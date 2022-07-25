@@ -1,6 +1,10 @@
+//const usersRoute = require('./routes/user.route')
 const mongoose = require('mongoose')
 const express = require('express')
+const cors = require('cors');
 require('dotenv').config();
+
+
 const app = express();
 
 const PORT = process.env.PORT;
@@ -28,7 +32,11 @@ database.on('disconnected', () => {
   console.log("Database disconnected")
 })
 
+//middlewares
+app.use(cors());
+app.use(express.json());
 
+app.use("/api/users", require('./routes/user.route.js'))
 
 app.listen(PORT, () => {
   mongodbConnection();
