@@ -1,9 +1,6 @@
-//import express from 'express'
-//import User from '../models/user.model.js'
-//import jwt from "jsonwebtoken";
 const userModel = require('../models/user.model.js');
 const hashedPassword = require('../utils/hashingPassword')
-const jwt = require('jsonwebtoken');
+const jwtSigning = require('../utils/tokenSigning.util')
 const bcrypt = require('bcrypt');
 //register an user
 const userRegistration = async (req, res, next) => {
@@ -47,12 +44,7 @@ const userLogin = async (req, res, next) => {
     if (!passwordCheck) return res.status(400).send("Wrong username or password.");
 
     const { password, isAdmin, ...otherDetails } = user._doc;
-    //res.status(200).json({ ...otherDetails });
-
-    const token = jwt.sign({
-      id: user._id, isAdmin: user.isAdmin
-    }, process.env.JWT)
-
+    const token = jwtSigning(user);
 
     res
       .cookie("access_token", token, {
