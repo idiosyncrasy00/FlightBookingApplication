@@ -13,6 +13,8 @@ const userRegistration = async (req, res, next) => {
   } else {
     //need to hash the password
     const newUser = new userModel({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
       username: req.body.username,
       password: req.body.password,
       phoneNumber: req.body.phoneNumber,
@@ -27,33 +29,6 @@ const userRegistration = async (req, res, next) => {
     } catch (err) {
       console.log(err.message)
     }
-  }
-}
-
-const userLogin = async (req, res, next) => {
-  //res.send("Login api");
-  try {
-    const user = await userModel.findOne({ username: req.body.username })
-    if (!user) return res.status(404).send("User not found!!!");
-    //compare password
-    const passwordCheck = await bcrypt.compare(
-      req.body.password,
-      user.password
-    )
-
-    if (!passwordCheck) return res.status(400).send("Wrong username or password.");
-
-    const { password, isAdmin, ...otherDetails } = user._doc;
-    const token = jwtSigning(user);
-
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json({ details: { ...otherDetails }, isAdmin });
-  } catch (error) {
-    next(error);
   }
 }
 
@@ -72,11 +47,48 @@ const getUser = async (req, res, next) => {
 }
 
 //login an user
+const userLogin = async (req, res, next) => {
+  //res.send("Login api");
+  try {
+    const user = await userModel.findOne({ username: req.body.username })
+    if (!user) return res.status(404).send("User not found!!!");
+    //compare password
+    const passwordCheck = await bcrypt.compare(
+      req.body.password,
+      user.password
+    )
+
+    if (!passwordCheck) return res.status(400).send("Wrong username or password.");
+
+    
+    const { password, isAdmin, payments, ...otherDetails } = user._doc;
+    const token = jwtSigning(user);
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ details: { ...otherDetails }, isAdmin });
+  } catch (error) {
+    next(error);
+  }
+}
 
 //update an user (later)
 
 //delete an user (later)
 
-module.exports = { userRegistration, getUser, userLogin, userUpdate }
+//post users' payments
+const postUserPayments = async (req, res, next) => {
+  res.send("Users' payments POST api");
+}
+
+//get users' payments
+const getUserPayments = async (req, res, next) => {
+  res.send("Users' payments GET api");
+}
+
+module.exports = { userRegistration, getUser, userLogin, userUpdate, postUserPayments, getUserPayments }
 
 
