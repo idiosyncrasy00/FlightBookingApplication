@@ -29,24 +29,22 @@ const deleteFlight = async (req, res, next) => {
 }
 
 const queryFlight = async (req, res, next) => {
-  const query = [{
-    brand: req.body.brand
-  },
-  { destination: req.body.destination },
-  { arrivalTime: req.body.arrivalTime },
-  { departureTime: req.body.departureTime },
-  { price: req.body.price },
-  { capacity: req.body.capacity }
-  ]
+  const query = {
+    brand: (req.body.brand) ? req.body.brand : /.*/,
+    destination: req.body.destination ? req.body.destination : /.*/,
+    arrivalTime: req.body.arrivalTime ? req.body.arrivalTime : /.*/,
+    departureTime: req.body.departureTime ? req.body.departureTime : /.*/,
+    price: req.body.price ? req.body.brand : { $gt: 0 },
+    capacity: req.body.capacity ? req.body.brand : { $gt: 0 },
+  }
   try {
-    // let flight = newFlight;
-    // await flight.save();
-    // res.send(flight);
-    let results = await flightModel.find(
-      { $and: query }
-    );
+    let results = await flightModel.find(query);
     const arr = Object.entries(results);
-    res.send(arr);
+    if (arr.length === 0) {
+      res.send({ message: "No results found!" })
+    } else {
+      res.send(arr);
+    }
   } catch (err) {
     console.log(err.message)
   }

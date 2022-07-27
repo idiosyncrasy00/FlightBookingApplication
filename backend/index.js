@@ -38,6 +38,7 @@ app.use(express.json());
 
 app.use("/api/users", require('./routes/user.route.js'))
 app.use("/api/flights", require('./routes/flight.route.js'))
+app.use("/api/utils", require('./routes/util.route.js'))
 
 app.listen(PORT, () => {
   mongodbConnection();
