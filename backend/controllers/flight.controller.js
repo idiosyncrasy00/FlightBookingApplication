@@ -20,7 +20,22 @@ const addFlight = async (req, res, next) => {
 }
 
 const updateFlight = async (req, res, next) => {
-
+  try {
+    const updatedFlight = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      username: req.body.username,
+      phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+    }
+    await flightModel.findOneAndUpdate(
+      { _id: req.body._id },
+      updatedFlight
+    ).exec()
+    res.status(200).send(updatedFlight);
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 //for testing

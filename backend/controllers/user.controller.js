@@ -32,10 +32,6 @@ const userRegistration = async (req, res, next) => {
   }
 }
 
-const userUpdate = async (req, res, next) => {
-  res.send("Update user api");
-}
-
 //for testing
 const getUser = async (req, res, next) => {
   try {
@@ -60,7 +56,7 @@ const userLogin = async (req, res, next) => {
 
     if (!passwordCheck) return res.status(400).send("Wrong username or password.");
 
-    
+
     const { password, isAdmin, payments, ...otherDetails } = user._doc;
     const token = jwtSigning(user);
 
@@ -75,7 +71,24 @@ const userLogin = async (req, res, next) => {
   }
 }
 
-//update an user (later)
+const userUpdate = async (req, res, next) => {
+  try {
+    const updatedUser = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      username: req.body.username,
+      phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+    }
+    await userModel.findOneAndUpdate(
+      { _id: req.body._id },
+      updatedUser
+    ).exec()
+    res.status(200).send(updatedUser);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 //delete an user (later)
 

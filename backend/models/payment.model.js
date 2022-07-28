@@ -7,7 +7,7 @@ const paymentSchema = new mongoose.Schema({
   },
   creditCard_number: {
     required: true,
-    type: Number,
+    type: String,
   },
   flight_id: {
     required: true,
