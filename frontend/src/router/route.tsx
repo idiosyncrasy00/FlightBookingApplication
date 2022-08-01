@@ -1,9 +1,19 @@
-import AnotherPage from '../components/anotherPage';
+import LoginPage from '../pages/LoginPage'
+import RegisterPage from '../pages/RegisterPage'
+import HomePage from '../pages/HomePage'
 
 const routes = [
   {
-    path: '/anotherPage',
-    component: <AnotherPage />,
+    path: '/',
+    component: <HomePage />
+  },
+  {
+    path: '/login',
+    component: <LoginPage />,
+  },
+  {
+    path: '/register',
+    component: <RegisterPage />,
   }
 ];
 

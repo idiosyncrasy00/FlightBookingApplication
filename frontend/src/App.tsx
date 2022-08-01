@@ -1,10 +1,8 @@
-import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
+import Navbar from './components/Navbar'
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import routes from './router/route'
 import { Fragment } from 'react';
-import AnotherPage2 from './components/anotherPage2'
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -12,7 +10,7 @@ function App() {
   return (
     <>
       <Router>
-        <AnotherPage2 />
+        <Navbar />
         <div className="App">
           <Routes>
             {
