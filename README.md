@@ -1,2 +1,0 @@
-# FlightBookingApplication
-Flight Booking Application
