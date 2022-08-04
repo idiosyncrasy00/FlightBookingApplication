@@ -27,9 +27,16 @@ const flightSchema = new mongoose.Schema({
     type: Number,
   },
 
-  num_of_booked: {
-    type: Number,
-    default: 0,
+  /**
+   * element type
+   * {
+   * first_name
+   * last_name
+   * }
+   */
+  list_of_passengers: {
+    type: Array,
+    default: [],
   }
 })
 

@@ -13,8 +13,8 @@ const userRegistration = async (req, res, next) => {
   } else {
     //need to hash the password
     const newUser = new userModel({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
+      // firstname: req.body.firstname,
+      // lastname: req.body.lastname,
       username: req.body.username,
       password: req.body.password,
       phoneNumber: req.body.phoneNumber,
@@ -74,8 +74,8 @@ const userLogin = async (req, res, next) => {
 const userUpdate = async (req, res, next) => {
   try {
     const updatedUser = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
+      // firstname: req.body.firstname,
+      // lastname: req.body.lastname,
       username: req.body.username,
       phoneNumber: req.body.phoneNumber,
       email: req.body.email,

@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 
-const paymentSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+
+const paymentSchema = Schema({
   amount: {
     required: true,
     type: Number,
@@ -11,11 +14,14 @@ const paymentSchema = new mongoose.Schema({
   },
   flight_id: {
     required: true,
-    type: { type: Schema.Types.ObjectId, ref: 'Flight' },
+    // Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    ref: 'Flight',
   },
   user_id: {
     required: true,
-    type: { type: Schema.Types.ObjectId, ref: 'User' },
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   }
 },
   { timestamps: true }
