@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import paperImg from '../assets/254367.webp'
 import { useNavigate } from 'react-router-dom'
 
@@ -5,12 +6,13 @@ import { useNavigate } from 'react-router-dom'
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Result from '../components/Result'
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const styles = {
   paperContainer: {
@@ -46,20 +48,91 @@ const styles = {
     gap: `3% 3%`,
     height: `20vh`
   },
+
+  formStyling: {
+    display: `flex`
+  }
 };
 
 function SecretPage() {
   const navigate = useNavigate()
+
+  const [age, setAge] = useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string);
+  };
+
   return (
     <div>
       <Paper style={styles.paperContainer}>
-        <div className="text-content" style={styles.textContent}>
-          <p>Hello username, where do you want to fly today?</p>
-          <Button onClick={() => { navigate('/register') }}>Sign up now!</Button>
+        <div style={styles.formStyling}>
+          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+            <InputLabel id="demo-simple-select-label">Brand</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="Age"
+              onChange={handleChange}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+            <InputLabel id="demo-simple-select-label">Destination</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="Age"
+              onChange={handleChange}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+
+
+          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+            <InputLabel id="demo-simple-select-label">Departure Date</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="Age"
+              onChange={handleChange}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+            <InputLabel id="demo-simple-select-label">Minimum Price</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="Age"
+              onChange={handleChange}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+
         </div>
+        <br></br>
+        <Button>Search Flight</Button>
       </Paper>
       <Typography variant="h3" style={styles.centerText}>Search Results</Typography>
-      {/* <div style={styles.searchResult}> */}
       <Box
         style={styles.searchResult}
       >
@@ -70,18 +143,20 @@ function SecretPage() {
           Vietnam Airlines
         </div>
         <div>
-          <span style={{ "padding-left": '20px' }}>21:30</span>
+          <span style={{ "padding-left": '5px' }}>21:30</span>
           <br />
-          <span>Departure Time</span>
+          <span>
+            Ha Noi
+          </span>
         </div>
         --
         <div>
-          <span style={{ "padding-left": '20px' }}>
+          <span style={{ "padding-left": '5px' }}>
             22:30
           </span>
           <br />
           <span>
-            Arrival Time
+            Sai Gon
           </span>
         </div>
         <div>
