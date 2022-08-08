@@ -2,6 +2,7 @@ import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
 import HomePage from '../pages/HomePage'
 import SecretPage from '../pages/SecretPage'
+import Profile from '../components/Profile'
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
   {
     path: 'secret',
     component: <SecretPage />
+  },
+  {
+    path: 'profileTest',
+    component: <Profile />
   }
 
 ];

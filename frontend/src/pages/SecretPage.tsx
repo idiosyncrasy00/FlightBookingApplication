@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import paperImg from '../assets/254367.webp'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,6 +13,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+// import TextField from '@mui/material/TextField';
+// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 const styles = {
   paperContainer: {
@@ -46,7 +51,9 @@ const styles = {
     alignItems: `center`,
     justifyContent: `center`,
     gap: `3% 3%`,
-    height: `20vh`
+    height: `20vh`,
+    width: `90vw`,
+    margin: `2% 3% 2% 3%`,
   },
 
   formStyling: {
@@ -63,8 +70,17 @@ function SecretPage() {
     setAge(event.target.value as string);
   };
 
+  const [value, setValue] = useState<Date | null>(
+    new Date('2014-08-18T21:11:54'),
+  );
+
+  // const handleChange = (newValue: Date | null) => {
+  //   setValue(newValue);
+  // };
+
   return (
     <div>
+      {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
       <Paper style={styles.paperContainer}>
         <div style={styles.formStyling}>
           <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
@@ -97,6 +113,14 @@ function SecretPage() {
             </Select>
           </FormControl>
 
+          {/* <DatePicker
+              label="Basic example"
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            /> */}
 
           <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
             <InputLabel id="demo-simple-select-label">Departure Date</InputLabel>
@@ -135,6 +159,7 @@ function SecretPage() {
       <Typography variant="h3" style={styles.centerText}>Search Results</Typography>
       <Box
         style={styles.searchResult}
+        sx={{ boxShadow: 3 }}
       >
         <div>
           Img
@@ -167,7 +192,10 @@ function SecretPage() {
         </div>
       </Box>
 
-      <div style={styles.searchResult}>
+      <Box
+        style={styles.searchResult}
+        sx={{ boxShadow: 3 }}
+      >
         <div>
           Img
         </div>
@@ -189,7 +217,8 @@ function SecretPage() {
         <div>
           <Button>Book</Button>
         </div>
-      </div>
+      </Box>
+      {/* </LocalizationProvider> */}
     </div >
   )
 }
