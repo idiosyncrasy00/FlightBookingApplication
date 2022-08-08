@@ -2,32 +2,33 @@ const userModel = require('../models/user.model.js');
 const hashedPassword = require('../utils/hashingPassword')
 const jwtSigning = require('../utils/tokenSigning.util')
 const bcrypt = require('bcrypt');
+const validation = require('../validations/user.validation');
+
 //register an user
 const userRegistration = async (req, res, next) => {
   //first check if user is exist?
   //let user = User.findOne({ email: req.body.email })
   console.log(`The email is ${req.body.email}`);
-  let user = userModel.findOne({ email: req.body.email })
-  if (!user) {
-    res.status(400).send("Username, email or phone number already exists!")
+  const { error, value } = await validation.registerSchema.validate(req.body);
+  if (error) {
+    res.status(403).send({ error: error.message });
   } else {
-    //need to hash the password
-    const newUser = new userModel({
-      // firstname: req.body.firstname,
-      // lastname: req.body.lastname,
-      username: req.body.username,
-      password: req.body.password,
-      phoneNumber: req.body.phoneNumber,
-      email: req.body.email,
-      isAdmin: false
-    })
-    try {
-      user = newUser;
-      user.password = await hashedPassword(user.password)
-      await user.save();
-      res.send(user)
-    } catch (err) {
-      console.log(err.message)
+    let user = userModel.findOne({ email: req.body.email })
+    console.log(value)
+    if (!user) {
+      res.status(400).send("Username, email or phone number already exists!")
+    } else {
+      //need to hash the password
+      const newUser = new userModel(value) 
+      //const newUser = value
+      try {
+        user = newUser;
+        user.password = await hashedPassword(user.password)
+        await user.save();
+        res.send(user)
+      } catch (err) {
+        console.log(err.message)
+      }
     }
   }
 }
@@ -72,21 +73,27 @@ const userLogin = async (req, res, next) => {
 }
 
 const userUpdate = async (req, res, next) => {
-  try {
-    const updatedUser = {
-      // firstname: req.body.firstname,
-      // lastname: req.body.lastname,
-      username: req.body.username,
-      phoneNumber: req.body.phoneNumber,
-      email: req.body.email,
+  const { error, value } = await validation.editSchema.validate(req.body);
+  if (error) {
+    res.status(403).send({ error: error.message });
+  } else {
+    try {
+      // const updatedUser = {
+      //   // firstname: req.body.firstname,
+      //   // lastname: req.body.lastname,
+      //   username: req.body.username,
+      //   phoneNumber: req.body.phoneNumber,
+      //   email: req.body.email,
+      // }
+      const updatedUser = value;
+      await userModel.findOneAndUpdate(
+        { _id: req.body._id },
+        updatedUser
+      ).exec()
+      res.status(200).send(updatedUser);
+    } catch (error) {
+      console.log(error.message);
     }
-    await userModel.findOneAndUpdate(
-      { _id: req.body._id },
-      updatedUser
-    ).exec()
-    res.status(200).send(updatedUser);
-  } catch (error) {
-    console.log(error.message);
   }
 }
 

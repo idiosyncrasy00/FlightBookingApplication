@@ -1,6 +1,15 @@
 const flightModel = require('../models/flight.model.js');
 var ObjectId = require('mongodb').ObjectId;
 
+function checkSSIDExists(arr, ssid) {
+  //return arr.indexOf(ssid);
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].social_security_id === ssid) {
+      return true;
+    }
+  }
+  return false;
+}
 
 const flightBooking = async (req, res, next) => {
   try {
@@ -19,21 +28,33 @@ const flightBooking = async (req, res, next) => {
     //   social_security_id: req.body.social_security_id,
     // }
     const _list_of_passengers = req.body.list_of_passengers //type array
+    let check = false;
+    //check if social_security_id exists?
     for (let i = 0; i < _list_of_passengers.length; i++) {
-      await flightModel.findOneAndUpdate(
-        { _id: req.body._id },
-        {
-          $push: {
-            list_of_passengers: {
-              first_name: _list_of_passengers[i].first_name,
-              last_name: _list_of_passengers[i].last_name,
-              social_security_id: _list_of_passengers[i].social_security_id,
+      if (checkSSIDExists(_list_of_passengers, _list_of_passengers[i].social_security_id) === true) {
+        check = true;
+        break;
+      }
+    }
+    if (check === false) {
+      for (let i = 0; i < _list_of_passengers.length; i++) {
+        await flightModel.findOneAndUpdate(
+          { _id: req.body._id },
+          {
+            $push: {
+              list_of_passengers: {
+                first_name: _list_of_passengers[i].first_name,
+                last_name: _list_of_passengers[i].last_name,
+                social_security_id: _list_of_passengers[i].social_security_id,
+              }
             }
           }
-        }
-      ).exec()
+        ).exec()
+      }
+      res.status(200).send("updated");
+    } else {
+      res.status(403).send("Something went wrong.");
     }
-    res.status(200).send("update");
   } catch (error) {
     console.log(error.message);
   }
