@@ -1,18 +1,19 @@
 const paymentModel = require('../models/payment.model.js');
 // var ObjectId = require('mongodb').ObjectId;
+const validation = require('../validations/payment.validation');
 
 const addPayment = async (req, res, next) => {
-  const newPaymentRecord = new paymentModel({
-    amount: req.body.amount,
-    creditCard_number: req.body.creditCard_number,
-    flight_id: req.body.flight_id,
-    user_id: req.body.user_id
-  })
-  try {
-    await newPaymentRecord.save()
-    res.send(newPaymentRecord)
-  } catch (error) {
-    console.log(error.message);
+  const { error, value } = await validation.registerSchema.validate(req.body);
+  if (error) {
+    res.status(403).send({ error: error.message });
+  } else {
+    const newPaymentRecord = new paymentModel(value)
+    try {
+      await newPaymentRecord.save()
+      res.send(newPaymentRecord)
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 }
 

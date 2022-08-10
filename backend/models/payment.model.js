@@ -8,6 +8,10 @@ const paymentSchema = Schema({
     required: true,
     type: Number,
   },
+  bankName: {
+    required: true,
+    type: String,
+  },
   creditCard_number: {
     required: true,
     type: String,
