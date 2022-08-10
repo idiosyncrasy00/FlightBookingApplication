@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const cors = require('cors');
+const bodyParser = require("body-parser")
 require('dotenv').config();
 
 
@@ -9,6 +10,14 @@ const app = express();
 
 const PORT = process.env.PORT;
 const url = process.env.DATABASE_URL;
+
+//cors
+app.use(cors({
+  origin: (process.env.FRONTEND_PORT || "http://localhost:5173").replace(/\/$/, ''),
+  exposedHeaders: ['accesstoken']
+}));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const mongodbConnection = async () => {
   try {
@@ -37,6 +46,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/users", require('./routes/user.route.js'))
+app.use("/api/flights", require('./routes/flight.route.js'))
+app.use("/api/utils", require('./routes/util.route.js'))
+app.use("/api/payments", require('./routes/payment.route.js'))
 
 app.listen(PORT, () => {
   mongodbConnection();
