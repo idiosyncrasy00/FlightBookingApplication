@@ -3,6 +3,7 @@ const hashedPassword = require('../utils/hashingPassword')
 const jwtSigning = require('../utils/tokenSigning.util')
 const bcrypt = require('bcrypt');
 const validation = require('../validations/user.validation');
+//const jwt = require('jsonwebtoken');
 
 //register an user
 const userRegistration = async (req, res, next) => {
@@ -19,7 +20,7 @@ const userRegistration = async (req, res, next) => {
       res.status(400).send("Username, email or phone number already exists!")
     } else {
       //need to hash the password
-      const newUser = new userModel(value) 
+      const newUser = new userModel(value)
       //const newUser = value
       try {
         user = newUser;
@@ -58,15 +59,21 @@ const userLogin = async (req, res, next) => {
     if (!passwordCheck) return res.status(400).send("Wrong username or password.");
 
 
-    const { password, isAdmin, payments, ...otherDetails } = user._doc;
+    const { password, isAdmin, ...otherDetails } = user._doc;
     const token = jwtSigning(user);
+    // const token = jwt.sign(
+    //   { id: user._id, isAdmin: user.isAdmin },
+    //   process.env.JWT
+    // );
 
     res
       .cookie("access_token", token, {
         httpOnly: true,
+        expires: new Date(Date.now() + 900000),
       })
       .status(200)
       .json({ details: { ...otherDetails }, isAdmin });
+    next();
   } catch (error) {
     next(error);
   }

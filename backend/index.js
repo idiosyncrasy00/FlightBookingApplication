@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const cors = require('cors');
+const cookieParser = require('cookie-parser')
 const bodyParser = require("body-parser")
 require('dotenv').config();
 
@@ -13,7 +14,7 @@ const url = process.env.DATABASE_URL;
 
 //cors
 app.use(cors({
-  origin: (process.env.FRONTEND_PORT || "http://localhost:5173").replace(/\/$/, ''),
+  origin: ("http://localhost:5173").replace(/\/$/, ''),
   exposedHeaders: ['accesstoken']
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,6 +43,13 @@ database.on('disconnected', () => {
 })
 
 //middlewares
+//cookie
+app.use(cookieParser());
+// app.get('/cookie', function (req, res) {
+//   res.cookie('flight', 'booking', { expires: new Date(Date.now() + 900000) });
+//   res.send('success')
+// });
+//something else
 app.use(cors());
 app.use(express.json());
 
