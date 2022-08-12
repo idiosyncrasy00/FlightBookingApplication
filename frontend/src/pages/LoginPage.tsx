@@ -28,10 +28,6 @@ const LoginPage = () => {
 
   const navigate = useNavigate()
 
-  // const handleChange = (e) => {
-  //   setAuth((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-  // };
-
   const handleClick = async (e) => {
     e.preventDefault();
     //dispatch({ type: "LOGIN_START" });
