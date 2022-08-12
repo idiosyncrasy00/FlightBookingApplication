@@ -33,10 +33,16 @@ const LoginPage = () => {
     //dispatch({ type: "LOGIN_START" });
     console.log(loginForm);
     try {
-      const res = await axios.post("http://localhost:8000/api/users/login", loginForm);
-      console.log(res.data.details)
+      const res = await axios.post("http://localhost:8000/api/users/login", loginForm, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(res.data)
+      //console.log(res.data.access_token);
       //dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      // navigate("/")
+      navigate("/")
     } catch (err) {
       // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
       console.log(err.message)
@@ -50,7 +56,7 @@ const LoginPage = () => {
         name="username"
         placeholder="username"
         value={loginForm.username}
-        onChange={e => setLoginForm({...loginForm, username: e.target.value})}
+        onChange={e => setLoginForm({ ...loginForm, username: e.target.value })}
         variant="standard"
       />
       <br></br>
@@ -60,7 +66,7 @@ const LoginPage = () => {
         type="password"
         placeholder="password"
         value={loginForm.password}
-        onChange={e => setLoginForm({...loginForm, password: e.target.value})}
+        onChange={e => setLoginForm({ ...loginForm, password: e.target.value })}
         variant="standard"
       />
       <br></br>

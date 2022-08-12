@@ -32,12 +32,13 @@ const RegisterPage = () => {
       const res = await axios.post("http://localhost:8000/api/users/register", registerForm);
       console.log(res.data)
       //dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      // navigate("/")
+      navigate("/login")
     } catch (err) {
       // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
       console.log(err.message)
     }
   };
+  const navigate = useNavigate()
   return (
     <div style={styles.containerSection}>
       <Typography variant="h5">Signup form</Typography>

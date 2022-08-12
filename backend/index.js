@@ -12,14 +12,6 @@ const app = express();
 const PORT = process.env.PORT;
 const url = process.env.DATABASE_URL;
 
-//cors
-app.use(cors({
-  origin: ("http://localhost:5173").replace(/\/$/, ''),
-  exposedHeaders: ['accesstoken']
-}));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
 const mongodbConnection = async () => {
   try {
     await mongoose.connect(url);
@@ -49,8 +41,14 @@ app.use(cookieParser());
 //   res.cookie('flight', 'booking', { expires: new Date(Date.now() + 900000) });
 //   res.send('success')
 // });
-//something else
-app.use(cors());
+//cors
+app.use(cors({
+  origin: "http://localhost:5173",
+  exposedHeaders: ['access_token'],
+  credentials: true,
+}));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.json());
 
 app.use("/api/users", require('./routes/user.route.js'))
