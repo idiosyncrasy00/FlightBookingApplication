@@ -8,6 +8,7 @@ const registerSchema = Joi.object({
 })
 
 const editSchema = Joi.object({
+  _id: Joi.string(),
   username: Joi.string().max(20).required(),
   phoneNumber: Joi.string().max(15).required(),
   email: Joi.string().email().required(),

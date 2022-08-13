@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-let initialValue = ''
+let initialValue = {}
 
-export const usernameSlice = createSlice({
-  name: 'usernameSlice',
+export const userInfoSlice = createSlice({
+  name: 'userInfoSlice',
   initialState: {
     user: initialValue,
   },
@@ -19,16 +19,17 @@ export const usernameSlice = createSlice({
     //   newTasks.splice(action.payload.index, 1);
     //   state.items2 = newTasks;
     // }
-    displayUsername: (state, action) => {
+    displayInfo: (state, action) => {
       state.user = action.payload;
     },
-    removeUsername: (state, action) => {
-      state.user = '';
-    },
+    // removeUsername: (state, action) => {
+    //   state.user = '';
+    // },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { displayUsername, removeUsername } = usernameSlice.actions
+//export const { displayUsername, removeUsername } = usernameSlice.actions
+export const { displayInfo } = userInfoSlice.actions
 
-export default usernameSlice.reducer
+export default userInfoSlice.reducer

@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk'
-import usernameReducer from './username';
+import userInfoReducer from './userInfoSlice';
 import SetTransform from './setTransform';
 
 
@@ -15,7 +15,7 @@ const persistConfig = {
 }
 
 const allReducers = combineReducers({
-  username: usernameReducer
+  userInfoReducer
 })
 
 export const persistedReducer = persistReducer(persistConfig, allReducers);

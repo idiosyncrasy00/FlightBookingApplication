@@ -3,12 +3,13 @@ import { AppBar, Toolbar, IconButton, Typography, Button, Stack } from '@mui/mat
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile'
 import getCookie from '../utils/getCookie'
-import { displayUsername, removeUsername } from '../redux/username'
+//import { displayUsername, removeUsername } from '../redux/userInfoSlice'
+import { displayInfo } from '../redux/userInfoSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
 const Navbar = () => {
   const navigate = useNavigate()
-  const username = useSelector((state) => state.username.user)
+  const username = useSelector((state) => state.userInfoReducer.user.username)
   const dispatch = useDispatch()
   const [auth, setAuth] = useState('');
 
@@ -20,7 +21,8 @@ const Navbar = () => {
       console.log("Username is ", username)
     } else if (auth === null) {
       alert("You're logged out")
-      dispatch(() => dispatch(removeUsername('')))
+      // dispatch(() => dispatch(removeUsername('')))
+      dispatch(() => dispatch(displayInfo({})))
       navigate('/');
       //window.location.href = '/'
     }
@@ -35,7 +37,7 @@ const Navbar = () => {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             HanoiBay
           </Typography>
-          {username === '' ? (
+          {username === undefined ? (
             <Stack direction="row" spacing={2}>
               <Button onClick={() => { navigate("/login") }} color="inherit">
                 Login

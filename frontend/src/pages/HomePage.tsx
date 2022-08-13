@@ -42,9 +42,7 @@ const HomePage = () => {
   const navigate = useNavigate()
   const [auth, setAuth] = useState(null);
   useEffect(() => {
-    //document.title = `You clicked ${count} times`;
     console.log(getCookie("access_token"));
-    //console.log(document.cookie);
     setAuth(getCookie("access_token"))
   });
   return (

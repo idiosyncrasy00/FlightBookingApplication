@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { useSelector, useDispatch } from 'react-redux'
-import { displayUsername, removeUsername } from '../redux/username'
+import { displayInfo } from '../redux/userInfoSlice'
 
 
 //import library  
@@ -44,9 +44,13 @@ const LoginPage = () => {
         }
       });
       console.log(res.data)
-      dispatch(() => dispatch(displayUsername(res.data.details.username)))
-      //console.log(res.data.access_token);
-      //dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+      //dispatch(() => dispatch(displayUsername(res.data.details.username)))
+      dispatch(() => dispatch(displayInfo({
+        _id: res.data.details._id,
+        username: res.data.details.username,
+        phoneNumber: res.data.details.phoneNumber,
+        email: res.data.details.email,
+      })))
       navigate("/")
     } catch (err) {
       // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });

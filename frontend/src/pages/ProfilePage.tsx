@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -12,19 +12,24 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSelector, useDispatch } from 'react-redux'
+
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { displayInfo } from '../redux/userInfoSlice'
 
 const theme = createTheme();
 
 const ProfilePage = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
 
+  const userInfo = useSelector((state) => state.userInfoReducer.user)
+  const [info, setInfo] = useState(userInfo)
+  useEffect(() => {
+    // setInfo(userInfo)
+    console.log(info)
+  }, [info]);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -40,7 +45,7 @@ const ProfilePage = () => {
           <Typography component="h1" variant="h5">
             Profile Information
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -49,6 +54,8 @@ const ProfilePage = () => {
                   fullWidth
                   id="firstName"
                   label="username"
+                  value={info.username}
+                  onChange={e => setInfo({ ...info, username: e.target.value })}
                   autoFocus
                 />
               </Grid>
@@ -68,6 +75,8 @@ const ProfilePage = () => {
                   fullWidth
                   id="email"
                   label="Email"
+                  value={info.email}
+                  onChange={e => setInfo({ ...info, email: e.target.value })}
                   name="email"
                   autoComplete="email"
                 />
@@ -89,6 +98,8 @@ const ProfilePage = () => {
                   fullWidth
                   name="phoneNumber"
                   label="phoneNumber"
+                  value={info.phoneNumber}
+                  onChange={e => setInfo({ ...info, phoneNumber: e.target.value })}
                   type="text"
                   id="phoneNumber"
                 />
@@ -101,10 +112,24 @@ const ProfilePage = () => {
               </Grid> */}
             </Grid>
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={async () => {
+                try {
+                  const res = await axios.put("http://localhost:8000/api/users/update", info, {
+                    withCredentials: true,
+                    headers: {
+                      'Content-Type': 'application/json'
+                    }
+                  });
+                  console.log(res.data)
+                  dispatch(() => dispatch(displayInfo(info)))
+                  navigate("/me")
+                } catch (err) {
+                  console.log(err.message)
+                }
+              }}
             >
               Update
             </Button>

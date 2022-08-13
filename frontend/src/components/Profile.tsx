@@ -12,7 +12,7 @@ import deleteAllCookies from '../utils/deleteCookie'
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux'
-import { removeUsername } from '../redux/username'
+import { displayInfo } from '../redux/userInfoSlice'
 
 export default function Profile(props) {
   const username = props.username;
@@ -87,7 +87,7 @@ export default function Profile(props) {
         </MenuItem>
         <MenuItem onClick={() => {
           deleteAllCookies()
-          dispatch(() => dispatch(removeUsername('')))
+          dispatch(() => dispatch(displayInfo({})))
           navigate('/');
         }}>
           {/* <Avatar /> My account */}
