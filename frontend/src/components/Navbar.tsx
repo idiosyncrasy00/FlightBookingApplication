@@ -2,20 +2,29 @@ import React, { useState, useEffect } from 'react'
 import { AppBar, Toolbar, IconButton, Typography, Button, Stack } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile'
-import { useSelector } from 'react-redux'
 import getCookie from '../utils/getCookie'
 import { displayUsername, removeUsername } from '../redux/username'
+import { useSelector, useDispatch } from 'react-redux'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const username = useSelector((state) => state.username.user)
-  const [auth, setAuth] = useState(null);
+  const dispatch = useDispatch()
+  const [auth, setAuth] = useState('');
 
   useEffect(() => {
-    console.log(getCookie("access_token"));
-    setAuth(getCookie("access_token"))
-    console.log("Username is ", username)
-  });
+    let setCookie = getCookie("access_token")
+    setAuth(setCookie)
+    if (auth !== null) {
+      console.log(auth);
+      console.log("Username is ", username)
+    } else if (auth === null) {
+      alert("You're logged out")
+      dispatch(() => dispatch(removeUsername('')))
+      navigate('/');
+      //window.location.href = '/'
+    }
+  }, [auth]);
   return (
     <div>
       <AppBar position="static">
@@ -26,7 +35,7 @@ const Navbar = () => {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             HanoiBay
           </Typography>
-          {auth === null ? (
+          {username === '' ? (
             <Stack direction="row" spacing={2}>
               <Button onClick={() => { navigate("/login") }} color="inherit">
                 Login

@@ -3,6 +3,7 @@ import RegisterPage from '../pages/RegisterPage'
 import HomePage from '../pages/HomePage'
 import SecretPage from '../pages/SecretPage'
 import Profile from '../components/Profile'
+import ProfilePage from '../pages/ProfilePage'
 
 const routes = [
   {
@@ -17,15 +18,21 @@ const routes = [
     path: '/register',
     component: <RegisterPage />,
   },
-  //for testing frontend purposes
+
   {
-    path: 'secret',
-    component: <SecretPage />
+    path: '/me',
+    component: <ProfilePage />,
   },
-  {
-    path: 'profileTest',
-    component: <Profile />
-  }
+
+  //for testing frontend purposes
+  // {
+  //   path: 'secret',
+  //   component: <SecretPage />
+  // },
+  // {
+  //   path: 'profileTest',
+  //   component: <Profile />
+  // }
 
 ];
 

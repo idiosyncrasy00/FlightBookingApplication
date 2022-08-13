@@ -9,9 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import deleteAllCookies from '../utils/deleteCookie'
-// import PersonAdd from '@mui/icons-material/PersonAdd';
-// import Settings from '@mui/icons-material/Settings';
-// import Logout from '@mui/icons-material/Logout';
+import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux'
 import { removeUsername } from '../redux/username'
@@ -26,6 +24,8 @@ export default function Profile(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const navigate = useNavigate()
 
   const dispatch = useDispatch()
   return (
@@ -79,12 +79,16 @@ export default function Profile(props) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
+        <MenuItem onClick={() => {
+          alert("LMAO")
+          navigate("/me")
+        }}>
           <Avatar /> {username}
         </MenuItem>
         <MenuItem onClick={() => {
           deleteAllCookies()
-          return dispatch(() => dispatch(removeUsername('')))
+          dispatch(() => dispatch(removeUsername('')))
+          navigate('/');
         }}>
           {/* <Avatar /> My account */}
           Logout
