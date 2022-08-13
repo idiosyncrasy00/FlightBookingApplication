@@ -3,8 +3,7 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk'
-import taskListReducer from './taskList'
-import tasksCompletedListReducer from './tasksCompletedList';
+import usernameReducer from './username';
 import SetTransform from './setTransform';
 
 
@@ -16,8 +15,7 @@ const persistConfig = {
 }
 
 const allReducers = combineReducers({
-  taskList: taskListReducer,
-  tasksCompletedList: tasksCompletedListReducer,
+  username: usernameReducer
 })
 
 export const persistedReducer = persistReducer(persistConfig, allReducers);

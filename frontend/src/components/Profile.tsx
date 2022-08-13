@@ -8,11 +8,16 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import deleteAllCookies from '../utils/deleteCookie'
 // import PersonAdd from '@mui/icons-material/PersonAdd';
 // import Settings from '@mui/icons-material/Settings';
 // import Logout from '@mui/icons-material/Logout';
 
-export default function Profile() {
+import { useSelector, useDispatch } from 'react-redux'
+import { removeUsername } from '../redux/username'
+
+export default function Profile(props) {
+  const username = props.username;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,11 +26,11 @@ export default function Profile() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const dispatch = useDispatch()
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-        <Typography sx={{ minWidth: 100 }}>Profile</Typography>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -75,10 +80,14 @@ export default function Profile() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <Avatar /> Profile
+          <Avatar /> {username}
         </MenuItem>
-        <MenuItem>
-          <Avatar /> My account
+        <MenuItem onClick={() => {
+          deleteAllCookies()
+          return dispatch(() => dispatch(removeUsername('')))
+        }}>
+          {/* <Avatar /> My account */}
+          Logout
         </MenuItem>
         <Divider />
       </Menu>

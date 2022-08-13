@@ -4,6 +4,10 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import { useSelector, useDispatch } from 'react-redux'
+import { displayUsername, removeUsername } from '../redux/username'
+
+
 //import library  
 import { TextField, Button, Typography } from '@mui/material';
 
@@ -24,14 +28,14 @@ const LoginPage = () => {
     password: '',
   })
 
-  const { loading, error } = useContext(AuthContext);
-
+  //const { loading, error } = useContext(AuthContext);
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleClick = async (e) => {
     e.preventDefault();
     //dispatch({ type: "LOGIN_START" });
-    console.log(loginForm);
+    //console.log(loginForm);
     try {
       const res = await axios.post("http://localhost:8000/api/users/login", loginForm, {
         withCredentials: true,
@@ -40,6 +44,7 @@ const LoginPage = () => {
         }
       });
       console.log(res.data)
+      dispatch(() => dispatch(displayUsername(res.data.details.username)))
       //console.log(res.data.access_token);
       //dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
       navigate("/")
@@ -70,10 +75,10 @@ const LoginPage = () => {
         variant="standard"
       />
       <br></br>
-      <Button disabled={loading} onClick={handleClick} color="inherit" variant="outlined" size="small">
+      <Button onClick={handleClick} color="inherit" variant="outlined" size="small">
         Submit task
       </Button>
-      {error && <span>{error.message}</span>}
+      {/* {error && <span>{error.message}</span>} */}
     </div>
   )
 }
