@@ -49,8 +49,10 @@ const queryFlight = async (req, res, next) => {
     destination: req.body.destination ? req.body.destination : /.*/,
     arrivalTime: req.body.arrivalTime ? req.body.arrivalTime : /.*/,
     departureTime: req.body.departureTime ? req.body.departureTime : /.*/,
-    price: req.body.price ? req.body.brand : { $gt: 0 },
-    capacity: req.body.capacity ? req.body.brand : { $gt: 0 },
+    arrivalDate: req.body.arrivalDate ? req.body.arrivalDate : /.*/,
+    departureDate: req.body.departureDate ? req.body.departureDate : /.*/,
+    // price: req.body.price ? req.body.price : { $gt: 0 },
+    // capacity: req.body.capacity ? req.body.capacity : { $gt: 0 },
   }
   try {
     let results = await flightModel.find(query);
@@ -58,7 +60,24 @@ const queryFlight = async (req, res, next) => {
     if (arr.length === 0) {
       res.send({ message: "No results found!" })
     } else {
-      res.send(arr);
+      // console.log(arr)
+      // console.log(arr[0][1]._id);
+      let formattedResults = []
+      for (let i = 0; i < arr.length; i++) {
+        formattedResults.push({
+          id: arr[i][1]._id,
+          brand: arr[i][1].brand,
+          destination: arr[i][1].destination,
+          arrivalTime: arr[i][1].arrivalTime,
+          departureTime: arr[i][1].departureTime,
+          arrivalDate: arr[i][1].arrivalDate,
+          departureDate: arr[i][1].departureDate,
+          price: arr[i][1].price,
+          capacity: arr[i][1].capacity,
+        })
+      }
+      //res.send(arr);
+      res.send(formattedResults);
     }
   } catch (err) {
     console.log(err.message)
