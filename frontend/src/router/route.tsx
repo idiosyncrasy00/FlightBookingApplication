@@ -4,6 +4,7 @@ import HomePage from '../pages/HomePage'
 import SecretPage from '../pages/SecretPage'
 import Profile from '../components/Profile'
 import ProfilePage from '../pages/ProfilePage'
+import ModalTest from '../components/ModalTest'
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
   //   path: 'profileTest',
   //   component: <Profile />
   // }
+
+  {
+    path: 'modal',
+    component: <ModalTest />
+  }
 
 ];
 

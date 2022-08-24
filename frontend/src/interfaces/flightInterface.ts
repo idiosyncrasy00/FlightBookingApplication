@@ -11,6 +11,8 @@ export interface FlightInterface {
   destination: string;
   departureTime: string;
   arrivalTime: string;
+  departureDate: string;
+  arrivalDate: string;
   price: number;
   capacity: number;
 }

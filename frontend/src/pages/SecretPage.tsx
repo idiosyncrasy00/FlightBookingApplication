@@ -20,6 +20,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TextField, Button, Typography } from '@mui/material';
+import flightInterface from '../interfaces/flightInterface'
 
 const styles = {
   paperContainer: {
@@ -73,7 +74,7 @@ function SecretPage() {
     departureDate: ''
   })
 
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState([] as flightInterface)
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -120,74 +121,13 @@ function SecretPage() {
       {
         results.map((result) => {
           return (
-            <>
-              <Box
-                style={styles.searchResult}
-                sx={{ boxShadow: 3 }}
-              >
-                <div>
-                  Img
-                </div>
-                <div>
-                  {result.brand}
-                </div>
-                <div>
-                  <span style={{ "padding-left": '5px' }}>{result.arrivalTime}</span>
-                  <br />
-                  <span>
-                    Ha Noi
-                  </span>
-                </div>
-                --
-                <div>
-                  <span style={{ "padding-left": '5px' }}>
-                    {result.departureTime}
-                  </span>
-                  <br />
-                  <span>
-                    {result.destination}
-                  </span>
-                </div>
-                <div>
-                  {result.price} VND
-                </div>
-                <div>
-                  <Button onClick={() => {
-                    alert(JSON.stringify(result))
-                  }}>Book</Button>
-                </div>
-              </Box>
-            </>
+            <Result
+              item={result}
+              booking={() => { alert(JSON.stringify(result)) }}
+            />
           )
         })
       }
-
-      {/* <Box
-        style={styles.searchResult}
-        sx={{ boxShadow: 3 }}
-      >
-        <div>
-          Img
-        </div>
-        <div>
-          Vietnam Airlines
-        </div>
-        <div>
-          21:30
-          Departure Time
-        </div>
-        <div>
-          22:30
-          Arrival Time
-        </div>
-
-        <div>
-          10000 VND
-        </div>
-        <div>
-          <Button>Book</Button>
-        </div>
-      </Box> */}
       {/* </LocalizationProvider> */}
     </div >
   )
