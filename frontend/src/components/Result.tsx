@@ -1,6 +1,10 @@
 import React from 'react'
-import { flightInterface } from '../interfaces/flightInterface'
+import { FlightInterface } from '../interfaces/flightInterface'
 import { useState, useEffect, useReducer } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { displayInfo } from '../redux/userInfoSlice'
+import axios from 'axios'
+import headerConfig from '../adapters/headerConfig'
 
 //modal import
 import Box from '@mui/material/Box';
@@ -17,7 +21,7 @@ import TextField from '@mui/material/TextField';
 import Draggable from 'react-draggable';
 
 type Props = {
-  item: flightInterface;
+  item: FlightInterface;
   booking: () => void;
 }
 
@@ -45,31 +49,88 @@ function PaperComponent(props: PaperProps) {
   );
 }
 
+let initialValue = 1
+
+const counterReducer = (state = 0, action: unknown) => {
+  switch (action.type) {
+    case "INCREMENT":
+      return state + 1
+    case "DECREMENT":
+      return state - 1
+    default:
+      return state
+  }
+}
+
 const Result: React.FC<Props> = ({ item, booking }) => {
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const handleClickOpen = (id: string) => {
+    console.log(id)
+    setChosenFlightID(id)
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const [counter, setCounter] = useState(0);
+
+  const [counter, dispatch] = useReducer(counterReducer, initialValue);
+  const [chosenFlightID, setChosenFlightID] = useState('' as string);
 
   const handleIncrement = () => {
-    setCounter(prev => prev + 1)
+    dispatch({ type: "INCREMENT" })
   };
 
   const handleDecrement = () => {
-    if (counter < 0) {
-      setCounter(0)
-    }
-    setCounter(prev => prev - 1)
+    dispatch({ type: "DECREMENT" })
   };
 
-  const [peopleListInfo, setPeopleListInfo] = useState([]);
+  const userId = useSelector((state) => state.userInfoReducer.user._id)
+  //const dispatch2 = useDispatch()
 
-  // useEffect(() => {
-  // } )
+  // id: string
+  const submitFlightForm = async () => {
+    let formArr = [];
+    for (let i = 0; i < counter; i++) {
+      let firstName = (document.getElementById(`first-name-${i}`) as HTMLInputElement).value
+      let lastName = (document.getElementById(`last-name-${i}`) as HTMLInputElement).value
+      let ssn = (document.getElementById(`ssn-${i}`) as HTMLInputElement).value
+      //console.log(firstName, lastName, ssn);
+      formArr.push({
+        first_name: firstName,
+        last_name: lastName,
+        social_security_id: ssn
+      })
+    }
+    console.log("Successfully booked a flight with id ", chosenFlightID)
+    console.log(formArr)
+
+    let bookingParam = {
+      _id: chosenFlightID,
+      list_of_passengers: formArr
+    }
+
+    let bookingFlightApi = await axios.put('http://localhost:8000/api/utils/booked', bookingParam, headerConfig);
+
+    console.log(bookingFlightApi)
+
+    //insert payment api here
+    let bankName = (document.getElementById(`bank-name`) as HTMLInputElement).value
+    let creditCardNumber = (document.getElementById(`credit-card`) as HTMLInputElement).value
+    let paymentDetails = {
+      amount: item.price * (counter),
+      bankName: bankName,
+      creditCard_number: creditCardNumber,
+      flight_id: chosenFlightID,
+      user_id: userId
+    }
+
+    console.log(paymentDetails)
+
+    let paymentApi = await axios.post('http://localhost:8000/api/payments/insert', paymentDetails, headerConfig)
+    console.log(paymentApi)
+    //console.log(paymentDetails)
+  }
+
   return (
     <>
       <Box
@@ -104,11 +165,7 @@ const Result: React.FC<Props> = ({ item, booking }) => {
         </div>
         <div>
           <Button
-            // onClick={() => {
-            // alert(JSON.stringify(item))
-            // }}
-            //onClick={() => booking()}
-            onClick={handleClickOpen}
+            onClick={() => handleClickOpen(item.id)}
           >Book</Button>
         </div>
       </Box>
@@ -126,10 +183,6 @@ const Result: React.FC<Props> = ({ item, booking }) => {
           <Button disabled>{counter}</Button>
           <Button onClick={handleIncrement}>+</Button>
         </ButtonGroup>
-        <Button onClick={() => {
-          //console.log(counter)
-          sessionStorage.setItem('counter', counter)
-        }}>Confirm</Button>
         <DialogContent>
           {item.price} VND
           <DialogContentText>
@@ -138,57 +191,62 @@ const Result: React.FC<Props> = ({ item, booking }) => {
           <DialogContentText>
             Ha Noi - {item.destination}
           </DialogContentText>
+          <DialogContentText>
+            Total price: {item.price * (counter)}
+          </DialogContentText>
         </DialogContent>
 
         <Grid container spacing={1} columns={12}>
           <Grid item xs={4}>
-            <TextField id="outlined-basic" label="First Name" variant="outlined" />
+            <TextField id={`first-name-0`} label="First Name" variant="outlined" />
           </Grid>
           <Grid item xs={4}>
-            <TextField id="outlined-basic" label="Last Name" variant="outlined" />
+            <TextField id={`last-name-0`} label="Last Name" variant="outlined" />
           </Grid>
           <Grid item xs={4}>
-            <TextField id="outlined-basic" label="Social Security Number" variant="outlined" />
+            <TextField id={`ssn-0`} label="Social Security Number" variant="outlined" />
           </Grid>
         </Grid>
 
         {(() => {
-          // let counter = sessionStorage.getItem('counter');
-          // counter = parseInt(counter)
           console.log(counter);
-          //setCounter(counter)
-          for (let i = 0; i < counter; i++) {
-            return (
+          let arr = [];
+          for (let i = 1; i < counter; i++) {
+            arr.push(
               <>
                 <Grid container spacing={1} columns={12}>
                   <Grid item xs={4}>
-                    <TextField id="outlined-basic" label="First Name" variant="outlined" />
+                    <TextField id={`first-name-${i}`} label="First Name" variant="outlined" />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField id="outlined-basic" label="Last Name" variant="outlined" />
+                    <TextField id={`last-name-${i}`} label="Last Name" variant="outlined" />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField id="outlined-basic" label="Social Security Number" variant="outlined" />
+                    <TextField id={`ssn-${i}`} label="Social Security Number" variant="outlined" />
                   </Grid>
                 </Grid>
               </>
             )
           }
+          return arr
         })()}
 
         <Grid container spacing={1} columns={12}>
           <Grid item xs={4}>
-            <TextField id="outlined-basic" label="Email" variant="outlined" />
+            <TextField id="email" label="Email" variant="outlined" />
           </Grid>
           <Grid item xs={4}>
-            <TextField id="outlined-basic" label="Credit Card Number" variant="outlined" />
+            <TextField id="bank-name" label="Bank Name" variant="outlined" />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField id="credit-card" label="Credit Card Number" variant="outlined" />
           </Grid>
         </Grid>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleClose}>Confirm your order</Button>
+          <Button onClick={submitFlightForm}>Confirm your order</Button>
         </DialogActions>
       </Dialog>
     </>

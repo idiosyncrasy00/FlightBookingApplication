@@ -9,16 +9,6 @@ export const userInfoSlice = createSlice({
   },
   //initialState,
   reducers: {
-    // addTask: (state, action) => {
-    //   let newTasks = state.items2
-    //   newTasks.push(action.payload.task)
-    //   state.items2 = newTasks;
-    // },
-    // removeTask: (state, action) => {
-    //   let newTasks = state.items2;
-    //   newTasks.splice(action.payload.index, 1);
-    //   state.items2 = newTasks;
-    // }
     displayInfo: (state, action) => {
       state.user = action.payload;
     },

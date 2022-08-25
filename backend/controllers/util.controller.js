@@ -2,7 +2,6 @@ const flightModel = require('../models/flight.model.js');
 var ObjectId = require('mongodb').ObjectId;
 
 function checkSSIDExists(arr, ssid) {
-  //return arr.indexOf(ssid);
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].social_security_id === ssid) {
       return true;
@@ -13,25 +12,20 @@ function checkSSIDExists(arr, ssid) {
 
 const flightBooking = async (req, res, next) => {
   try {
-    // let flightID = String(req.body._id);
-    // let update = flightModel.findOne({ _id: ObjectId("62e025e1b799624934490003") })
-    // flightModel.findOneAndUpdate(
-    //   { _id: req.body._id },
-    //   {
-    //     $inc: {
-    //       'num_of_booked': 1
-    //     }
-    //   }).exec()
-    // const addedField = {
-    //   first_name: req.body.first_name,
-    //   last_name: req.body.last_name,
-    //   social_security_id: req.body.social_security_id,
-    // }
     const _list_of_passengers = req.body.list_of_passengers //type array
+    let list_of_passengers_arr = [];
+    try {
+      const res = await flightModel.findById({ _id: req.body._id })
+      console.log(res.list_of_passengers)
+      list_of_passengers_arr = res.list_of_passengers;
+    } catch (err) {
+      // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+      console.log(err.message)
+    }
     let check = false;
     //check if social_security_id exists?
     for (let i = 0; i < _list_of_passengers.length; i++) {
-      if (checkSSIDExists(_list_of_passengers, _list_of_passengers[i].social_security_id) === true) {
+      if (checkSSIDExists(list_of_passengers_arr, _list_of_passengers[i].social_security_id) === true) {
         check = true;
         break;
       }

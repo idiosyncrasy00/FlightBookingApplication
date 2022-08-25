@@ -1,11 +1,11 @@
 const Joi = require('joi');
 
 const paymentValidator = Joi.object({
-  amount: Joi.string().max(20).required(),
+  amount: Joi.number().required(),
   bankName: Joi.string().max(20).required(),
   creditCard_number: Joi.string().max(12).required(),
   flight_id: Joi.string().required(),
-  user_id: Joi.string().email().required(),
+  user_id: Joi.string().required(),
 })
 
 // const editSchema = Joi.object({

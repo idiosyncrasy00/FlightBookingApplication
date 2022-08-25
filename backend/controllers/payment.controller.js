@@ -3,7 +3,7 @@ const paymentModel = require('../models/payment.model.js');
 const validation = require('../validations/payment.validation');
 
 const addPayment = async (req, res, next) => {
-  const { error, value } = await validation.registerSchema.validate(req.body);
+  const { error, value } = await validation.paymentValidator.validate(req.body);
   if (error) {
     res.status(403).send({ error: error.message });
   } else {
