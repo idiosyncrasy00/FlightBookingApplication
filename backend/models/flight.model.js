@@ -5,7 +5,11 @@ const flightSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  destination: {
+  from: {
+    required: true,
+    type: String,
+  },
+  to: {
     required: true,
     type: String,
   },

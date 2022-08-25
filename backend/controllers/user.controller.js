@@ -8,7 +8,6 @@ const validation = require('../validations/user.validation');
 //register an user
 const userRegistration = async (req, res, next) => {
   //first check if user is exist?
-  //let user = User.findOne({ email: req.body.email })
   console.log(`The email is ${req.body.email}`);
   const { error, value } = await validation.registerSchema.validate(req.body);
   if (error) {

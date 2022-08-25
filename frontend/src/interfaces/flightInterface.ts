@@ -8,7 +8,8 @@ export interface FlightInterface {
   // title: string;
   // amount: number;
   brand: string;
-  destination: string;
+  from: string
+  to: string;
   departureTime: string;
   arrivalTime: string;
   departureDate: string;

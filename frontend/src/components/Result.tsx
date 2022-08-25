@@ -147,7 +147,7 @@ const Result: React.FC<Props> = ({ item, booking }) => {
           <span style={{ "padding-left": '5px' }}>{item.arrivalTime}</span>
           <br />
           <span>
-            Ha Noi
+            {item.from}
           </span>
         </div>
         --
@@ -157,7 +157,7 @@ const Result: React.FC<Props> = ({ item, booking }) => {
           </span>
           <br />
           <span>
-            {item.destination}
+            {item.to}
           </span>
         </div>
         <div>
@@ -189,7 +189,7 @@ const Result: React.FC<Props> = ({ item, booking }) => {
             From {item.arrivalTime} {item.arrivalDate} To {item.departureTime} {item.departureDate}
           </DialogContentText>
           <DialogContentText>
-            Ha Noi - {item.destination}
+            {item.from} - {item.to}
           </DialogContentText>
           <DialogContentText>
             Total price: {item.price * (counter)}

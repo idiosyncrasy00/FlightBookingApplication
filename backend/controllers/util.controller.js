@@ -11,23 +11,31 @@ function checkSSIDExists(arr, ssid) {
 }
 
 const flightBooking = async (req, res, next) => {
+  const _list_of_passengers = req.body.list_of_passengers //type array
+  let list_of_passengers_arr = [];
+  let check = false;
+  let capacity = 0;
   try {
-    const _list_of_passengers = req.body.list_of_passengers //type array
-    let list_of_passengers_arr = [];
     try {
       const res = await flightModel.findById({ _id: req.body._id })
+      console.log(res)
       console.log(res.list_of_passengers)
       list_of_passengers_arr = res.list_of_passengers;
+      capacity = res.capacity
     } catch (err) {
-      // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
       console.log(err.message)
     }
-    let check = false;
-    //check if social_security_id exists?
-    for (let i = 0; i < _list_of_passengers.length; i++) {
-      if (checkSSIDExists(list_of_passengers_arr, _list_of_passengers[i].social_security_id) === true) {
-        check = true;
-        break;
+
+    //check if number of added people exceeds?
+    if (list_of_passengers_arr.length + req.body.length > capacity) {
+      check = true;
+    } else {
+      //check if social_security_id exists?
+      for (let i = 0; i < _list_of_passengers.length; i++) {
+        if (checkSSIDExists(list_of_passengers_arr, _list_of_passengers[i].social_security_id) === true) {
+          check = true;
+          break;
+        }
       }
     }
     if (check === false) {

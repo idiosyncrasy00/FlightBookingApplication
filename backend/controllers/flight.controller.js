@@ -3,7 +3,8 @@ const flightModel = require('../models/flight.model.js');
 const addFlight = async (req, res, next) => {
   const newFlight = new flightModel({
     brand: req.body.brand,
-    destination: req.body.destination,
+    from: req.body.from,
+    to: req.body.to,
     arrivalTime: req.body.arrivalTime,
     departureTime: req.body.departureTime,
     price: req.body.price,
@@ -20,22 +21,22 @@ const addFlight = async (req, res, next) => {
 }
 
 const updateFlight = async (req, res, next) => {
-  try {
-    const updatedFlight = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      username: req.body.username,
-      phoneNumber: req.body.phoneNumber,
-      email: req.body.email,
-    }
-    await flightModel.findOneAndUpdate(
-      { _id: req.body._id },
-      updatedFlight
-    ).exec()
-    res.status(200).send(updatedFlight);
-  } catch (error) {
-    console.log(error.message);
-  }
+  // try {
+  //   const updatedFlight = {
+  //     firstname: req.body.firstname,
+  //     lastname: req.body.lastname,
+  //     username: req.body.username,
+  //     phoneNumber: req.body.phoneNumber,
+  //     email: req.body.email,
+  //   }
+  //   await flightModel.findOneAndUpdate(
+  //     { _id: req.body._id },
+  //     updatedFlight
+  //   ).exec()
+  //   res.status(200).send(updatedFlight);
+  // } catch (error) {
+  //   console.log(error.message);
+  // }
 }
 
 //for testing
@@ -46,7 +47,8 @@ const deleteFlight = async (req, res, next) => {
 const queryFlight = async (req, res, next) => {
   const query = {
     brand: (req.body.brand) ? req.body.brand : /.*/,
-    destination: req.body.destination ? req.body.destination : /.*/,
+    from: req.body.from ? req.body.from : /.*/,
+    to: req.body.to ? req.body.to : /.*/,
     arrivalTime: req.body.arrivalTime ? req.body.arrivalTime : /.*/,
     departureTime: req.body.departureTime ? req.body.departureTime : /.*/,
     arrivalDate: req.body.arrivalDate ? req.body.arrivalDate : /.*/,
@@ -67,7 +69,8 @@ const queryFlight = async (req, res, next) => {
         formattedResults.push({
           id: arr[i][1]._id,
           brand: arr[i][1].brand,
-          destination: arr[i][1].destination,
+          from: arr[i][1].from,
+          to: arr[i][1].to,
           arrivalTime: arr[i][1].arrivalTime,
           departureTime: arr[i][1].departureTime,
           arrivalDate: arr[i][1].arrivalDate,

@@ -69,7 +69,8 @@ function SecretPage() {
 
   const [searchForm, setSearchForm] = useState({
     brand: '',
-    destination: '',
+    from: '',
+    to: '',
     arrivalDate: '',
     departureDate: ''
   })
@@ -100,8 +101,12 @@ function SecretPage() {
             onChange={e => setSearchForm({ ...searchForm, brand: e.target.value })}
           />
           <TextField
-            id="standard-basic" label="Destination" variant="standard"
-            onChange={e => setSearchForm({ ...searchForm, destination: e.target.value })}
+            id="standard-basic" label="From" variant="standard"
+            onChange={e => setSearchForm({ ...searchForm, from: e.target.value })}
+          />
+          <TextField
+            id="standard-basic" label="To" variant="standard"
+            onChange={e => setSearchForm({ ...searchForm, to: e.target.value })}
           />
           <TextField
             id="standard-basic" label="Arrival Date" variant="standard"
