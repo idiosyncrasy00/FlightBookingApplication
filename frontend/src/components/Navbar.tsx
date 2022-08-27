@@ -3,7 +3,6 @@ import { AppBar, Toolbar, IconButton, Typography, Button, Stack } from '@mui/mat
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile'
 import getCookie from '../utils/getCookie'
-//import { displayUsername, removeUsername } from '../redux/userInfoSlice'
 import { displayInfo } from '../redux/userInfoSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -35,7 +34,7 @@ const Navbar = () => {
             fasdfasd
           </IconButton>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            HanoiBay
+            VietnamBay
           </Typography>
           {username === undefined ? (
             <Stack direction="row" spacing={2}>

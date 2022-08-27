@@ -17,8 +17,9 @@ const styles = {
     backgroundImage: `url(${paperImg})`,
     backgroundRepeat: `no-repeat`,
     backgroundSize: `100% 100%`,
-    width: `99vw`,
-    height: `70vh`,
+    width: `100vw`,
+    // height: `70vh`,
+    minHeight: `100vh`,
     display: `flex`,
     alignItems: `center`
   },

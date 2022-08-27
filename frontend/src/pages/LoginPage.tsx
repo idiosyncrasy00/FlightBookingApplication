@@ -1,28 +1,25 @@
-import React from 'react'
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+//import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { displayInfo } from '../redux/userInfoSlice'
 
+const theme = createTheme();
 
-//import library  
-import { TextField, Button, Typography } from '@mui/material';
-
-
-const styles = {
-  containerSection: {
-    display: `grid`,
-    alignItems: `center`,
-    justifyContent: `center`,
-    margin: `5% 0 0 0`,
-    padding: `0 1%`,
-  },
-};
-
-const LoginPage = () => {
+export default function LoginPage() {
   const [loginForm, setLoginForm] = useState({
     username: '',
     password: '',
@@ -44,7 +41,6 @@ const LoginPage = () => {
         }
       });
       console.log(res.data)
-      //dispatch(() => dispatch(displayUsername(res.data.details.username)))
       dispatch(() => dispatch(displayInfo({
         _id: res.data.details._id,
         username: res.data.details.username,
@@ -53,38 +49,83 @@ const LoginPage = () => {
       })))
       navigate("/")
     } catch (err) {
-      // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
       console.log(err.message)
     }
   };
-  return (
-    <div style={styles.containerSection}>
-      <Typography variant="h5">Signin form</Typography>
-      <TextField
-        label="username"
-        name="username"
-        placeholder="username"
-        value={loginForm.username}
-        onChange={e => setLoginForm({ ...loginForm, username: e.target.value })}
-        variant="standard"
-      />
-      <br></br>
-      <TextField
-        label="password"
-        name="password"
-        type="password"
-        placeholder="password"
-        value={loginForm.password}
-        onChange={e => setLoginForm({ ...loginForm, password: e.target.value })}
-        variant="standard"
-      />
-      <br></br>
-      <Button onClick={handleClick} color="inherit" variant="outlined" size="small">
-        Submit task
-      </Button>
-      {/* {error && <span>{error.message}</span>} */}
-    </div>
-  )
-}
 
-export default LoginPage
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar> */}
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              onChange={e => setLoginForm({ ...loginForm, username: e.target.value })}
+              value={loginForm.username}
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={e => setLoginForm({ ...loginForm, password: e.target.value })}
+              value={loginForm.password}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+
+              onClick={handleClick}
+              color="primary"
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
+}

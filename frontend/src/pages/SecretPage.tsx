@@ -3,22 +3,14 @@ import paperImg from '../assets/254367.webp'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-//mui import
-import Paper from '@mui/material/Paper';
-//import Button from '@mui/material/Button'
-import Box from '@mui/material/Box';
-//import Typography from '@mui/material/Typography';
-import Result from '../components/Result'
-
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-// import TextField from '@mui/material/TextField';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+//mui import
+import Paper from '@mui/material/Paper';
+import Result from '../components/Result'
 import { TextField, Button, Typography } from '@mui/material';
 import flightInterface from '../interfaces/flightInterface'
 
@@ -68,11 +60,11 @@ function SecretPage() {
   const navigate = useNavigate()
 
   const [searchForm, setSearchForm] = useState({
-    brand: '',
-    from: '',
-    to: '',
-    arrivalDate: '',
-    departureDate: ''
+    brand: '' as string,
+    from: '' as string,
+    to: '' as string,
+    arrivalDate: '' as string,
+    departureDate: '' as string,
   })
 
   const [results, setResults] = useState([] as flightInterface)
@@ -93,13 +85,25 @@ function SecretPage() {
 
   return (
     <div>
-      {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
       <Paper style={styles.paperContainer}>
         <div style={styles.formStyling}>
-          <TextField
-            id="standard-basic" label="Brand" variant="standard"
-            onChange={e => setSearchForm({ ...searchForm, brand: e.target.value })}
-          />
+          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+            <InputLabel id="demo-select-small">Flight Brand</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              label="Flight Brand"
+              //onChange={handleChange}
+              onChange={e => setSearchForm({ ...searchForm, brand: e.target.value })}
+            >
+              {/* <MenuItem value="">
+                <em>None</em>
+              </MenuItem> */}
+              <MenuItem value={"Vietnam Airlines"}>Vietnam Airlines</MenuItem>
+              <MenuItem value={"VietJet Air"}>VietJet Air</MenuItem>
+              <MenuItem value={"Bamboo Airways"}>Bamboo Airways</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             id="standard-basic" label="From" variant="standard"
             onChange={e => setSearchForm({ ...searchForm, from: e.target.value })}

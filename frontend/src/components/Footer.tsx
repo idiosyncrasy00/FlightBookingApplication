@@ -13,7 +13,7 @@ const styles = {
     alignItems: `center`,
     justifyContent: `center`,
     gap: `80%`,
-    backgroundColor: `blue`,
+    backgroundColor: `lightblue`,
   },
   leftSection: {
 
@@ -38,19 +38,11 @@ function Copyright() {
 
 const Footer = () => {
   return (
-    // <div style={styles.containerSection}>
-    //   <div style={styles.leftSection}>
-    //     abcd
-    //   </div>
-    //   <div style={styles.rightSection}>
-    //     xyzd
-    //   </div>
-    // </div>
     <Box
       sx={{
-        display: 'flex',
+        textAlign: 'center',
         flexDirection: 'column',
-        minHeight: '50vh',
+        height: '10vh',
       }}
     >
       <CssBaseline />
@@ -59,7 +51,7 @@ const Footer = () => {
         sx={{
           py: 3,
           px: 2,
-          mt: 'auto',
+          //mt: 'auto',
           backgroundColor: (theme) =>
             theme.palette.mode === 'light'
               ? theme.palette.grey[200]
@@ -77,7 +69,7 @@ const Footer = () => {
           <Copyright />
         </Container>
       </Box>
-    </Box>
+    </Box >
   )
 }
 
