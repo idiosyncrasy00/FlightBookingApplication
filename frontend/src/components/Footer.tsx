@@ -13,7 +13,7 @@ const styles = {
     alignItems: `center`,
     justifyContent: `center`,
     gap: `80%`,
-    backgroundColor: `lightblue`,
+    backgroundColor: `rgb(25, 118, 210)`,
   },
   leftSection: {
 
@@ -43,6 +43,7 @@ const Footer = () => {
         textAlign: 'center',
         flexDirection: 'column',
         height: '10vh',
+        marginTop: '15vh',
       }}
     >
       <CssBaseline />
@@ -51,11 +52,6 @@ const Footer = () => {
         sx={{
           py: 3,
           px: 2,
-          //mt: 'auto',
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[200]
-              : theme.palette.grey[800],
         }}
         style={styles.containerSection}
       >

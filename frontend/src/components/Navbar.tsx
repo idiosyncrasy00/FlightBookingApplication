@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { AppBar, Toolbar, IconButton, Typography, Button, Stack } from '@mui/material'
+import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile'
 import getCookie from '../utils/getCookie'

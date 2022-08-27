@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import Result from '../components/Result'
 import { TextField, Button, Typography } from '@mui/material';
 import flightInterface from '../interfaces/flightInterface'
+import { airportList } from '../utils/airportList'
 
 const styles = {
   paperContainer: {
@@ -96,22 +97,45 @@ function SecretPage() {
               //onChange={handleChange}
               onChange={e => setSearchForm({ ...searchForm, brand: e.target.value })}
             >
-              {/* <MenuItem value="">
-                <em>None</em>
-              </MenuItem> */}
               <MenuItem value={"Vietnam Airlines"}>Vietnam Airlines</MenuItem>
               <MenuItem value={"VietJet Air"}>VietJet Air</MenuItem>
               <MenuItem value={"Bamboo Airways"}>Bamboo Airways</MenuItem>
             </Select>
           </FormControl>
-          <TextField
-            id="standard-basic" label="From" variant="standard"
-            onChange={e => setSearchForm({ ...searchForm, from: e.target.value })}
-          />
-          <TextField
-            id="standard-basic" label="To" variant="standard"
-            onChange={e => setSearchForm({ ...searchForm, to: e.target.value })}
-          />
+          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+            <InputLabel id="demo-select-small">From</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              label="From"
+              onChange={e => setSearchForm({ ...searchForm, from: e.target.value })}
+            >
+              {
+                airportList.map(airport => {
+                  return (
+                    <MenuItem value={airport}>{airport}</MenuItem>
+                  )
+                })
+              }
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+            <InputLabel id="demo-select-small">To</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              label="To"
+              onChange={e => setSearchForm({ ...searchForm, to: e.target.value })}
+            >
+              {
+                airportList.map(airport => {
+                  return (
+                    <MenuItem value={airport}>{airport}</MenuItem>
+                  )
+                })
+              }
+            </Select>
+          </FormControl>
           <TextField
             id="standard-basic" label="Arrival Date" variant="standard"
             onChange={e => setSearchForm({ ...searchForm, arrivalDate: e.target.value })}
