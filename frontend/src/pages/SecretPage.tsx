@@ -15,6 +15,12 @@ import { TextField, Button, Typography } from '@mui/material';
 import flightInterface from '../interfaces/flightInterface'
 import { airportList } from '../utils/airportList'
 
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { Calendar } from 'react-date-range-ts';
+
+
 const styles = {
   paperContainer: {
     backgroundImage: `url(${paperImg})`,
@@ -72,9 +78,21 @@ function SecretPage() {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(searchForm)
-    //axios.post('http://localhost:8000/api/flights/query', searchForm)
-    const res = await axios.post("http://localhost:8000/api/flights/query", searchForm, {
+    let getDate = document.getElementById('arrivalDate')?.value || null;
+    console.log(getDate);
+    let formatDate = null;
+    if (getDate !== null) {
+      formatDate = getDate.replaceAll('/', '-')
+    }
+    let submittedForm = {
+      brand: searchForm.brand,
+      from: searchForm.from,
+      to: searchForm.to,
+      arrivalDate: formatDate,
+      departureDate: '',
+    }
+    console.log(submittedForm)
+    const res = await axios.post("http://localhost:8000/api/flights/query", submittedForm, {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json'
@@ -84,8 +102,18 @@ function SecretPage() {
     console.log(res.data)
   };
 
+  const [value, setValue] = useState<Date | null>(
+    new Date().toJSON().slice(0, 10)
+  );
+
+  const handleChange = (newValue: Date | null) => {
+    //let formatDate = newValue.toJSON().slice(0, 10).replace('/', '-')
+    //setValue(newValue);
+    setValue(newValue);
+  };
+
   return (
-    <div>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Paper style={styles.paperContainer}>
         <div style={styles.formStyling}>
           <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
@@ -136,9 +164,22 @@ function SecretPage() {
               }
             </Select>
           </FormControl>
-          <TextField
+          {/* <TextField
             id="standard-basic" label="Arrival Date" variant="standard"
             onChange={e => setSearchForm({ ...searchForm, arrivalDate: e.target.value })}
+          /> */}
+          <DesktopDatePicker
+            label="Departure Date"
+            inputFormat="dd/MM/yyyy"
+            value={value}
+            onChange={handleChange}
+            renderInput={
+              (params) =>
+                <TextField
+                  id="arrivalDate"
+                  {...params}
+                />
+            }
           />
           <TextField
             id="standard-basic" label="Departure Date" variant="standard"
@@ -152,17 +193,16 @@ function SecretPage() {
       </Paper>
       <Typography variant="h3" style={styles.centerText}>Search Results</Typography>
       {
-        results.map((result) => {
+        results.length > 0 ? results.map((result) => {
           return (
             <Result
               item={result}
               booking={() => { alert(JSON.stringify(result)) }}
             />
           )
-        })
+        }) : "LOL"
       }
-      {/* </LocalizationProvider> */}
-    </div >
+    </LocalizationProvider>
   )
 }
 
