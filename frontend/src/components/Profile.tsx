@@ -80,10 +80,14 @@ export default function Profile(props) {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={() => {
-          alert("LMAO")
           navigate("/me")
         }}>
           <Avatar /> {username}
+        </MenuItem>
+        <MenuItem onClick={() => {
+          navigate("/paymentHistory")
+        }}>
+          Your Payment History
         </MenuItem>
         <MenuItem onClick={() => {
           deleteAllCookies()

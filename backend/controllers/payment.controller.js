@@ -18,9 +18,11 @@ const addPayment = async (req, res, next) => {
 }
 
 const getPaymentsByUserId = async (req, res, next) => {
-  console.log(req.body.user_id)
+  let param = req.query.user_id
+  //console.log(req.body.user_id)
+  console.log(param)
   try {
-    const paymentHistory = await paymentModel.find({ user_id: req.body.user_id });
+    const paymentHistory = await paymentModel.find({ user_id: param });
     console.log(paymentHistory)
     res.status(200).send(paymentHistory);
   } catch (error) {
@@ -29,8 +31,11 @@ const getPaymentsByUserId = async (req, res, next) => {
 }
 
 const cancelPayment = async (req, res, next) => {
+  let param = req.query.payment_id
+  //console.log(req.body.user_id)
+  console.log(param)
   try {
-    const result = await paymentModel.deleteOne({ _id: req.body.payment_id })
+    const result = await paymentModel.deleteOne({ payment_id: param })
     //res.status(200).send(result);
     res.status(200).send("Delete success!");
     console.log(result)

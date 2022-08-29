@@ -4,7 +4,7 @@ import HomePage from '../pages/HomePage'
 import SecretPage from '../pages/SecretPage'
 import Profile from '../components/Profile'
 import ProfilePage from '../pages/ProfilePage'
-import ModalTest from '../components/ModalTest'
+import PaymentHistoryPage from '../pages/PaymentHistoryPage'
 
 const routes = [
   {
@@ -36,8 +36,8 @@ const routes = [
   // }
 
   {
-    path: 'modal',
-    component: <ModalTest />
+    path: '/paymentHistory',
+    component: <PaymentHistoryPage />
   }
 
 ];
