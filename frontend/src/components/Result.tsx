@@ -85,34 +85,9 @@ const Result: React.FC<Props> = ({ item, booking }) => {
   };
 
   const userId = useSelector((state) => state.userInfoReducer.user._id)
-  //const dispatch2 = useDispatch()
-
   // id: string
   const submitFlightForm = async () => {
     let formArr = [];
-    for (let i = 0; i < counter; i++) {
-      let firstName = (document.getElementById(`first-name-${i}`) as HTMLInputElement).value
-      let lastName = (document.getElementById(`last-name-${i}`) as HTMLInputElement).value
-      let ssn = (document.getElementById(`ssn-${i}`) as HTMLInputElement).value
-      //console.log(firstName, lastName, ssn);
-      formArr.push({
-        first_name: firstName,
-        last_name: lastName,
-        social_security_id: ssn
-      })
-    }
-    console.log("Successfully booked a flight with id ", chosenFlightID)
-    console.log(formArr)
-
-    let bookingParam = {
-      _id: chosenFlightID,
-      list_of_passengers: formArr
-    }
-
-    let bookingFlightApi = await axios.put('http://localhost:8000/api/utils/booked', bookingParam, headerConfig);
-
-    console.log(bookingFlightApi)
-
     //insert payment api here
     let bankName = (document.getElementById(`bank-name`) as HTMLInputElement).value
     let creditCardNumber = (document.getElementById(`credit-card`) as HTMLInputElement).value
@@ -128,7 +103,30 @@ const Result: React.FC<Props> = ({ item, booking }) => {
 
     let paymentApi = await axios.post('http://localhost:8000/api/payments/insert', paymentDetails, headerConfig)
     console.log(paymentApi)
-    //console.log(paymentDetails)
+    //insert booking api here
+    for (let i = 0; i < counter; i++) {
+      let firstName = (document.getElementById(`first-name-${i}`) as HTMLInputElement).value
+      let lastName = (document.getElementById(`last-name-${i}`) as HTMLInputElement).value
+      let ssn = (document.getElementById(`ssn-${i}`) as HTMLInputElement).value
+      //console.log(firstName, lastName, ssn);
+      formArr.push({
+        first_name: firstName,
+        last_name: lastName,
+        social_security_id: ssn,
+        payment_id: paymentApi.data._id,
+      })
+    }
+    console.log("Successfully booked a flight with id ", chosenFlightID)
+    console.log(formArr)
+
+    let bookingParam = {
+      _id: chosenFlightID,
+      list_of_passengers: formArr
+    }
+
+    let bookingFlightApi = await axios.put('http://localhost:8000/api/utils/booked', bookingParam, headerConfig);
+
+    console.log(bookingFlightApi)
   }
 
   return (

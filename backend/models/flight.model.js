@@ -46,6 +46,7 @@ const flightSchema = new mongoose.Schema({
    * first_name
    * last_name
    * social_security_id
+   * payment_id
    * }
    */
   list_of_passengers: {

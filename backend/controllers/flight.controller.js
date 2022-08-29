@@ -62,8 +62,6 @@ const queryFlight = async (req, res, next) => {
     if (arr.length === 0) {
       res.send({ message: "No results found!" })
     } else {
-      // console.log(arr)
-      // console.log(arr[0][1]._id);
       let formattedResults = []
       for (let i = 0; i < arr.length; i++) {
         formattedResults.push({

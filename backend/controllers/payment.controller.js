@@ -18,13 +18,26 @@ const addPayment = async (req, res, next) => {
 }
 
 const getPaymentsByUserId = async (req, res, next) => {
+  console.log(req.body.user_id)
   try {
-    const paymentHistory = await paymentModel.findById(req.body.user_id);
+    const paymentHistory = await paymentModel.find({ user_id: req.body.user_id });
+    console.log(paymentHistory)
     res.status(200).send(paymentHistory);
   } catch (error) {
     console.log(error.message);
   }
 }
 
-module.exports = { addPayment, getPaymentsByUserId };
+const cancelPayment = async (req, res, next) => {
+  try {
+    const result = await paymentModel.deleteOne({ _id: req.body.payment_id })
+    //res.status(200).send(result);
+    res.status(200).send("Delete success!");
+    console.log(result)
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+module.exports = { addPayment, getPaymentsByUserId, cancelPayment };
 
