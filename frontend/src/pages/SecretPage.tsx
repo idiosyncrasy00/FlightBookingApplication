@@ -197,7 +197,7 @@ function SecretPage() {
           return (
             <Result
               item={result}
-              booking={() => { alert(JSON.stringify(result)) }}
+              //booking={() => { alert(JSON.stringify(result)) }}
             />
           )
         }) : "LOL"

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { DataGrid, GridColDef, GridApi, GridCellValue } from '@mui/x-data-grid';
 
-
 import headerConfig from '../adapters/headerConfig'
 //import { displayInfo } from '../redux/userInfoSlice'
 import { useSelector, useDispatch } from 'react-redux'
