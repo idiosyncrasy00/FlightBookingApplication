@@ -66,6 +66,7 @@ const queryFlight = async (req, res, next) => {
       for (let i = 0; i < arr.length; i++) {
         formattedResults.push({
           id: arr[i][1]._id,
+          image: arr[i][1].image,
           brand: arr[i][1].brand,
           from: arr[i][1].from,
           to: arr[i][1].to,

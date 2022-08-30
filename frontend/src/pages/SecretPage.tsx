@@ -6,6 +6,7 @@ import axios from 'axios'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 //mui import
@@ -20,6 +21,16 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { Calendar } from 'react-date-range-ts';
 
+import { styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const BoxLayout = styled(Box)(({ theme }) => ({
+  display: `grid`,
+  alignItems: `center`,
+  justifyContent: `center`,
+  gap: `4% 3%`,
+  maxWidth: `100vw`,
+}));
 
 const styles = {
   paperContainer: {
@@ -192,16 +203,19 @@ function SecretPage() {
         </Button>
       </Paper>
       <Typography variant="h3" style={styles.centerText}>Search Results</Typography>
-      {
-        results.length > 0 ? results.map((result) => {
-          return (
-            <Result
-              item={result}
+      <BoxLayout>
+        {
+          results.length > 0 ? results.map((result) => {
+            return (
+
+              <Result
+                item={result}
               //booking={() => { alert(JSON.stringify(result)) }}
-            />
-          )
-        }) : "LOL"
-      }
+              />
+            )
+          }) : "LOL"
+        }
+      </BoxLayout>
     </LocalizationProvider>
   )
 }

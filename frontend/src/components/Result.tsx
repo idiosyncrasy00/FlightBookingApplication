@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { displayInfo } from '../redux/userInfoSlice'
 import axios from 'axios'
 import headerConfig from '../adapters/headerConfig'
+import Divider from "@mui/material/Divider";
 
 //modal import
 import Box from '@mui/material/Box';
@@ -20,25 +21,129 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import TextField from '@mui/material/TextField';
 import Draggable from 'react-draggable';
 
+
+import { styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useReactToPrint } from 'react-to-print'
+import Typography from '@mui/material/Typography';
+
+const BoxLayout = styled(Paper)(({ theme }) => ({
+  //width: `80vw`,
+  [theme.breakpoints.down('sm')]: {
+    display: `flex`,
+    flexDirection: `column`,
+    alignItems: `center`,
+    justifyContent: `center`,
+    textAlign: `center`,
+    gap: `1%`,
+    maxHeight: `60vh`,
+    width: `90vw`
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    // display: `flex`,
+    // alignItems: `center`,
+    // justifyContent: `center`,
+    // gap: `3% 3%`,
+    // height: `20vh`,
+    display: `flex`,
+    //flexWrap: `nowrap`,
+    alignItems: `center`,
+    justifyContent: `center`,
+    gap: `0 3%`,
+    height: `20vh`,
+    width: '100vw',
+  },
+  [theme.breakpoints.up('lg')]: {
+    display: `flex`,
+    // flexWrap: `nowrap`,
+    alignItems: `center`,
+    justifyContent: `center`,
+    gap: `0 3%`,
+    height: `20vh`,
+    width: '80vw',
+  },
+  border: '1px solid rgba(0, 0, 0, .125)',
+}));
+
+const BoxChild1 = styled('div')(({ theme }) => ({
+  padding: theme.spacing(1),
+  [theme.breakpoints.down('sm')]: {
+
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: `10%`,
+    textAlign: `center`,
+  },
+  [theme.breakpoints.up('lg')]: {
+    width: `10%`,
+    textAlign: `center`,
+  },
+}));
+
+const BoxChild2 = styled('div')(({ theme }) => ({
+  padding: theme.spacing(1),
+  [theme.breakpoints.down('sm')]: {
+
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: `10%`,
+    // marginLeft: `15px`,
+    textAlign: `center`,
+  },
+  [theme.breakpoints.up('lg')]: {
+    width: `10%`,
+    // marginLeft: `15px`,
+    textAlign: `center`,
+  },
+}));
+
+const BoxChild3 = styled('div')(({ theme }) => ({
+  padding: theme.spacing(1),
+  [theme.breakpoints.down('sm')]: {
+
+  },
+  [theme.breakpoints.up('sm')]: {
+
+  },
+  [theme.breakpoints.up('lg')]: {
+    width: `50%`,
+    textAlign: `center`,
+  },
+}));
+
+const BoxChild4 = styled('div')(({ theme }) => ({
+  padding: theme.spacing(1),
+  [theme.breakpoints.down('sm')]: {
+
+  },
+  [theme.breakpoints.up('sm')]: {
+
+  },
+  [theme.breakpoints.up('lg')]: {
+    display: `flex`,
+    flexWrap: 'no-wrap',
+    width: `40%`,
+    // gap: `5% 5%`,
+    textAlign: `center`,
+  },
+}));
+
+const BoxChild5 = styled('div')(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+
+  },
+  [theme.breakpoints.up('sm')]: {
+
+  },
+  [theme.breakpoints.up('lg')]: {
+
+  },
+}));
 
 type Props = {
   item: FlightInterface;
   booking: () => void;
 }
-
-const styles = {
-  centerText: {
-    textAlign: `center`,
-  },
-  searchResult: {
-    display: `flex`,
-    alignItems: `center`,
-    justifyContent: `center`,
-    gap: `3% 3%`,
-    height: `20vh`
-  },
-};
 
 function PaperComponent(props: PaperProps) {
   return (
@@ -228,42 +333,45 @@ const Result: React.FC<Props> = ({ item, booking }) => {
 
   return (
     <>
-      <Box
-        style={styles.searchResult}
-        sx={{ boxShadow: 3 }}
-      >
-        <div>
-          Img
-        </div>
-        <div>
-          {item.brand}
-        </div>
-        <div>
-          <span style={{ "padding-left": '5px' }}>{item.arrivalTime}</span>
-          <br />
-          <span>
-            {item.from}
-          </span>
-        </div>
-        --
-        <div>
-          <span style={{ "padding-left": '5px' }}>
-            {item.departureTime}
-          </span>
-          <br />
-          <span>
-            {item.to}
-          </span>
-        </div>
-        <div>
+      <BoxLayout>
+        <BoxChild1>
+          {/* { "background-color": "green" } */}
+          <img src={item.image} width="50" height="50"></img>
+        </BoxChild1>
+        <BoxChild2>
+          <Typography sx={{ fontWeight: 'bold' }}>{item.brand}</Typography>
+        </BoxChild2>
+        <BoxChild4>
+          <BoxChild3>
+            <span style={{ "font-weight": "bold" }}>{item.arrivalTime}</span>
+            <br />
+            <span>
+              {item.from}
+            </span>
+          </BoxChild3>
+          <Divider style={{ backgroundColor: "gray", width: '1%' }} />
+          <BoxChild3>
+            <div>
+              <span style={{ "font-weight": "bold" }}>
+                {item.departureTime}
+              </span>
+              <br />
+              <span>
+                {item.to}
+              </span>
+            </div>
+          </BoxChild3>
+        </BoxChild4>
+        <div style={{ "font-weight": "bold" }}>
           {item.price} VND
         </div>
-        <div>
+        <BoxChild5>
           <Button
             onClick={() => handleClickOpen(item.id)}
           >Book</Button>
-        </div>
-      </Box>
+        </BoxChild5>
+        {/* </Box> */}
+      </BoxLayout>
       <Modal
         ref={pdfRef}
         open={open}
