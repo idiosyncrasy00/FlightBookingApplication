@@ -78,29 +78,29 @@ function SecretPage() {
   const navigate = useNavigate()
 
   const [searchForm, setSearchForm] = useState({
-    brand: '' as string,
+    //brand: '' as string,
     from: '' as string,
     to: '' as string,
-    arrivalDate: '' as string,
-    departureDate: '' as string,
+    //arrivalDate: '' as string,
+    //departureDate: '' as string,
   })
 
   const [results, setResults] = useState([] as flightInterface)
 
   const handleClick = async (e) => {
     e.preventDefault();
-    let getDate = document.getElementById('arrivalDate')?.value || null;
+    let getDate = document.getElementById('departureDate')?.value || null;
     console.log(getDate);
     let formatDate = null;
     if (getDate !== null) {
       formatDate = getDate.replaceAll('/', '-')
     }
     let submittedForm = {
-      brand: searchForm.brand,
+      //brand: searchForm.brand,
       from: searchForm.from,
       to: searchForm.to,
-      arrivalDate: formatDate,
-      departureDate: '',
+      departureDate: formatDate,
+      //departureDate: '',
     }
     console.log(submittedForm)
     const res = await axios.post("http://localhost:8000/api/flights/query", submittedForm, {
@@ -118,8 +118,6 @@ function SecretPage() {
   );
 
   const handleChange = (newValue: Date | null) => {
-    //let formatDate = newValue.toJSON().slice(0, 10).replace('/', '-')
-    //setValue(newValue);
     setValue(newValue);
   };
 
@@ -127,20 +125,6 @@ function SecretPage() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Paper style={styles.paperContainer}>
         <div style={styles.formStyling}>
-          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-            <InputLabel id="demo-select-small">Flight Brand</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              label="Flight Brand"
-              //onChange={handleChange}
-              onChange={e => setSearchForm({ ...searchForm, brand: e.target.value })}
-            >
-              <MenuItem value={"Vietnam Airlines"}>Vietnam Airlines</MenuItem>
-              <MenuItem value={"VietJet Air"}>VietJet Air</MenuItem>
-              <MenuItem value={"Bamboo Airways"}>Bamboo Airways</MenuItem>
-            </Select>
-          </FormControl>
           <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
             <InputLabel id="demo-select-small">From</InputLabel>
             <Select
@@ -187,14 +171,10 @@ function SecretPage() {
             renderInput={
               (params) =>
                 <TextField
-                  id="arrivalDate"
+                  id="departureDate"
                   {...params}
                 />
             }
-          />
-          <TextField
-            id="standard-basic" label="Departure Date" variant="standard"
-            onChange={e => setSearchForm({ ...searchForm, departureDate: e.target.value })}
           />
         </div>
         <br></br>

@@ -5,7 +5,7 @@ const addFlight = async (req, res, next) => {
     brand: req.body.brand,
     from: req.body.from,
     to: req.body.to,
-    arrivalTime: req.body.arrivalTime,
+    //arrivalTime: req.body.arrivalTime,
     departureTime: req.body.departureTime,
     price: req.body.price,
     //to check the number of booked flights
@@ -46,12 +46,12 @@ const deleteFlight = async (req, res, next) => {
 
 const queryFlight = async (req, res, next) => {
   const query = {
-    brand: (req.body.brand) ? req.body.brand : /.*/,
+    //brand: (req.body.brand) ? req.body.brand : /.*/,
     from: req.body.from ? req.body.from : /.*/,
     to: req.body.to ? req.body.to : /.*/,
     arrivalTime: req.body.arrivalTime ? req.body.arrivalTime : /.*/,
     departureTime: req.body.departureTime ? req.body.departureTime : /.*/,
-    arrivalDate: req.body.arrivalDate ? req.body.arrivalDate : /.*/,
+    //arrivalDate: req.body.arrivalDate ? req.body.arrivalDate : /.*/,
     departureDate: req.body.departureDate ? req.body.departureDate : /.*/,
     // price: req.body.price ? req.body.price : { $gt: 0 },
     // capacity: req.body.capacity ? req.body.capacity : { $gt: 0 },
@@ -72,13 +72,11 @@ const queryFlight = async (req, res, next) => {
           to: arr[i][1].to,
           arrivalTime: arr[i][1].arrivalTime,
           departureTime: arr[i][1].departureTime,
-          arrivalDate: arr[i][1].arrivalDate,
           departureDate: arr[i][1].departureDate,
           price: arr[i][1].price,
           capacity: arr[i][1].capacity,
         })
       }
-      //res.send(arr);
       res.send(formattedResults);
     }
   } catch (err) {

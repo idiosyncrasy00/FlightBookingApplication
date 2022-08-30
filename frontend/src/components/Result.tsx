@@ -190,7 +190,8 @@ const Modal = React.forwardRef((props, ref) => {
         <DialogContent>
           {props.price} VND
           <DialogContentText>
-            From {props.arrivalTime} {props.arrivalDate} To {props.departureTime} {props.departureDate}
+            Date: {props.departureDate}.
+            From {props.arrivalTime} To {props.departureTime}
           </DialogContentText>
           <DialogContentText>
             {props.from} - {props.to}
@@ -381,7 +382,7 @@ const Result: React.FC<Props> = ({ item, booking }) => {
         handleIncrement={handleIncrement}
         price={item.price}
         arrivalTime={item.arrivalTime}
-        arrivalDate={item.arrivalDate}
+        // arrivalDate={item.arrivalDate}
         departureTime={item.departureTime}
         departureDate={item.departureDate}
         from={item.from}
