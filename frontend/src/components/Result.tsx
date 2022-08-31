@@ -2,13 +2,13 @@ import React, { useRef } from 'react'
 import { FlightInterface } from '../interfaces/flightInterface'
 import { useState, useEffect, useReducer } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { displayInfo } from '../redux/userInfoSlice'
+//import { displayInfo } from '../redux/userInfoSlice'
 import axios from 'axios'
 import headerConfig from '../adapters/headerConfig'
 import Divider from "@mui/material/Divider";
 
 //modal import
-import Box from '@mui/material/Box';
+//import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog';
@@ -23,39 +23,24 @@ import Draggable from 'react-draggable';
 
 
 import { styled } from '@mui/material/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useReactToPrint } from 'react-to-print'
 import Typography from '@mui/material/Typography';
 
 const BoxLayout = styled(Paper)(({ theme }) => ({
-  //width: `80vw`,
-  [theme.breakpoints.down('sm')]: {
+  margin: `2%`,
+  [theme.breakpoints.up('xs')]: {
     display: `flex`,
     flexDirection: `column`,
     alignItems: `center`,
     justifyContent: `center`,
     textAlign: `center`,
-    gap: `1%`,
+    // gap: `1%`,
     maxHeight: `60vh`,
     width: `90vw`
   },
-  [theme.breakpoints.between('sm', 'lg')]: {
-    // display: `flex`,
-    // alignItems: `center`,
-    // justifyContent: `center`,
-    // gap: `3% 3%`,
-    // height: `20vh`,
-    display: `flex`,
-    //flexWrap: `nowrap`,
-    alignItems: `center`,
-    justifyContent: `center`,
-    gap: `0 3%`,
-    height: `20vh`,
-    width: '100vw',
-  },
   [theme.breakpoints.up('lg')]: {
     display: `flex`,
-    // flexWrap: `nowrap`,
+    flexDirection: `row`,
     alignItems: `center`,
     justifyContent: `center`,
     gap: `0 3%`,
@@ -87,12 +72,10 @@ const BoxChild2 = styled('div')(({ theme }) => ({
   },
   [theme.breakpoints.up('sm')]: {
     width: `10%`,
-    // marginLeft: `15px`,
     textAlign: `center`,
   },
   [theme.breakpoints.up('lg')]: {
     width: `10%`,
-    // marginLeft: `15px`,
     textAlign: `center`,
   },
 }));

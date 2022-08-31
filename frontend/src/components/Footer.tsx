@@ -6,6 +6,21 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 
+import { styled } from '@mui/material/styles';
+
+const DivLayout = styled('div')(({ theme }) => ({
+  //width: `80vw`,
+  [theme.breakpoints.up('xs')]: {
+    // marginTop: `40%`,
+    textAlign: 'center',
+    flexDirection: 'column',
+    height: '10vh',
+  },
+  [theme.breakpoints.up('lg')]: {
+    // marginTop: `10%`,
+  },
+}));
+
 const styles = {
   containerSection: {
     display: `flex`,
@@ -38,15 +53,8 @@ function Copyright() {
 
 const Footer = () => {
   return (
-    <Box
-      sx={{
-        textAlign: 'center',
-        flexDirection: 'column',
-        height: '10vh',
-        marginTop: '15vh',
-      }}
-    >
-      <CssBaseline />
+    <DivLayout>
+      {/* <CssBaseline /> */}
       <Box
         component="footer"
         sx={{
@@ -65,7 +73,7 @@ const Footer = () => {
           <Copyright />
         </Container>
       </Box>
-    </Box >
+    </DivLayout>
   )
 }
 

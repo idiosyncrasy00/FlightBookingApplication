@@ -28,33 +28,31 @@ const Navbar = () => {
     }
   }, [auth]);
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton onClick={() => { navigate("/") }}>
-            fasdfasd
-          </IconButton>
-          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            VietnamBay
-          </Typography>
-          {username === undefined ? (
-            <Stack direction="row" spacing={2}>
-              <Button onClick={() => { navigate("/login") }} color="inherit">
-                Login
-              </Button>
-              <Button onClick={() => { navigate("/register") }} color="inherit">
-                Sign up
-              </Button>
-            </Stack>
-          ) : (
-            <Profile
-              username={username}
-            />
-          )
-          }
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton onClick={() => { navigate("/") }}>
+          fasdfasd
+        </IconButton>
+        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+          VietnamBay
+        </Typography>
+        {username === undefined ? (
+          <Stack direction="row" spacing={2}>
+            <Button onClick={() => { navigate("/login") }} color="inherit">
+              Login
+            </Button>
+            <Button onClick={() => { navigate("/register") }} color="inherit">
+              Sign up
+            </Button>
+          </Stack>
+        ) : (
+          <Profile
+            username={username}
+          />
+        )
+        }
+      </Toolbar>
+    </AppBar>
   )
 }
 

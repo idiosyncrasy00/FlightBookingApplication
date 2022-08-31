@@ -2,87 +2,110 @@ import { useState } from 'react'
 import paperImg from '../assets/254367.webp'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Box from '@mui/material/Box';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 //mui import
-import Paper from '@mui/material/Paper';
 import Result from '../components/Result'
 import { TextField, Button, Typography } from '@mui/material';
 import flightInterface from '../interfaces/flightInterface'
 import { airportList } from '../utils/airportList'
-
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { Calendar } from 'react-date-range-ts';
+import Card from '@mui/material/Card';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box';
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import { styled } from '@mui/material/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme();
+
+const Layout = styled(Box)(({ theme }) => ({
+  display: `flex`,
+  flexDirection: 'column',
+  alignItems: `center`,
+  justifyContent: `center`,
+  textAlign: 'center',
+}))
 
 const BoxLayout = styled(Box)(({ theme }) => ({
   display: `grid`,
   alignItems: `center`,
   justifyContent: `center`,
-  gap: `4% 3%`,
-  maxWidth: `100vw`,
+  textAlign: 'center',
+  maxWidth: `100%`,
+  [theme.breakpoints.up('xs')]: {
+    // minHeight: `200vh`,
+    maxHeight: `235vh`,
+  },
+  [theme.breakpoints.up('lg')]: {
+    maxHeight: `135vh`,
+  },
 }));
 
-const styles = {
-  paperContainer: {
-    backgroundImage: `url(${paperImg})`,
-    backgroundRepeat: `no-repeat`,
-    backgroundSize: `100% 100%`,
-    width: `99vw`,
-    height: `70vh`,
-    display: `flex`,
-    alignItems: `center`
-  },
-  textContent: {
-    color: `white`,
-    flex: `1`,
-    alignItems: `flex-start`,
-    fontSize: `25px`,
-    top: `50`
-  },
-  bodySection: {
-    display: `flex`,
-    flexDirection: `row`,
-    gap: `5% 5%`,
-    justifyContent: `center`,
-    alignItems: `center`,
-  },
-  centerText: {
-    textAlign: `center`,
-  },
-  searchResult: {
-    display: `flex`,
-    alignItems: `center`,
-    justifyContent: `center`,
-    gap: `3% 3%`,
-    height: `20vh`,
-    width: `90vw`,
-    margin: `2% 3% 2% 3%`,
-  },
+const SearchStyling = styled(Box)(({ theme }) => ({
+  backgroundImage: `url(${paperImg})`,
+  backgroundRepeat: `no-repeat`,
+  backgroundSize: `100% 100%`,
+  width: `100%`,
+  height: `60vh`,
+  display: `flex`,
+  flexDirection: `column`,
+  alignItems: `center`,
+}))
 
-  formStyling: {
-    display: `flex`
-  }
+const SearchForm = styled(Box)(({ theme }) => ({
+  display: `flex`,
+  justifyContent: `center`,
+  alignItems: `center`,
+  [theme.breakpoints.up('xs')]: {
+    flexDirection: `column`,
+  },
+  [theme.breakpoints.up('lg')]: {
+    // marginTop: `5%`,
+    flexDirection: `row`,
+  },
+}))
+
+const CardForm = styled(Card)(({ theme }) => ({
+  display: `flex`,
+  flexDirection: `column`,
+  justifyContent: `center`,
+  alignItems: `center`,
+  [theme.breakpoints.up('xs')]: {
+    height: `65%`,
+    marginTop: `3%`,
+  },
+  [theme.breakpoints.up('lg')]: {
+    height: `30%`,
+    marginTop: `3%`,
+    width: `80vw`,
+    // display: `none`,
+  },
+}))
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
 };
 
 function SecretPage() {
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
 
   const [searchForm, setSearchForm] = useState({
-    //brand: '' as string,
     from: '' as string,
     to: '' as string,
-    //arrivalDate: '' as string,
-    //departureDate: '' as string,
   })
 
   const [results, setResults] = useState([] as flightInterface)
@@ -96,11 +119,9 @@ function SecretPage() {
       formatDate = getDate.replaceAll('/', '-')
     }
     let submittedForm = {
-      //brand: searchForm.brand,
       from: searchForm.from,
       to: searchForm.to,
       departureDate: formatDate,
-      //departureDate: '',
     }
     console.log(submittedForm)
     const res = await axios.post("http://localhost:8000/api/flights/query", submittedForm, {
@@ -122,81 +143,97 @@ function SecretPage() {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Paper style={styles.paperContainer}>
-        <div style={styles.formStyling}>
-          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-            <InputLabel id="demo-select-small">From</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              label="From"
-              onChange={e => setSearchForm({ ...searchForm, from: e.target.value })}
-            >
-              {
-                airportList.map(airport => {
-                  return (
-                    <MenuItem value={airport}>{airport}</MenuItem>
-                  )
-                })
-              }
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-            <InputLabel id="demo-select-small">To</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              label="To"
-              onChange={e => setSearchForm({ ...searchForm, to: e.target.value })}
-            >
-              {
-                airportList.map(airport => {
-                  return (
-                    <MenuItem value={airport}>{airport}</MenuItem>
-                  )
-                })
-              }
-            </Select>
-          </FormControl>
-          {/* <TextField
-            id="standard-basic" label="Arrival Date" variant="standard"
-            onChange={e => setSearchForm({ ...searchForm, arrivalDate: e.target.value })}
-          /> */}
-          <DesktopDatePicker
-            label="Departure Date"
-            inputFormat="dd/MM/yyyy"
-            value={value}
-            onChange={handleChange}
-            renderInput={
-              (params) =>
-                <TextField
-                  id="departureDate"
-                  {...params}
-                />
-            }
-          />
-        </div>
-        <br></br>
-        <Button onClick={handleClick} color="inherit" variant="outlined" size="small">
-          Submit task
-        </Button>
-      </Paper>
-      <Typography variant="h3" style={styles.centerText}>Search Results</Typography>
-      <BoxLayout>
-        {
-          results.length > 0 ? results.map((result) => {
-            return (
-
-              <Result
-                item={result}
-              //booking={() => { alert(JSON.stringify(result)) }}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        {/* <Paper style={styles.paperContainer}> */}
+        <Layout>
+          <SearchStyling />
+          <CardForm>
+            <Typography variant="h4">Searching Flights</Typography>
+            <SearchForm>
+              <FormControl sx={{ m: 2, minWidth: 250 }}>
+                <InputLabel id="demo-select-small">From</InputLabel>
+                <Select
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  label="From"
+                  onChange={e => setSearchForm({ ...searchForm, from: e.target.value })}
+                  MenuProps={MenuProps}
+                >
+                  {
+                    airportList.map(airport => {
+                      return (
+                        <MenuItem value={airport}>{airport}</MenuItem>
+                      )
+                    })
+                  }
+                </Select>
+              </FormControl>
+              <FormControl sx={{ m: 2, minWidth: 250 }}>
+                <InputLabel id="demo-select-small">To</InputLabel>
+                <Select
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  label="To"
+                  onChange={e => setSearchForm({ ...searchForm, to: e.target.value })}
+                  MenuProps={MenuProps}
+                >
+                  {
+                    airportList.map(airport => {
+                      return (
+                        // <MenuItem value={airport}>{airport}</MenuItem>
+                        <MenuItem
+                          // key={airport}
+                          value={airport}
+                        // style={getStyles(airport, personName, theme)}
+                        >
+                          {airport}
+                        </MenuItem>
+                      )
+                    })
+                  }
+                </Select>
+              </FormControl>
+              <DesktopDatePicker
+                label="Departure Date"
+                inputFormat="dd/MM/yyyy"
+                value={value}
+                onChange={handleChange}
+                renderInput={
+                  (params) =>
+                    <TextField
+                      id="departureDate"
+                      {...params}
+                    />
+                }
               />
-            )
-          }) : "LOL"
-        }
-      </BoxLayout>
-    </LocalizationProvider>
+            </SearchForm>
+            <Button onClick={handleClick}
+              fullWidth
+              variant="contained"
+              // sx={{ p: 1, minWidth: '100%' }}
+              sx={{ width: '55%', my: 2 }}
+            >
+              Search
+            </Button>
+          </CardForm>
+          <BoxLayout>
+            {
+              results.length > 0 ? results.map((result) => {
+                return (
+
+                  <Result
+                    item={result}
+                  //booking={() => { alert(JSON.stringify(result)) }}
+                  />
+                )
+              }) : ""
+            }
+          </BoxLayout>
+        </Layout>
+      </LocalizationProvider >
+    </ThemeProvider>
   )
 }
 
