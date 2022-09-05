@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import paperImg from '../assets/254367.webp'
 import { useNavigate } from 'react-router-dom'
+import PaginationUsage from '../components/PaginationUsage'
 import axios from 'axios'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
@@ -17,6 +18,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
+import Pagination from '@mui/material/Pagination';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -101,7 +103,10 @@ const MenuProps = {
 };
 
 function SecretPage() {
-  //const navigate = useNavigate()
+
+  useEffect(() => {
+    console.log(count)
+  })
 
   const [searchForm, setSearchForm] = useState({
     from: '' as string,
@@ -140,6 +145,12 @@ function SecretPage() {
 
   const handleChange = (newValue: Date | null) => {
     setValue(newValue);
+  };
+
+  const count = Math.ceil(results.length / 1);
+  const [page, setPage] = useState(1);
+  const handleChangePagination = (event, value) => {
+    setPage(PaginationUsage(results, value, 1).page);
   };
 
   return (
@@ -182,9 +193,7 @@ function SecretPage() {
                   {
                     airportList.map(airport => {
                       return (
-                        // <MenuItem value={airport}>{airport}</MenuItem>
                         <MenuItem
-                          // key={airport}
                           value={airport}
                         // style={getStyles(airport, personName, theme)}
                         >
@@ -220,16 +229,25 @@ function SecretPage() {
           </CardForm>
           <BoxLayout>
             {
-              results.length > 0 ? results.map((result) => {
+              results.length > 0 ? PaginationUsage(results, page, 4).data.map((result) => {
                 return (
-
-                  <Result
-                    item={result}
-                  //booking={() => { alert(JSON.stringify(result)) }}
-                  />
+                  <>
+                    <Result
+                      item={result}
+                    //booking={() => { alert(JSON.stringify(result)) }}
+                    />
+                  </>
                 )
               }) : ""
             }
+            <div style={{ display: "flex", justifyContent: "center", padding: "10px" }}>
+              <Pagination
+                count={PaginationUsage(results, page, 4).total_pages}
+                page={PaginationUsage(results, page, 4).page}
+                onChange={handleChangePagination}
+                color="primary"
+              />
+            </div>
           </BoxLayout>
         </Layout>
       </LocalizationProvider >

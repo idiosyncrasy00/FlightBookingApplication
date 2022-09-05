@@ -7,7 +7,7 @@ import axios from 'axios'
 import headerConfig from '../adapters/headerConfig'
 import Divider from "@mui/material/Divider";
 
-//modal import
+//mui import
 //import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button'
@@ -20,7 +20,7 @@ import Paper, { PaperProps } from '@mui/material/Paper';
 import ButtonGroup from '@mui/material/ButtonGroup'
 import TextField from '@mui/material/TextField';
 import Draggable from 'react-draggable';
-
+//import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 
 import { styled } from '@mui/material/styles';
 import { useReactToPrint } from 'react-to-print'
@@ -174,6 +174,7 @@ const Modal = React.forwardRef((props, ref) => {
           {props.price} VND
           <DialogContentText>
             Date: {props.departureDate}.
+            {/* <FlightTakeoffIcon /> */}
             From {props.arrivalTime} To {props.departureTime}
           </DialogContentText>
           <DialogContentText>
@@ -241,7 +242,7 @@ const Modal = React.forwardRef((props, ref) => {
   )
 })
 
-const Result: React.FC<Props> = ({ item, booking }) => {
+const Result: React.FC<Props> = ({ item }) => {
   const [open, setOpen] = useState(false);
   const handleClickOpen = (id: string) => {
     console.log(id)

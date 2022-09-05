@@ -7,6 +7,8 @@ import getCookie from '../utils/getCookie'
 import { displayInfo } from '../redux/userInfoSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
+//import FlightIcon from '@mui/icons-material/Flight';
+
 const Navbar = () => {
   const navigate = useNavigate()
   const username = useSelector((state) => state.userInfoReducer.user.username)
@@ -30,10 +32,15 @@ const Navbar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton onClick={() => { navigate("/") }}>
-          fasdfasd
-        </IconButton>
-        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+        {/* <IconButton onClick={() => { navigate("/") }}>
+          <FlightIcon />
+        </IconButton> */}
+        <Typography
+          variant='h6'
+          component='div'
+          sx={{ flexGrow: 1 }}
+          onClick={() => { navigate("/") }}
+        >
           VietnamBay
         </Typography>
         {username === undefined ? (

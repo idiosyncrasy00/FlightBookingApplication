@@ -19,23 +19,35 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import Box from '@mui/material/Box';
+
+const Layout = styled('div')(({ theme }) => ({
+  display: `flex`,
+  flexDirection: 'column',
+  alignItems: `center`,
+  justifyContent: `center`,
+  // textAlign: 'center',
+  gap: `25px`,
+}))
+
+const PaperContainer = styled(Box)(({ theme }) => ({
+  backgroundImage: `url(${paperImg})`,
+  backgroundRepeat: `no-repeat`,
+  backgroundSize: `100% 100%`,
+  width: `100vw`,
+  minHeight: `100vh`,
+  display: `flex`,
+  alignItems: `center`
+}))
 
 const styles = {
-  paperContainer: {
-    backgroundImage: `url(${paperImg})`,
-    backgroundRepeat: `no-repeat`,
-    backgroundSize: `100% 100%`,
-    width: `100vw`,
-    minHeight: `100vh`,
-    display: `flex`,
-    alignItems: `center`
-  },
   textContent: {
     color: `white`,
-    flex: `1`,
+    display: `flex`,
+    flexDirection: `column`,
     alignItems: `flex-start`,
     fontSize: `25px`,
-    top: `50`
+    padding: `0 0 0 10px`
   },
   bodySection1: {
     display: `flex`,
@@ -56,8 +68,9 @@ const styles = {
     justifyContent: `center`,
     alignItems: `center`,
   },
-  textCenter: {
+  headingStyle: {
     textAlign: "center",
+    padding: `0 0 25px 0`,
   }
 };
 
@@ -107,7 +120,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-const CardLayouts = styled(Paper)(({ theme }) => ({
+const CardLayouts = styled('div')(({ theme }) => ({
   padding: theme.spacing(2),
   [theme.breakpoints.up('xs')]: {
     //backgroundColor: theme.palette.secondary.main,
@@ -116,7 +129,7 @@ const CardLayouts = styled(Paper)(({ theme }) => ({
     justifyContent: `center`,
     alignItems: `center`,
   },
-  [theme.breakpoints.between('sm', 'md')]: {
+  [theme.breakpoints.between('sm', 'lg')]: {
     //backgroundColor: theme.palette.primary.main,
     display: `flex`,
     flexDirection: `row`,
@@ -133,6 +146,28 @@ const CardLayouts = styled(Paper)(({ theme }) => ({
     alignItems: `center`,
   },
   //borderTop: '1px solid rgba(0, 0, 0, .125)',
+}));
+
+const FAQLayout = styled('div')(({ theme }) => ({
+  display: `grid`,
+  alignItems: `center`,
+  justifyContent: `center`,
+  textAlign: 'center',
+  maxWidth: `100%`,
+  [theme.breakpoints.up('xs')]: {
+    // minHeight: `200vh`,
+    maxHeight: `240vh`,
+    margin: `10% 0 10% 0`,
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    maxHeight: `135vh`,
+    margin: `0% 0 10% 0`,
+  },
+  [theme.breakpoints.up('lg')]: {
+    maxHeight: `135vh`,
+    margin: `0% 0 10% 0`,
+    gap: `10%`
+  },
 }));
 
 const HomePage = () => {
@@ -153,114 +188,116 @@ const HomePage = () => {
       {
         auth === null ? (
           <>
-            <Paper style={styles.paperContainer}>
-              <div className="text-content" style={styles.textContent}>
-                <p>Book your flight now!</p>
-                <Button onClick={() => { navigate('/register') }}>Sign up now!</Button>
+            <Layout>
+              <PaperContainer>
+                <div className="text-content" style={styles.textContent}>
+                  <p>Book your flight now!</p>
+                  <Button onClick={() => { navigate('/register') }}>Sign up now!</Button>
+                </div>
+              </PaperContainer>
+              <div>
+                <Typography variant="h3" style={styles.headingStyle}>Reviews from our users</Typography>
+                <CardLayouts>
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image="../assets/person.png"
+                      alt="green iguana"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Hai
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        This app is great! I can get a flight ticket without spending times going to the airport!
+                      </Typography>
+                    </CardContent>
+                  </Card>
+
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image="../assets/person.png"
+                      alt="green iguana"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Hoang
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        This app is great! I can get a flight ticket without spending times going to the airport!
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image="../assets/person.png"
+                      alt="green iguana"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Dang
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        This app is great! I can get a flight ticket without spending times going to the airport!
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </CardLayouts>
               </div>
-            </Paper>
-
-            <Typography variant="h3" style={styles.textCenter}>Reviews</Typography>
-            <CardLayouts>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="../assets/person.png"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Hai
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    This app is great! I can get a flight ticket without spending times going to the airport!
-                  </Typography>
-                </CardContent>
-              </Card>
-
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="../assets/person.png"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Hoang
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    This app is great! I can get a flight ticket without spending times going to the airport!
-                  </Typography>
-                </CardContent>
-              </Card>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="../assets/person.png"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Dang
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    This app is great! I can get a flight ticket without spending times going to the airport!
-                  </Typography>
-                </CardContent>
-              </Card>
-            </CardLayouts>
-            <Typography variant="h3" style={styles.textCenter}>Frequenly Asked Questions</Typography>
-            <div style={styles.bodySection2}>
-              <Accordion
-                expanded={expanded === 'panel1'}
-                onChange={handleChange('panel1')}>
-                <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                  <Typography>Question 1</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                    malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                expanded={expanded === 'panel2'}
-                onChange={handleChange('panel2')}>
-                <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                  <Typography>Question 2</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                    malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                expanded={expanded === 'panel3'}
-                onChange={handleChange('panel3')}>
-                <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-                  <Typography>Question 3</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                    malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            </div>
-
+              <FAQLayout>
+                <Typography variant="h3" style={styles.headingStyle}>Frequenly Asked Questions</Typography>
+                <Accordion
+                  expanded={expanded === 'panel1'}
+                  onChange={handleChange('panel1')}>
+                  <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                    <Typography>Question 1</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                      malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                      sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                      sit amet blandit leo lobortis eget.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === 'panel2'}
+                  onChange={handleChange('panel2')}>
+                  <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+                    <Typography>Question 2</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                      malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                      sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                      sit amet blandit leo lobortis eget.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === 'panel3'}
+                  onChange={handleChange('panel3')}>
+                  <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+                    <Typography>Question 3</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                      malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                      sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                      sit amet blandit leo lobortis eget.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              </FAQLayout>
+            </Layout>
           </>
         ) : (<SecretPage />)
       }
