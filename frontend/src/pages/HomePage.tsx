@@ -21,58 +21,68 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Box from '@mui/material/Box';
 
-const Layout = styled('div')(({ theme }) => ({
-  display: `flex`,
-  flexDirection: 'column',
-  alignItems: `center`,
-  justifyContent: `center`,
-  // textAlign: 'center',
-  gap: `25px`,
-}))
+import {
+  Layout,
+  PaperContainer,
+  styles,
+  //Accordion,
+  //AccordionSummary,
+  CardLayouts,
+  FAQLayout
+} from './HomePage.styles'
 
-const PaperContainer = styled(Box)(({ theme }) => ({
-  backgroundImage: `url(${paperImg})`,
-  backgroundRepeat: `no-repeat`,
-  backgroundSize: `100% 100%`,
-  width: `100vw`,
-  minHeight: `100vh`,
-  display: `flex`,
-  alignItems: `center`
-}))
+// const Layout = styled('div')(({ theme }) => ({
+//   display: `flex`,
+//   flexDirection: 'column',
+//   alignItems: `center`,
+//   justifyContent: `center`,
+//   // textAlign: 'center',
+//   gap: `25px`,
+// }))
 
-const styles = {
-  textContent: {
-    color: `white`,
-    display: `flex`,
-    flexDirection: `column`,
-    alignItems: `flex-start`,
-    fontSize: `25px`,
-    padding: `0 0 0 10px`
-  },
-  bodySection1: {
-    display: `flex`,
-    flexDirection: `row`,
-    gap: `5% 5%`,
-    justifyContent: `center`,
-    alignItems: `center`,
-  },
-  bodySection2: {
-    display: `grid`,
-    flexDirection: `column`,
-    gap: `10%`,
-    justifyContent: `center`,
-    alignItems: `center`,
-  },
-  perfectCentering: {
-    display: `grid`,
-    justifyContent: `center`,
-    alignItems: `center`,
-  },
-  headingStyle: {
-    textAlign: "center",
-    padding: `0 0 25px 0`,
-  }
-};
+// const PaperContainer = styled(Box)(({ theme }) => ({
+//   backgroundImage: `url(${paperImg})`,
+//   backgroundRepeat: `no-repeat`,
+//   backgroundSize: `100% 100%`,
+//   width: `100vw`,
+//   minHeight: `100vh`,
+//   display: `flex`,
+//   alignItems: `center`
+// }))
+
+// const styles = {
+//   textContent: {
+//     color: `white`,
+//     display: `flex`,
+//     flexDirection: `column`,
+//     alignItems: `flex-start`,
+//     fontSize: `25px`,
+//     padding: `0 0 0 10px`
+//   },
+//   bodySection1: {
+//     display: `flex`,
+//     flexDirection: `row`,
+//     gap: `5% 5%`,
+//     justifyContent: `center`,
+//     alignItems: `center`,
+//   },
+//   bodySection2: {
+//     display: `grid`,
+//     flexDirection: `column`,
+//     gap: `10%`,
+//     justifyContent: `center`,
+//     alignItems: `center`,
+//   },
+//   perfectCentering: {
+//     display: `grid`,
+//     justifyContent: `center`,
+//     alignItems: `center`,
+//   },
+//   headingStyle: {
+//     textAlign: "center",
+//     padding: `0 0 25px 0`,
+//   }
+// };
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -120,55 +130,55 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-const CardLayouts = styled('div')(({ theme }) => ({
-  padding: theme.spacing(2),
-  [theme.breakpoints.up('xs')]: {
-    //backgroundColor: theme.palette.secondary.main,
-    display: `grid`,
-    gap: `5%`,
-    justifyContent: `center`,
-    alignItems: `center`,
-  },
-  [theme.breakpoints.between('sm', 'lg')]: {
-    //backgroundColor: theme.palette.primary.main,
-    display: `flex`,
-    flexDirection: `row`,
-    gap: `5% 5%`,
-    justifyContent: `center`,
-    alignItems: `center`,
-  },
-  [theme.breakpoints.up('lg')]: {
-    //backgroundColor: 'green',
-    display: `flex`,
-    flexDirection: `row`,
-    gap: `5% 5%`,
-    justifyContent: `center`,
-    alignItems: `center`,
-  },
-  //borderTop: '1px solid rgba(0, 0, 0, .125)',
-}));
+// const CardLayouts = styled('div')(({ theme }) => ({
+//   padding: theme.spacing(2),
+//   [theme.breakpoints.up('xs')]: {
+//     //backgroundColor: theme.palette.secondary.main,
+//     display: `grid`,
+//     gap: `5%`,
+//     justifyContent: `center`,
+//     alignItems: `center`,
+//   },
+//   [theme.breakpoints.between('sm', 'lg')]: {
+//     //backgroundColor: theme.palette.primary.main,
+//     display: `flex`,
+//     flexDirection: `row`,
+//     gap: `5% 5%`,
+//     justifyContent: `center`,
+//     alignItems: `center`,
+//   },
+//   [theme.breakpoints.up('lg')]: {
+//     //backgroundColor: 'green',
+//     display: `flex`,
+//     flexDirection: `row`,
+//     gap: `5% 5%`,
+//     justifyContent: `center`,
+//     alignItems: `center`,
+//   },
+//   //borderTop: '1px solid rgba(0, 0, 0, .125)',
+// }));
 
-const FAQLayout = styled('div')(({ theme }) => ({
-  display: `grid`,
-  alignItems: `center`,
-  justifyContent: `center`,
-  textAlign: 'center',
-  maxWidth: `100%`,
-  [theme.breakpoints.up('xs')]: {
-    // minHeight: `200vh`,
-    maxHeight: `240vh`,
-    margin: `10% 0 10% 0`,
-  },
-  [theme.breakpoints.between('sm', 'lg')]: {
-    maxHeight: `135vh`,
-    margin: `0% 0 10% 0`,
-  },
-  [theme.breakpoints.up('lg')]: {
-    maxHeight: `135vh`,
-    margin: `0% 0 10% 0`,
-    gap: `10%`
-  },
-}));
+// const FAQLayout = styled('div')(({ theme }) => ({
+//   display: `grid`,
+//   alignItems: `center`,
+//   justifyContent: `center`,
+//   textAlign: 'center',
+//   maxWidth: `100%`,
+//   [theme.breakpoints.up('xs')]: {
+//     // minHeight: `200vh`,
+//     maxHeight: `240vh`,
+//     margin: `10% 0 10% 0`,
+//   },
+//   [theme.breakpoints.between('sm', 'lg')]: {
+//     maxHeight: `135vh`,
+//     margin: `0% 0 10% 0`,
+//   },
+//   [theme.breakpoints.up('lg')]: {
+//     maxHeight: `135vh`,
+//     margin: `0% 0 10% 0`,
+//     gap: `10%`
+//   },
+// }));
 
 const HomePage = () => {
   const navigate = useNavigate()

@@ -36,18 +36,30 @@ const Layout = styled(Box)(({ theme }) => ({
 }))
 
 const BoxLayout = styled(Box)(({ theme }) => ({
-  display: `grid`,
+  display: `flex`,
+  flexDirection: `column`,
   alignItems: `center`,
   justifyContent: `center`,
   textAlign: 'center',
   maxWidth: `100%`,
-  [theme.breakpoints.up('xs')]: {
-    // minHeight: `200vh`,
-    maxHeight: `235vh`,
-  },
-  [theme.breakpoints.up('lg')]: {
-    maxHeight: `135vh`,
-  },
+  // [theme.breakpoints.up('xs')]: {
+  //   // minHeight: `200vh`,
+  //   maxHeight: `235vh`,
+  // },
+  // [theme.breakpoints.up('lg')]: {
+  //   maxHeight: `135vh`,
+  // },
+  // [theme.breakpoints.up('xs')]: {
+  //   flexDirection: `column`,
+
+  // },
+  // [theme.breakpoints.between('sm', 'lg')]: {
+  //   flexDirection: `row`,
+  // },
+  // [theme.breakpoints.up('lg')]: {
+  //   // marginTop: `5%`,
+  //   flexDirection: `column`,
+  // },
 }));
 
 const SearchStyling = styled(Box)(({ theme }) => ({
@@ -68,6 +80,9 @@ const SearchForm = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('xs')]: {
     flexDirection: `column`,
   },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    flexDirection: `row`,
+  },
   [theme.breakpoints.up('lg')]: {
     // marginTop: `5%`,
     flexDirection: `row`,
@@ -82,6 +97,11 @@ const CardForm = styled(Card)(({ theme }) => ({
   [theme.breakpoints.up('xs')]: {
     height: `65%`,
     marginTop: `3%`,
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    height: `30%`,
+    marginTop: `3%`,
+    width: `100vw`,
   },
   [theme.breakpoints.up('lg')]: {
     height: `30%`,
@@ -104,16 +124,13 @@ const MenuProps = {
 
 function SecretPage() {
 
-  useEffect(() => {
-    console.log(count)
-  })
-
   const [searchForm, setSearchForm] = useState({
     from: '' as string,
     to: '' as string,
   })
 
   const [results, setResults] = useState([] as flightInterface)
+  const [notifyResults, setNotifyResults] = useState('')
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -135,6 +152,9 @@ function SecretPage() {
         'Content-Type': 'application/json'
       }
     });
+    if (typeof res.data !== 'Object') {
+      setNotifyResults("Sorry, there are not available flights you're looking for!")
+    }
     setResults(res.data);
     console.log(res.data)
   };
@@ -147,7 +167,6 @@ function SecretPage() {
     setValue(newValue);
   };
 
-  const count = Math.ceil(results.length / 1);
   const [page, setPage] = useState(1);
   const handleChangePagination = (event, value) => {
     setPage(PaginationUsage(results, value, 1).page);
@@ -157,13 +176,12 @@ function SecretPage() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        {/* <Paper style={styles.paperContainer}> */}
         <Layout>
           <SearchStyling />
           <CardForm>
             <Typography variant="h4">Searching Flights</Typography>
             <SearchForm>
-              <FormControl sx={{ m: 2, minWidth: 250 }}>
+              <FormControl sx={{ m: 2, minWidth: 170 }}>
                 <InputLabel id="demo-select-small">From</InputLabel>
                 <Select
                   labelId="demo-select-small"
@@ -181,7 +199,7 @@ function SecretPage() {
                   }
                 </Select>
               </FormControl>
-              <FormControl sx={{ m: 2, minWidth: 250 }}>
+              <FormControl sx={{ m: 2, minWidth: 170 }}>
                 <InputLabel id="demo-select-small">To</InputLabel>
                 <Select
                   labelId="demo-select-small"
@@ -204,19 +222,21 @@ function SecretPage() {
                   }
                 </Select>
               </FormControl>
-              <DesktopDatePicker
-                label="Departure Date"
-                inputFormat="dd/MM/yyyy"
-                value={value}
-                onChange={handleChange}
-                renderInput={
-                  (params) =>
-                    <TextField
-                      id="departureDate"
-                      {...params}
-                    />
-                }
-              />
+              <FormControl sx={{ m: 2, minWidth: 200 }}>
+                <DesktopDatePicker
+                  label="Departure Date"
+                  inputFormat="dd/MM/yyyy"
+                  value={value}
+                  onChange={handleChange}
+                  renderInput={
+                    (params) =>
+                      <TextField
+                        id="departureDate"
+                        {...params}
+                      />
+                  }
+                />
+              </FormControl>
             </SearchForm>
             <Button onClick={handleClick}
               fullWidth
@@ -238,16 +258,23 @@ function SecretPage() {
                     />
                   </>
                 )
-              }) : ""
+              }) : <div style={{ "font-size": `25px`, "padding": "20px" }}>
+                {notifyResults}
+              </div>
             }
-            <div style={{ display: "flex", justifyContent: "center", padding: "10px" }}>
-              <Pagination
-                count={PaginationUsage(results, page, 4).total_pages}
-                page={PaginationUsage(results, page, 4).page}
-                onChange={handleChangePagination}
-                color="primary"
-              />
-            </div>
+            {
+              results.length > 0 ?
+                <>
+                  <div style={{ display: "flex", justifyContent: "center", padding: "10px" }}>
+                    <Pagination
+                      count={PaginationUsage(results, page, 4).total_pages}
+                      page={PaginationUsage(results, page, 4).page}
+                      onChange={handleChangePagination}
+                      color="primary"
+                    />
+                  </div>
+                </> : ""
+            }
           </BoxLayout>
         </Layout>
       </LocalizationProvider >

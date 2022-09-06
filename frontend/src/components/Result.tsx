@@ -1,7 +1,6 @@
-import React, { useRef } from 'react'
 import { FlightInterface } from '../interfaces/flightInterface'
-import { useState, useEffect, useReducer } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useReducer, useRef } from 'react'
+import { useSelector } from 'react-redux'
 //import { displayInfo } from '../redux/userInfoSlice'
 import axios from 'axios'
 import headerConfig from '../adapters/headerConfig'
@@ -21,107 +20,21 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import TextField from '@mui/material/TextField';
 import Draggable from 'react-draggable';
 //import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
-
-import { styled } from '@mui/material/styles';
 import { useReactToPrint } from 'react-to-print'
 import Typography from '@mui/material/Typography';
 
-const BoxLayout = styled(Paper)(({ theme }) => ({
-  margin: `2%`,
-  [theme.breakpoints.up('xs')]: {
-    display: `flex`,
-    flexDirection: `column`,
-    alignItems: `center`,
-    justifyContent: `center`,
-    textAlign: `center`,
-    // gap: `1%`,
-    maxHeight: `60vh`,
-    width: `90vw`
-  },
-  [theme.breakpoints.up('lg')]: {
-    display: `flex`,
-    flexDirection: `row`,
-    alignItems: `center`,
-    justifyContent: `center`,
-    gap: `0 3%`,
-    height: `20vh`,
-    width: '80vw',
-  },
-  border: '1px solid rgba(0, 0, 0, .125)',
-}));
-
-const BoxChild1 = styled('div')(({ theme }) => ({
-  padding: theme.spacing(1),
-  [theme.breakpoints.down('sm')]: {
-
-  },
-  [theme.breakpoints.up('sm')]: {
-    width: `10%`,
-    textAlign: `center`,
-  },
-  [theme.breakpoints.up('lg')]: {
-    width: `10%`,
-    textAlign: `center`,
-  },
-}));
-
-const BoxChild2 = styled('div')(({ theme }) => ({
-  padding: theme.spacing(1),
-  [theme.breakpoints.down('sm')]: {
-
-  },
-  [theme.breakpoints.up('sm')]: {
-    width: `10%`,
-    textAlign: `center`,
-  },
-  [theme.breakpoints.up('lg')]: {
-    width: `10%`,
-    textAlign: `center`,
-  },
-}));
-
-const BoxChild3 = styled('div')(({ theme }) => ({
-  padding: theme.spacing(1),
-  [theme.breakpoints.down('sm')]: {
-
-  },
-  [theme.breakpoints.up('sm')]: {
-
-  },
-  [theme.breakpoints.up('lg')]: {
-    width: `50%`,
-    textAlign: `center`,
-  },
-}));
-
-const BoxChild4 = styled('div')(({ theme }) => ({
-  padding: theme.spacing(1),
-  [theme.breakpoints.down('sm')]: {
-
-  },
-  [theme.breakpoints.up('sm')]: {
-
-  },
-  [theme.breakpoints.up('lg')]: {
-    display: `flex`,
-    flexWrap: 'no-wrap',
-    width: `40%`,
-    // gap: `5% 5%`,
-    textAlign: `center`,
-  },
-}));
-
-const BoxChild5 = styled('div')(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-
-  },
-  [theme.breakpoints.up('sm')]: {
-
-  },
-  [theme.breakpoints.up('lg')]: {
-
-  },
-}));
+import {
+  BoxLayout,
+  BoxChild1,
+  BoxChild2,
+  BoxChild3,
+  BoxChild4,
+  BoxChild5,
+  ModalLayout,
+  styles,
+  FormModalLayout,
+  GridLayout
+} from './Result.styles'
 
 type Props = {
   item: FlightInterface;
@@ -134,7 +47,11 @@ function PaperComponent(props: PaperProps) {
       handle="#draggable-dialog-title"
       cancel={'[class*="MuiDialogContent-root"]'}
     >
-      <Paper {...props} />
+      <Paper {...props}
+        style={{
+          width: '120% !important',
+        }}
+      />
     </Draggable>
   );
 }
@@ -160,78 +77,83 @@ const Modal = React.forwardRef((props, ref) => {
       PaperComponent={PaperComponent}
       aria-labelledby="draggable-dialog-title"
     >
-      <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-        Flight Information
-      </DialogTitle>
-      <ButtonGroup size="small" aria-label="small outlined button group">
-        <Button onClick={props.handleDecrement}>-</Button>
-        <Button disabled>{props.counter}</Button>
-        <Button onClick={props.handleIncrement}>+</Button>
-        <Button onClick={props.printToPDF}>Print to PDF</Button>
-      </ButtonGroup>
-      <div ref={ref}>
-        <DialogContent>
-          {props.price} VND
-          <DialogContentText>
-            Date: {props.departureDate}.
-            {/* <FlightTakeoffIcon /> */}
-            From {props.arrivalTime} To {props.departureTime}
-          </DialogContentText>
-          <DialogContentText>
-            {props.from} - {props.to}
-          </DialogContentText>
-          <DialogContentText>
-            Total price: {props.price * (props.counter)}
-          </DialogContentText>
-        </DialogContent>
+      <ModalLayout>
+        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          Flight Information
+        </DialogTitle>
+        <ButtonGroup size="small" aria-label="small outlined button group">
+          <Button onClick={props.handleDecrement}>-</Button>
+          <Button disabled>{props.counter}</Button>
+          <Button onClick={props.handleIncrement}>+</Button>
+          <Button onClick={props.printToPDF}>Print to PDF</Button>
+        </ButtonGroup>
+        <div ref={ref}>
+          <DialogContent>
+            {props.price} VND
+            <DialogContentText>
+              Date: {props.departureDate}.
+              {/* <FlightTakeoffIcon /> */}
+              From {props.arrivalTime} To {props.departureTime}
+            </DialogContentText>
+            <DialogContentText>
+              {props.from} - {props.to}
+            </DialogContentText>
+            <DialogContentText>
+              Total price: {props.price * (props.counter)}
+            </DialogContentText>
+          </DialogContent>
+          <FormModalLayout>
+            <div>Person 1</div>
+            <GridLayout container spacing={1} columns={12}>
+              <Grid item xs={4}>
+                <TextField id={`first-name-0`} label="First Name" variant="outlined" />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField id={`last-name-0`} label="Last Name" variant="outlined" />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField id={`ssn-0`} label="Social Security Number" variant="outlined" />
+              </Grid>
+            </GridLayout>
 
-        <Grid container spacing={1} columns={12}>
-          <Grid item xs={4}>
-            <TextField id={`first-name-0`} label="First Name" variant="outlined" />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField id={`last-name-0`} label="Last Name" variant="outlined" />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField id={`ssn-0`} label="Social Security Number" variant="outlined" />
-          </Grid>
-        </Grid>
-
-        {(() => {
-          console.log(props.counter);
-          let arr = [];
-          for (let i = 1; i < props.counter; i++) {
-            arr.push(
-              <>
-                <Grid container spacing={1} columns={12}>
-                  <Grid item xs={4}>
-                    <TextField id={`first-name-${i}`} label="First Name" variant="outlined" />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextField id={`last-name-${i}`} label="Last Name" variant="outlined" />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextField id={`ssn-${i}`} label="Social Security Number" variant="outlined" />
-                  </Grid>
-                </Grid>
-              </>
-            )
-          }
-          return arr
-        })()}
-
-        <Grid container spacing={1} columns={12}>
-          <Grid item xs={4}>
-            <TextField id="email" label="Email" variant="outlined" />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField id="bank-name" label="Bank Name" variant="outlined" />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField id="credit-card" label="Credit Card Number" variant="outlined" />
-          </Grid>
-        </Grid>
-      </div>
+            {(() => {
+              console.log(props.counter);
+              let arr = [];
+              for (let i = 1; i < props.counter; i++) {
+                arr.push(
+                  <>
+                    <div>Person {i + 1}</div>
+                    <GridLayout container spacing={1} columns={12}>
+                      <Grid item xs={4}>
+                        <TextField id={`first-name-${i}`} label="First Name" variant="outlined" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField id={`last-name-${i}`} label="Last Name" variant="outlined" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField id={`ssn-${i}`} label="Social Security Number" variant="outlined" />
+                      </Grid>
+                    </GridLayout>
+                  </>
+                )
+              }
+              return arr
+            })()}
+            <div>Contact and payments</div>
+            <GridLayout container spacing={1} columns={12}>
+              <Grid item xs={4}>
+                <TextField id="email" label="Email" variant="outlined" />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField id="bank-name" label="Bank Name" variant="outlined" />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField id="credit-card" label="Credit Card Number" variant="outlined" />
+              </Grid>
+            </GridLayout>
+          </FormModalLayout>
+        </div>
+      </ModalLayout>
       <DialogActions>
         <Button autoFocus onClick={props.handleClose}>
           Cancel
