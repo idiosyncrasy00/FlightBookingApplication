@@ -23,6 +23,10 @@ import Draggable from 'react-draggable';
 import { useReactToPrint } from 'react-to-print'
 import Typography from '@mui/material/Typography';
 
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+
 import {
   BoxLayout,
   BoxChild1,
@@ -79,7 +83,9 @@ const Modal = React.forwardRef((props, ref) => {
     >
       <ModalLayout>
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Flight Information
+          <b>
+            Flight Information
+          </b>
         </DialogTitle>
         <ButtonGroup size="small" aria-label="small outlined button group">
           <Button onClick={props.handleDecrement}>-</Button>
@@ -89,21 +95,34 @@ const Modal = React.forwardRef((props, ref) => {
         </ButtonGroup>
         <div ref={ref}>
           <DialogContent>
-            {props.price} VND
-            <DialogContentText>
-              Date: {props.departureDate}.
-              {/* <FlightTakeoffIcon /> */}
-              From {props.arrivalTime} To {props.departureTime}
+            <img src={props.image} width="50" height="50" />
+            <DialogContentText style={{fontSize: `30px`}}>
+              <b>{props.from} - {props.to}</b>
+            </DialogContentText>
+            <DialogContentText style={{ display: `flex`, flexDirection: `collumn`, justifyContent: `center`, alignItems: `center`, gap: `5%` }}>
+              <div>
+                <img src="../../public/plane_start.png" width="24" height="24" />
+                <br />
+                <b>{props.departureTime + " at " + props.from}</b>
+              </div>
+              <div>
+                <img src="../../public/plane_end.png" width="24" height="24" />
+                <br />
+                <b>{props.arrivalTime + " at " + props.to}</b>
+              </div>
             </DialogContentText>
             <DialogContentText>
-              {props.from} - {props.to}
+              <b>Departure Date: {props.departureDate}</b>
             </DialogContentText>
             <DialogContentText>
-              Total price: {props.price * (props.counter)}
+              <b>Ticket price: {props.price} VND/Person</b>
             </DialogContentText>
           </DialogContent>
+          <DialogContentText style={{ float: 'right', paddingRight: `19px` }}>
+            <b>Total price: {props.price * (props.counter)}</b>
+          </DialogContentText>
           <FormModalLayout>
-            <div>Person 1</div>
+            <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Person 1</b></div>
             <GridLayout container spacing={1} columns={12}>
               <Grid item xs={4}>
                 <TextField id={`first-name-0`} label="First Name" variant="outlined" />
@@ -122,7 +141,7 @@ const Modal = React.forwardRef((props, ref) => {
               for (let i = 1; i < props.counter; i++) {
                 arr.push(
                   <>
-                    <div>Person {i + 1}</div>
+                    <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Person {i + 1}</b></div>
                     <GridLayout container spacing={1} columns={12}>
                       <Grid item xs={4}>
                         <TextField id={`first-name-${i}`} label="First Name" variant="outlined" />
@@ -139,7 +158,7 @@ const Modal = React.forwardRef((props, ref) => {
               }
               return arr
             })()}
-            <div>Contact and payments</div>
+            <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Contact and payments</b></div>
             <GridLayout container spacing={1} columns={12}>
               <Grid item xs={4}>
                 <TextField id="email" label="Email" variant="outlined" />
@@ -152,15 +171,15 @@ const Modal = React.forwardRef((props, ref) => {
               </Grid>
             </GridLayout>
           </FormModalLayout>
-        </div>
-      </ModalLayout>
+        </div >
+      </ModalLayout >
       <DialogActions>
         <Button autoFocus onClick={props.handleClose}>
           Cancel
         </Button>
         <Button onClick={props.submitFlightForm}>Confirm your order</Button>
       </DialogActions>
-    </Dialog>
+    </Dialog >
   )
 })
 
@@ -286,6 +305,7 @@ const Result: React.FC<Props> = ({ item }) => {
         handleDecrement={handleDecrement}
         counter={counter}
         handleIncrement={handleIncrement}
+        image={item.image}
         price={item.price}
         arrivalTime={item.arrivalTime}
         // arrivalDate={item.arrivalDate}

@@ -145,13 +145,13 @@ export const FormModalLayout = styled('div')(({ theme }) => ({
 
 export const GridLayout = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
-    padding: `20px 10px`,
+    padding: `10px 10px`,
   },
   [theme.breakpoints.up('sm')]: {
-    padding: `20px 10px`,
+    padding: `10px 10px`,
   },
   [theme.breakpoints.up('lg')]: {
-    padding: `20px 10px`,
+    padding: `5px 10px`,
   },
 }));
 
