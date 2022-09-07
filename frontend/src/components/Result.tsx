@@ -23,9 +23,9 @@ import Draggable from 'react-draggable';
 import { useReactToPrint } from 'react-to-print'
 import Typography from '@mui/material/Typography';
 
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
+// import Input from '@mui/material/Input';
+// import InputLabel from '@mui/material/InputLabel';
+// import InputAdornment from '@mui/material/InputAdornment';
 
 import {
   BoxLayout,
@@ -95,8 +95,8 @@ const Modal = React.forwardRef((props, ref) => {
         </ButtonGroup>
         <div ref={ref}>
           <DialogContent>
-            <img src={props.image} width="50" height="50" />
-            <DialogContentText style={{fontSize: `30px`}}>
+            <img src={props.image} width="40" height="40" />
+            <DialogContentText style={{ fontSize: `24px` }}>
               <b>{props.from} - {props.to}</b>
             </DialogContentText>
             <DialogContentText style={{ display: `flex`, flexDirection: `collumn`, justifyContent: `center`, alignItems: `center`, gap: `5%` }}>
@@ -174,10 +174,15 @@ const Modal = React.forwardRef((props, ref) => {
         </div >
       </ModalLayout >
       <DialogActions>
-        <Button autoFocus onClick={props.handleClose}>
+        <Button
+          variant="standard"
+          onClick={props.handleClose}>
           Cancel
         </Button>
-        <Button onClick={props.submitFlightForm}>Confirm your order</Button>
+        <Button
+          onClick={props.submitFlightForm}
+          variant="contained"
+        >Confirm your order</Button>
       </DialogActions>
     </Dialog >
   )

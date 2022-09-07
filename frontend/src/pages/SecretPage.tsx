@@ -241,7 +241,6 @@ function SecretPage() {
             <Button onClick={handleClick}
               fullWidth
               variant="contained"
-              // sx={{ p: 1, minWidth: '100%' }}
               sx={{ width: '55%', my: 2 }}
             >
               Search

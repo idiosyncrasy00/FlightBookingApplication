@@ -25,14 +25,17 @@ export default function LoginPage() {
     password: '',
   })
 
+  const [error, setError] = useState('')
+
   //const { loading, error } = useContext(AuthContext);
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const handleClick = async (e) => {
     e.preventDefault();
-    //dispatch({ type: "LOGIN_START" });
-    //console.log(loginForm);
+    if (loginForm.username === '' || loginForm.password === '') {
+      setError("Field is not allowed to be empty")
+    }
     try {
       const res = await axios.post("http://localhost:8000/api/users/login", loginForm, {
         withCredentials: true,
@@ -49,7 +52,8 @@ export default function LoginPage() {
       })))
       navigate("/")
     } catch (err) {
-      console.log(err.message)
+      console.log(err.response)
+      setError(err.response.data)
     }
   };
 
@@ -63,14 +67,14 @@ export default function LoginPage() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          <div style={{ color: "red", fontSize: "13px" }}>{error}</div>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -96,10 +100,10 @@ export default function LoginPage() {
               onChange={e => setLoginForm({ ...loginForm, password: e.target.value })}
               value={loginForm.password}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -111,17 +115,10 @@ export default function LoginPage() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
+            <Grid item>
+              <Link href="/signup" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
             </Grid>
           </Box>
         </Box>

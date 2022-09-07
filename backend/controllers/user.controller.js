@@ -13,11 +13,18 @@ const userRegistration = async (req, res, next) => {
   if (error) {
     res.status(403).send({ error: error.message });
   } else {
-    let user = userModel.findOne({ email: req.body.email })
+    let userName = await userModel.findOne({ username: req.body.username })
+    let userEmail = await userModel.findOne({ email: req.body.email })
+    let userPhone = await userModel.findOne({ phoneNumber: req.body.phoneNumber })
     console.log(value)
-    if (!user) {
-      res.status(400).send("Username, email or phone number already exists!")
-    } else {
+    if (userName) {
+      return res.status(403).send({ error: "Username already exists!" })
+    } else if (userEmail) {
+      return res.status(403).send({ error: "Email already exists!" })
+    } else if (userPhone) {
+      return res.status(403).send({ error: "Phone number already exists!" })
+    }
+    else {
       //need to hash the password
       const newUser = new userModel(value)
       //const newUser = value
@@ -49,7 +56,7 @@ const userLogin = async (req, res, next) => {
   //res.send("Login api");
   try {
     const user = await userModel.findOne({ username: req.body.username })
-    if (!user) return res.status(404).send("User not found!!!");
+    if (!user) return res.status(404).send("Username not found!!!");
     //compare password
     const passwordCheck = await bcrypt.compare(
       req.body.password,

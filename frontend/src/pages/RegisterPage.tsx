@@ -22,15 +22,21 @@ export default function RegisterPage() {
     password: '',
   })
 
+  const [error, setError] = useState('')
+
   const handleClick = async (e: unknown) => {
     e.preventDefault();
     console.log(registerForm);
+    if (registerForm.username === '' || registerForm.password === '' || registerForm.email === '' || registerForm.phoneNumber === '') {
+      setError("Field is not allowed to be empty")
+    }
     try {
       const res = await axios.post("http://localhost:8000/api/users/register", registerForm);
       console.log(res.data)
       navigate("/login")
     } catch (err) {
-      console.log(err.message)
+      console.log(err.response)
+      setError(err.response.data.error)
     }
   };
   const navigate = useNavigate()
@@ -50,6 +56,7 @@ export default function RegisterPage() {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
+          <div style={{ color: "red", fontSize: "13px" }}>{error}</div>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
