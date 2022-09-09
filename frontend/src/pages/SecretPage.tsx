@@ -24,6 +24,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { styled } from '@mui/material/styles';
+import { useSelector, useDispatch } from 'react-redux'
 
 const theme = createTheme();
 
@@ -42,24 +43,6 @@ const BoxLayout = styled(Box)(({ theme }) => ({
   justifyContent: `center`,
   textAlign: 'center',
   maxWidth: `100%`,
-  // [theme.breakpoints.up('xs')]: {
-  //   // minHeight: `200vh`,
-  //   maxHeight: `235vh`,
-  // },
-  // [theme.breakpoints.up('lg')]: {
-  //   maxHeight: `135vh`,
-  // },
-  // [theme.breakpoints.up('xs')]: {
-  //   flexDirection: `column`,
-
-  // },
-  // [theme.breakpoints.between('sm', 'lg')]: {
-  //   flexDirection: `row`,
-  // },
-  // [theme.breakpoints.up('lg')]: {
-  //   // marginTop: `5%`,
-  //   flexDirection: `column`,
-  // },
 }));
 
 const SearchStyling = styled(Box)(({ theme }) => ({
@@ -69,7 +52,7 @@ const SearchStyling = styled(Box)(({ theme }) => ({
   width: `100%`,
   height: `60vh`,
   display: `flex`,
-  flexDirection: `column`,
+  flexDirection: `row`,
   alignItems: `center`,
 }))
 
@@ -130,6 +113,28 @@ const PaginationLayout = styled('div')(({ theme }) => ({
   },
 }))
 
+export const TextContentInBG = styled('div')(({ theme }) => ({
+  color: `white`,
+  display: `flex`,
+  flexDirection: `column`,
+  alignItems: `center`,
+  padding: `0 0 220px 10px`,
+  fontSize: `20px`,
+  fontWeight: `bold`,
+  textAlign: `center`,
+  [theme.breakpoints.up('xs')]: {
+    width: '100%'
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    width: '45%',
+    padding: `0 0 13% 1%`
+  },
+  [theme.breakpoints.up('lg')]: {
+    width: '30%',
+    padding: `0 0 5% 5%`
+  },
+}));
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -150,6 +155,7 @@ function SecretPage() {
 
   const [results, setResults] = useState([] as flightInterface)
   const [notifyResults, setNotifyResults] = useState('')
+  const username = useSelector((state) => state.userInfoReducer.user.username)
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -196,7 +202,11 @@ function SecretPage() {
       <CssBaseline />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Layout>
-          <SearchStyling />
+          <SearchStyling>
+            <TextContentInBG>
+              <p>Hello {username}. What is your trip today? Book a flight now!</p>
+            </TextContentInBG>
+          </SearchStyling>
           <CardForm>
             <Typography variant="h4">Searching Flights</Typography>
             <SearchForm>

@@ -120,13 +120,13 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   [theme.breakpoints.up('xs')]: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'lightgray',
   },
   [theme.breakpoints.up('md')]: {
-    backgroundColor: theme.palette.primary.main,
+    //backgroundColor: theme.palette.primary.main,
   },
   [theme.breakpoints.up('lg')]: {
-    backgroundColor: 'green',
+    //backgroundColor: 'green',
   },
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
@@ -239,7 +239,7 @@ const HomePage = () => {
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
-                        Hoang
+                        Linh
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         This app is great! I can get a flight ticket without spending times going to the airport!
@@ -268,24 +268,28 @@ const HomePage = () => {
                 <Typography variant="h3" style={styles.headingStyle}>Frequenly Asked Questions</Typography>
                 <Accordion
                   expanded={expanded === 'panel1'}
-                  onChange={handleChange('panel1')}>
+                  onChange={handleChange('panel1')}
+                  style={{ textAlign: `left` }}
+                >
                   <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                    <Typography>Question 1: What is VietnamBay?</Typography>
+                    <Typography style={{ fontSize: '30px' }}><span>+ </span>Question 1: What is VietnamBay?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
-                      Answer: VietnamBay is a website for people booking a domestic flight in Vietnam online. 
+                    <Typography style={{ paddingLeft: `25px` }}>
+                      Answer: VietnamBay is a website for people booking a domestic flight in Vietnam online.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
                 <Accordion
                   expanded={expanded === 'panel2'}
-                  onChange={handleChange('panel2')}>
+                  onChange={handleChange('panel2')}
+                  style={{ textAlign: `left` }}
+                >
                   <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                    <Typography>Question 2: How can you book a flight here?</Typography>
+                    <Typography style={{ fontSize: '30px' }}><span>+ </span>Question 2: How can you book a flight here?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
+                    <Typography style={{ paddingLeft: `25px` }}>
                       Answer: You need to get an account. If you have not had an account yet, go sign up here.
                       Once get an account, you login to the page and choose a flight you wish.
                     </Typography>
@@ -293,13 +297,15 @@ const HomePage = () => {
                 </Accordion>
                 <Accordion
                   expanded={expanded === 'panel3'}
-                  onChange={handleChange('panel3')}>
+                  onChange={handleChange('panel3')}
+                  style={{ textAlign: `left` }}
+                >
                   <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-                    <Typography>Question 3: What types of payment method is accepted?</Typography>
+                    <Typography style={{ fontSize: '30px' }}><span>+ </span> Question 3: What types of payment method is accepted?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
-                      Answer: We currently accept payments by Vietnamese credit card.
+                    <Typography style={{ paddingLeft: `25px` }}>
+                      Answer: We currently accept credit cards distributed by Vietnamese Banks.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>

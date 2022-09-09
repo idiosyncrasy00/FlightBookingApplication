@@ -116,7 +116,13 @@ export default function LoginPage() {
               Sign In
             </Button>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link
+                onClick={() => {
+                  navigate('/register');
+                }}
+                underline={'hover'}
+                //href=""
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

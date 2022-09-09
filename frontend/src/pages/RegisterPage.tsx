@@ -33,6 +33,7 @@ export default function RegisterPage() {
     try {
       const res = await axios.post("http://localhost:8000/api/users/register", registerForm);
       console.log(res.data)
+      alert("Registered successfully!")
       navigate("/login")
     } catch (err) {
       console.log(err.response)
@@ -116,7 +117,10 @@ export default function RegisterPage() {
               Sign Up
             </Button>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link onClick={() => {
+                navigate('/login');
+              }}
+                underline={'hover'} variant="body2">
                 {"Already have an account? Sign In"}
               </Link>
             </Grid>

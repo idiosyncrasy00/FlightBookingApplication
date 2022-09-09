@@ -30,22 +30,23 @@ const styles = {
     gap: `80%`,
     backgroundColor: `rgb(25, 118, 210)`,
   },
-  leftSection: {
-
+  iconSection: {
+    display: `flex`,
+    flexDirection: `row`,
+    alignItems: `center`,
+    justifyContent: `center`,
+    gap: `2%`,
+    paddingBottom: `2%`
   },
-  rightSection: {
-
+  textSection: {
+    
   }
 };
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
+      {'Copyright © VietnamBay || All rights reserved || '} {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -64,14 +65,14 @@ const Footer = () => {
         style={styles.containerSection}
       >
         <Container maxWidth="sm">
-          <div style={styles.leftSection}>
-            <img src="../../public/github.svg" width="20" height="20"></img>
-            <img src="../../public/github.svg" width="20" height="20"></img>
-            <img src="../../public/github.svg" width="20" height="20"></img>
-            <img src="../../public/github.svg" width="20" height="20"></img>
+          <div style={styles.iconSection}>
+            <img src="../../public/github.svg" width="30" height="30" />
+            <img src="../../public/facebook.svg" width="30" height="30" />
+            <img src="../../public/instagram.svg" width="30" height="30" />
+            <img src="../../public/twitter.svg" width="30" height="30" />
           </div>
-          <div style={styles.rightSection}>
-            Website made by Duc Hoang
+          <div style={styles.textSection}>
+            Website made by Duc Hoang - 19020098
           </div>
           <Copyright />
         </Container>

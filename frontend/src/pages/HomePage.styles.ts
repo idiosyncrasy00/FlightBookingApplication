@@ -61,7 +61,7 @@ export const styles = {
   },
   headingStyle: {
     textAlign: "center",
-    padding: `0 0 25px 0`,
+    padding: `25px 0 25px 0`,
   }
 };
 

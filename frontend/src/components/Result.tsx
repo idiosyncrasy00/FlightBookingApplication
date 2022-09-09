@@ -23,11 +23,7 @@ import Draggable from 'react-draggable';
 import ReactToPrint from 'react-to-print'
 import Typography from '@mui/material/Typography';
 
-import PDFPrint from './PDFPrint'
-
-// import Input from '@mui/material/Input';
-// import InputLabel from '@mui/material/InputLabel';
-// import InputAdornment from '@mui/material/InputAdornment';
+import numberWithCommas from '../utils/setDotsInNumber'
 
 import {
   BoxLayout,
@@ -130,23 +126,23 @@ const Modal = (props, ref) => {
               <b>Departure Date: {props.departureDate}</b>
             </DialogContentText>
             <DialogContentText>
-              <b>Ticket price: {props.price} VND/Person</b>
+              <b>Ticket price: {numberWithCommas(props.price)} VND/Person</b>
             </DialogContentText>
           </DialogContent>
           <DialogContentText style={{ float: 'right', paddingRight: `19px` }}>
-            <b>TOTAL PRICE: {props.price * (props.counter)}</b>
+            <b>TOTAL PRICE: {numberWithCommas(props.price * (props.counter))} VND</b>
           </DialogContentText>
           <FormModalLayout>
             <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Person 1</b></div>
             <GridLayout container spacing={1} columns={12}>
               <Grid item xs={12} sm={4}>
-                <TextField id={`first-name-0`} fullWidth label="First Name" variant="outlined" />
+                <TextField id={`first-name-0`} fullWidth label="First Name" variant="outlined" size="small" />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <TextField id={`last-name-0`} fullWidth label="Last Name" variant="outlined" />
+                <TextField id={`last-name-0`} fullWidth label="Last Name" variant="outlined" size="small" />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <TextField id={`ssn-0`} fullWidth label="Social Security Number" variant="outlined" />
+                <TextField id={`ssn-0`} fullWidth label="Social Security Number" variant="outlined" size="small" />
               </Grid>
             </GridLayout>
             {(() => {
@@ -157,22 +153,22 @@ const Modal = (props, ref) => {
                 arr.push(
                   <>
                     <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Person {i + 1}</b></div>
-                    <Grid container spacing={1} columns={12}>
+                    <GridLayout container spacing={1} columns={12}>
                       <Grid item xs={12} sm={4}>
-                        <TextField id={`first-name-${i}`} fullWidth label="First Name" variant="outlined"
+                        <TextField id={`first-name-${i}`} fullWidth label="First Name" variant="outlined" size="small"
                         />
                         {/* {
                         (document.getElementById(`first-name-${i}`) as HTMLInputElement).value} */}
                       </Grid>
                       <Grid item xs={12} sm={4}>
-                        <TextField id={`last-name-${i}`} fullWidth label="Last Name" variant="outlined" />
+                        <TextField id={`last-name-${i}`} fullWidth label="Last Name" variant="outlined" size="small" />
                         {/* {(document.getElementById(`last-name-${i}`) as HTMLInputElement).value} */}
                       </Grid>
                       <Grid item xs={12} sm={4}>
-                        <TextField id={`ssn-${i}`} fullWidth label="Social Security Number" variant="outlined" />
+                        <TextField id={`ssn-${i}`} fullWidth label="Social Security Number" variant="outlined" size="small" />
                         {/* {(document.getElementById(`ssn-${i}`) as HTMLInputElement).value} */}
                       </Grid>
-                    </Grid>
+                    </GridLayout>
                   </>
                 )
               }
@@ -181,13 +177,13 @@ const Modal = (props, ref) => {
             <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Contact and payments</b></div>
             <GridLayout container spacing={1} columns={12}>
               <Grid item xs={12} sm={4}>
-                <TextField id="email" fullWidth label="Email" variant="outlined" />
+                <TextField id="email" fullWidth label="Email" variant="outlined" size="small" />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <TextField id="bank-name" fullWidth label="Bank Name" variant="outlined" />
+                <TextField id="bank-name" fullWidth label="Bank Name" variant="outlined" size="small" />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <TextField id="credit-card" fullWidth label="Credit Card Number" variant="outlined" />
+                <TextField id="credit-card" fullWidth label="Credit Card Number" variant="outlined" size="small" />
               </Grid>
             </GridLayout>
           </FormModalLayout>
@@ -196,12 +192,15 @@ const Modal = (props, ref) => {
       <DialogActions>
         <Button
           variant="standard"
-          onClick={props.handleClose}>
+          onClick={props.handleClose}
+          size="small"
+        >
           Cancel
         </Button>
         <Button
           onClick={props.submitFlightForm}
           variant="contained"
+          size="small"
         >Confirm your order</Button>
       </DialogActions>
     </Dialog >
@@ -315,7 +314,7 @@ const Result: React.FC<Props> = ({ item }) => {
           </BoxChild3>
         </BoxChild4>
         <div style={{ "font-weight": "bold" }}>
-          {item.price} VND
+          {numberWithCommas(item.price)} VND
         </div>
         <BoxChild5>
           <Button
