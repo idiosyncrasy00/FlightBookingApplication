@@ -30,7 +30,7 @@ const Navbar = () => {
     }
   }, [auth]);
   return (
-    <AppBar position="static">
+    <AppBar style={{ position: 'fixed' }}>
       <Toolbar>
         {/* <IconButton onClick={() => { navigate("/") }}>
           <FlightIcon />

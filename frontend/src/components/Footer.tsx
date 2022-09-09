@@ -65,10 +65,13 @@ const Footer = () => {
       >
         <Container maxWidth="sm">
           <div style={styles.leftSection}>
-            abcd
+            <img src="../../public/github.svg" width="20" height="20"></img>
+            <img src="../../public/github.svg" width="20" height="20"></img>
+            <img src="../../public/github.svg" width="20" height="20"></img>
+            <img src="../../public/github.svg" width="20" height="20"></img>
           </div>
           <div style={styles.rightSection}>
-            xyzd
+            Website made by Duc Hoang
           </div>
           <Copyright />
         </Container>

@@ -20,8 +20,10 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import TextField from '@mui/material/TextField';
 import Draggable from 'react-draggable';
 //import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
-import { useReactToPrint } from 'react-to-print'
+import ReactToPrint from 'react-to-print'
 import Typography from '@mui/material/Typography';
+
+import PDFPrint from './PDFPrint'
 
 // import Input from '@mui/material/Input';
 // import InputLabel from '@mui/material/InputLabel';
@@ -35,9 +37,9 @@ import {
   BoxChild4,
   BoxChild5,
   ModalLayout,
-  styles,
   FormModalLayout,
-  GridLayout
+  GridLayout,
+  DialogContentTextLayout
 } from './Result.styles'
 
 type Props = {
@@ -73,7 +75,8 @@ const counterReducer = (state = 0, action: unknown) => {
   }
 }
 
-const Modal = React.forwardRef((props, ref) => {
+const Modal = (props, ref) => {
+  const pdfRef = useRef(null);
   return (
     <Dialog
       open={props.open}
@@ -82,24 +85,36 @@ const Modal = React.forwardRef((props, ref) => {
       aria-labelledby="draggable-dialog-title"
     >
       <ModalLayout>
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title" style={{ textAlign: 'center' }}>
           <b>
             Flight Information
           </b>
         </DialogTitle>
-        <ButtonGroup size="small" aria-label="small outlined button group">
+        <ButtonGroup size="small" aria-label="small outlined button group"
+          style={{
+            display: `flex`,
+            flexDirection: `collumn`,
+            justifyContent: `center`,
+            alignItems: `center`,
+          }}
+        >
           <Button onClick={props.handleDecrement}>-</Button>
-          <Button disabled>{props.counter}</Button>
+          <Button disabled><b>{props.counter}</b></Button>
           <Button onClick={props.handleIncrement}>+</Button>
-          <Button onClick={props.printToPDF}>Print to PDF</Button>
+          {/* <Button onClick={printToPDF}>Print to PDF</Button> */}
+
+          <ReactToPrint
+            trigger={() => <Button>Print to PDF</Button>}
+            content={() => pdfRef.current}
+          />
         </ButtonGroup>
-        <div ref={ref}>
+        <div ref={pdfRef}>
           <DialogContent>
             <img src={props.image} width="40" height="40" />
             <DialogContentText style={{ fontSize: `24px` }}>
               <b>{props.from} - {props.to}</b>
             </DialogContentText>
-            <DialogContentText style={{ display: `flex`, flexDirection: `collumn`, justifyContent: `center`, alignItems: `center`, gap: `5%` }}>
+            <DialogContentTextLayout>
               <div>
                 <img src="../../public/plane_start.png" width="24" height="24" />
                 <br />
@@ -110,7 +125,7 @@ const Modal = React.forwardRef((props, ref) => {
                 <br />
                 <b>{props.arrivalTime + " at " + props.to}</b>
               </div>
-            </DialogContentText>
+            </DialogContentTextLayout>
             <DialogContentText>
               <b>Departure Date: {props.departureDate}</b>
             </DialogContentText>
@@ -119,40 +134,45 @@ const Modal = React.forwardRef((props, ref) => {
             </DialogContentText>
           </DialogContent>
           <DialogContentText style={{ float: 'right', paddingRight: `19px` }}>
-            <b>Total price: {props.price * (props.counter)}</b>
+            <b>TOTAL PRICE: {props.price * (props.counter)}</b>
           </DialogContentText>
           <FormModalLayout>
             <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Person 1</b></div>
             <GridLayout container spacing={1} columns={12}>
-              <Grid item xs={4}>
-                <TextField id={`first-name-0`} label="First Name" variant="outlined" />
+              <Grid item xs={12} sm={4}>
+                <TextField id={`first-name-0`} fullWidth label="First Name" variant="outlined" />
               </Grid>
-              <Grid item xs={4}>
-                <TextField id={`last-name-0`} label="Last Name" variant="outlined" />
+              <Grid item xs={12} sm={4}>
+                <TextField id={`last-name-0`} fullWidth label="Last Name" variant="outlined" />
               </Grid>
-              <Grid item xs={4}>
-                <TextField id={`ssn-0`} label="Social Security Number" variant="outlined" />
+              <Grid item xs={12} sm={4}>
+                <TextField id={`ssn-0`} fullWidth label="Social Security Number" variant="outlined" />
               </Grid>
             </GridLayout>
-
             {(() => {
               console.log(props.counter);
               let arr = [];
+              //let arr1 = []
               for (let i = 1; i < props.counter; i++) {
                 arr.push(
                   <>
                     <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Person {i + 1}</b></div>
-                    <GridLayout container spacing={1} columns={12}>
-                      <Grid item xs={4}>
-                        <TextField id={`first-name-${i}`} label="First Name" variant="outlined" />
+                    <Grid container spacing={1} columns={12}>
+                      <Grid item xs={12} sm={4}>
+                        <TextField id={`first-name-${i}`} fullWidth label="First Name" variant="outlined"
+                        />
+                        {/* {
+                        (document.getElementById(`first-name-${i}`) as HTMLInputElement).value} */}
                       </Grid>
-                      <Grid item xs={4}>
-                        <TextField id={`last-name-${i}`} label="Last Name" variant="outlined" />
+                      <Grid item xs={12} sm={4}>
+                        <TextField id={`last-name-${i}`} fullWidth label="Last Name" variant="outlined" />
+                        {/* {(document.getElementById(`last-name-${i}`) as HTMLInputElement).value} */}
                       </Grid>
-                      <Grid item xs={4}>
-                        <TextField id={`ssn-${i}`} label="Social Security Number" variant="outlined" />
+                      <Grid item xs={12} sm={4}>
+                        <TextField id={`ssn-${i}`} fullWidth label="Social Security Number" variant="outlined" />
+                        {/* {(document.getElementById(`ssn-${i}`) as HTMLInputElement).value} */}
                       </Grid>
-                    </GridLayout>
+                    </Grid>
                   </>
                 )
               }
@@ -160,14 +180,14 @@ const Modal = React.forwardRef((props, ref) => {
             })()}
             <div style={{ textAlign: 'start', paddingLeft: '10px', }}><b>Contact and payments</b></div>
             <GridLayout container spacing={1} columns={12}>
-              <Grid item xs={4}>
-                <TextField id="email" label="Email" variant="outlined" />
+              <Grid item xs={12} sm={4}>
+                <TextField id="email" fullWidth label="Email" variant="outlined" />
               </Grid>
-              <Grid item xs={4}>
-                <TextField id="bank-name" label="Bank Name" variant="outlined" />
+              <Grid item xs={12} sm={4}>
+                <TextField id="bank-name" fullWidth label="Bank Name" variant="outlined" />
               </Grid>
-              <Grid item xs={4}>
-                <TextField id="credit-card" label="Credit Card Number" variant="outlined" />
+              <Grid item xs={12} sm={4}>
+                <TextField id="credit-card" fullWidth label="Credit Card Number" variant="outlined" />
               </Grid>
             </GridLayout>
           </FormModalLayout>
@@ -186,11 +206,12 @@ const Modal = React.forwardRef((props, ref) => {
       </DialogActions>
     </Dialog >
   )
-})
+}
 
 const Result: React.FC<Props> = ({ item }) => {
   const [open, setOpen] = useState(false);
-  const handleClickOpen = (id: string) => {
+  const handleClickOpen = (e, id: string) => {
+    e.stopPropagation();
     console.log(id)
     setChosenFlightID(id)
     setOpen(true);
@@ -256,11 +277,11 @@ const Result: React.FC<Props> = ({ item }) => {
     setOpen(false);
   }
 
-  const pdfRef = useRef();
+  // const pdfRef = useRef();
 
-  const printToPDF = useReactToPrint({
-    content: () => pdfRef.current,
-  })
+  // const printToPDF = useReactToPrint({
+  //   content: () => pdfRef.current
+  // })
 
   return (
     <>
@@ -298,13 +319,13 @@ const Result: React.FC<Props> = ({ item }) => {
         </div>
         <BoxChild5>
           <Button
-            onClick={() => handleClickOpen(item.id)}
+            onClick={(e) => handleClickOpen(e, item.id)}
           >Book</Button>
         </BoxChild5>
         {/* </Box> */}
       </BoxLayout>
       <Modal
-        ref={pdfRef}
+        //ref={pdfRef}
         open={open}
         handleClose={handleClose}
         handleDecrement={handleDecrement}
@@ -319,7 +340,7 @@ const Result: React.FC<Props> = ({ item }) => {
         from={item.from}
         to={item.to}
         submitFlightForm={submitFlightForm}
-        printToPDF={printToPDF}
+      // printToPDF={printToPDF}
       />
     </>
   )

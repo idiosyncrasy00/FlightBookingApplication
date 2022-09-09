@@ -111,6 +111,25 @@ const CardForm = styled(Card)(({ theme }) => ({
   },
 }))
 
+const PaginationLayout = styled('div')(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  [theme.breakpoints.up('xs')]: {
+    paddingLeft: "2%",
+    paddingBottom: "2%"
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    paddingLeft: "1%",
+    paddingBottom: "2%"
+  },
+  [theme.breakpoints.up('lg')]: {
+    paddingLeft: "5%",
+    paddingBottom: "2%"
+    // display: `none`,
+  },
+}))
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -264,14 +283,14 @@ function SecretPage() {
             {
               results.length > 0 ?
                 <>
-                  <div style={{ display: "flex", justifyContent: "center", padding: "10px" }}>
+                  <PaginationLayout>
                     <Pagination
                       count={PaginationUsage(results, page, 4).total_pages}
                       page={PaginationUsage(results, page, 4).page}
                       onChange={handleChangePagination}
                       color="primary"
                     />
-                  </div>
+                  </PaginationLayout>
                 </> : ""
             }
           </BoxLayout>

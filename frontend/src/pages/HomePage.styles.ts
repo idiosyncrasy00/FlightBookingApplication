@@ -1,10 +1,5 @@
 //mui import
 import { styled } from '@mui/material/styles';
-import { AccordionProps } from '@mui/material/Accordion';
-import MuiAccordionSummary, {
-  AccordionSummaryProps,
-} from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Box from '@mui/material/Box';
 import paperImg from '../assets/254367.webp'
 
@@ -22,10 +17,18 @@ export const PaperContainer = styled(Box)(({ theme }) => ({
   backgroundImage: `url(${paperImg})`,
   backgroundRepeat: `no-repeat`,
   backgroundSize: `100% 100%`,
-  width: `100vw`,
-  minHeight: `100vh`,
   display: `flex`,
-  alignItems: `center`
+  alignItems: `center`,
+  width: `100vw`,
+  [theme.breakpoints.up('xs')]: {
+    minHeight: `100vh`,
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    minHeight: `70vh`,
+  },
+  [theme.breakpoints.up('lg')]: {
+
+  },
 }))
 
 export const styles = {
@@ -62,50 +65,28 @@ export const styles = {
   }
 };
 
-// const Accordion = styled((props: AccordionProps) => (
-//   <MuiAccordion disableGutters elevation={0} square {...props} />
-// ))(({ theme }) => ({
-//   border: `1px solid ${theme.palette.divider}`,
-//   '&:not(:last-child)': {
-//     borderBottom: 0,
-//   },
-//   '&:before': {
-//     display: 'none',
-//   },
-//   width: '90%',
-//   [theme.breakpoints.up('xs')]: {
-//     margin: '0 5% 0 5%',
-//   },
-//   [theme.breakpoints.up('sm')]: {
-//     margin: '0 5% 0 5%',
-//   },
-//   [theme.breakpoints.up('lg')]: {
-//     margin: '0 5% 0 5%',
-//   },
-// }));
-
-// export const AccordionSummary = styled((props: AccordionSummaryProps) => (
-//   <MuiAccordionSummary
-//     { ...props }
-//   />
-// ))(({ theme }) => ({
-//     backgroundColor: 'lightgrey',
-//     flexDirection: 'row-reverse',
-//   }));
-
-// export const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-//   padding: theme.spacing(2),
-//   [theme.breakpoints.up('xs')]: {
-//     backgroundColor: theme.palette.secondary.main,
-//   },
-//   [theme.breakpoints.up('md')]: {
-//     backgroundColor: theme.palette.primary.main,
-//   },
-//   [theme.breakpoints.up('lg')]: {
-//     backgroundColor: 'green',
-//   },
-//   borderTop: '1px solid rgba(0, 0, 0, .125)',
-// }));
+export const TextContentInBG = styled('div')(({ theme }) => ({
+  color: `white`,
+  display: `flex`,
+  flexDirection: `column`,
+  alignItems: `center`,
+  padding: `0 0 0 10px`,
+  fontSize: `25px`,
+  fontWeight: `bold`,
+  textAlign: `center`,
+  lineHeight: `1.3`,
+  [theme.breakpoints.up('xs')]: {
+    width: '100%'
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    width: '45%',
+    padding: `0 0 13% 1%`
+  },
+  [theme.breakpoints.up('lg')]: {
+    width: '30%',
+    padding: `0 0 7% 5%`
+  },
+}));
 
 export const CardLayouts = styled('div')(({ theme }) => ({
   padding: theme.spacing(2),

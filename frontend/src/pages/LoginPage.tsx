@@ -63,7 +63,7 @@ export default function LoginPage() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: `50%`,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

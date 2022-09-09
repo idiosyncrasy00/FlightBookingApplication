@@ -28,7 +28,8 @@ import {
   //Accordion,
   //AccordionSummary,
   CardLayouts,
-  FAQLayout
+  FAQLayout,
+  TextContentInBG
 } from './HomePage.styles'
 
 // const Layout = styled('div')(({ theme }) => ({
@@ -183,10 +184,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const HomePage = () => {
   const navigate = useNavigate()
   const [auth, setAuth] = useState(null);
+
   useEffect(() => {
     console.log(getCookie("access_token"));
     setAuth(getCookie("access_token"))
-  });
+  }, []);
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
   const handleChange =
@@ -194,25 +196,28 @@ const HomePage = () => {
       setExpanded(newExpanded ? panel : false);
     };
   return (
-    <div>
+    <Box sx={{ width: '100%' }}>
+      {/* <LinearProgress variant="determinate" value={progress} /> */}
       {
         auth === null ? (
           <>
             <Layout>
               <PaperContainer>
-                <div className="text-content" style={styles.textContent}>
-                  <p>Book your flight now!</p>
-                  <Button onClick={() => { navigate('/register') }}>Sign up now!</Button>
-                </div>
+                <TextContentInBG>
+                  <p>Book your flight to anywhere in Vietnam now!</p>
+                  <Button
+                    variant="contained"
+                    onClick={() => { navigate('/register') }}>Sign up now!</Button>
+                </TextContentInBG>
               </PaperContainer>
               <div>
                 <Typography variant="h3" style={styles.headingStyle}>Reviews from our users</Typography>
                 <CardLayouts>
-                  <Card sx={{ maxWidth: 345 }}>
+                  <Card sx={{ maxWidth: 320 }}>
                     <CardMedia
                       component="img"
-                      height="140"
-                      image="../assets/person.png"
+                      height="200"
+                      image="../../public/person1.jpg"
                       alt="green iguana"
                     />
                     <CardContent>
@@ -225,11 +230,11 @@ const HomePage = () => {
                     </CardContent>
                   </Card>
 
-                  <Card sx={{ maxWidth: 345 }}>
+                  <Card sx={{ maxWidth: 320 }}>
                     <CardMedia
                       component="img"
-                      height="140"
-                      image="../assets/person.png"
+                      height="200"
+                      image="../../public/person2.jpg"
                       alt="green iguana"
                     />
                     <CardContent>
@@ -241,11 +246,11 @@ const HomePage = () => {
                       </Typography>
                     </CardContent>
                   </Card>
-                  <Card sx={{ maxWidth: 345 }}>
+                  <Card sx={{ maxWidth: 320 }}>
                     <CardMedia
                       component="img"
-                      height="140"
-                      image="../assets/person.png"
+                      height="200"
+                      image="../../public/person3.jpg"
                       alt="green iguana"
                     />
                     <CardContent>
@@ -265,14 +270,11 @@ const HomePage = () => {
                   expanded={expanded === 'panel1'}
                   onChange={handleChange('panel1')}>
                   <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                    <Typography>Question 1</Typography>
+                    <Typography>Question 1: What is VietnamBay?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                      malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                      sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget.
+                      Answer: VietnamBay is a website for people booking a domestic flight in Vietnam online. 
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -280,14 +282,12 @@ const HomePage = () => {
                   expanded={expanded === 'panel2'}
                   onChange={handleChange('panel2')}>
                   <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                    <Typography>Question 2</Typography>
+                    <Typography>Question 2: How can you book a flight here?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                      malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                      sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget.
+                      Answer: You need to get an account. If you have not had an account yet, go sign up here.
+                      Once get an account, you login to the page and choose a flight you wish.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -295,14 +295,11 @@ const HomePage = () => {
                   expanded={expanded === 'panel3'}
                   onChange={handleChange('panel3')}>
                   <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-                    <Typography>Question 3</Typography>
+                    <Typography>Question 3: What types of payment method is accepted?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                      malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                      sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget.
+                      Answer: We currently accept payments by Vietnamese credit card.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -311,7 +308,7 @@ const HomePage = () => {
           </>
         ) : (<SecretPage />)
       }
-    </div>
+    </Box>
   )
 }
 

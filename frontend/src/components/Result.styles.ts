@@ -2,6 +2,7 @@
 import Paper, { PaperProps } from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
+import DialogContentText from '@mui/material/DialogContentText';
 
 export const BoxLayout = styled(Paper)(({ theme }) => ({
   margin: `2%`,
@@ -111,11 +112,15 @@ export const BoxChild5 = styled('div')(({ theme }) => ({
 
 //Modal layout
 export const ModalLayout = styled('div')(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.up('xs')]: {
 
   },
-  [theme.breakpoints.up('sm')]: {
-
+  [theme.breakpoints.between('sm', 'lg')]: {
+    display: `flex`,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   [theme.breakpoints.up('lg')]: {
     display: `flex`,
@@ -153,6 +158,48 @@ export const GridLayout = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     padding: `5px 10px`,
   },
+}));
+
+export const DialogContentTextLayout = styled(DialogContentText)(({ theme }) => ({
+  [theme.breakpoints.up('xs')]: {
+    display: `flex`,
+    flexDirection: `row`,
+    justifyContent: `flex-start`,
+    alignItems: `flex-start`,
+    //float: `left`,
+    gap: `5%`
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    display: `flex`,
+    flexDirection: `row`,
+    justifyContent: `center`,
+    alignItems: `center`,
+    //float: `left`,
+    gap: `5%`
+  },
+  [theme.breakpoints.up('lg')]: {
+    display: `flex`,
+    flexDirection: `collumn`,
+    justifyContent: `center`,
+    alignItems: `center`,
+    gap: `5%`
+  },
+
+  // [theme.breakpoints.up('xs')]: {
+  //   display: `flex`,
+  //   flexDirection: `row`,
+  //   justifyContent: `flex-start`,
+  //   alignItems: `flex-start`,
+  //   //float: `left`,
+  //   gap: `5%`
+  // },
+  // [theme.breakpoints.up('lg')]: {
+  //   display: `flex`,
+  //   flexDirection: `collumn`,
+  //   justifyContent: `center`,
+  //   alignItems: `center`,
+  //   gap: `5%`
+  // },
 }));
 
 export const styles = {

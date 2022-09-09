@@ -31,10 +31,12 @@ const ProfilePage = () => {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: `230px`,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
           }}
         >
           <Typography component="h1" variant="h5">

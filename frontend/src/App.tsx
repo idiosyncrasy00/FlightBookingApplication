@@ -7,6 +7,9 @@ import { Fragment } from 'react';
 
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react'
+// import LinearProgress from '@mui/material/LinearProgress';
+
 
 let theme = createTheme();
 
@@ -34,8 +37,26 @@ theme.typography.h3 = {
 function App() {
   //const [count, setCount] = useState(0)
 
+  // const [progress, setProgress] = useState(0);
+  // useEffect(() => {
+
+  //   const timer = setInterval(() => {
+  //     setProgress((oldProgress) => {
+  //       if (oldProgress === 100) {
+  //         return 0;
+  //       }
+  //       const diff = Math.random() * 10;
+  //       return Math.min(oldProgress + diff, 100);
+  //     });
+  //   }, 500);
+
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
   return (
     <>
+      {/* <LinearProgress variant="determinate" value={progress} /> */}
       <Router>
         <ThemeProvider theme={theme}>
           <Navbar />
