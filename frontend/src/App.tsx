@@ -16,22 +16,28 @@ let theme = createTheme();
 theme = responsiveFontSizes(theme);
 
 theme.typography.h3 = {
-  fontSize: '1.2rem',
   [theme.breakpoints.up('xs')]: {
-
+    fontSize: '1.5rem',
   },
   [theme.breakpoints.between('sm', 'md')]: {
-
+    fontSize: '2rem',
   },
   [theme.breakpoints.up('lg')]: {
     fontSize: '2.5rem',
   },
-  // '@media (min-width:600px)': {
-  //   fontSize: '1.5rem',
-  // },
-  // [theme.breakpoints.up('md')]: {
-  //   fontSize: '2rem',
-  // },
+};
+
+theme.typography.h4 = {
+  fontWeight: '100',
+  [theme.breakpoints.up('xs')]: {
+    fontSize: '0.8rem',
+  },
+  [theme.breakpoints.between('sm', 'md')]: {
+    fontSize: '1.3rem',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '1.8rem',
+  },
 };
 
 function App() {

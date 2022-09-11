@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { displayInfo } from '../redux/userInfoSlice'
+import getCookie from '../utils/getCookie'
 
 const theme = createTheme();
 
@@ -19,10 +20,24 @@ const ProfilePage = () => {
 
   const userInfo = useSelector((state) => state.userInfoReducer.user)
   const [info, setInfo] = useState(userInfo)
+  const [auth, setAuth] = useState('');
   useEffect(() => {
     // setInfo(userInfo)
     console.log(info)
-  }, [info]);
+
+    let setCookie = getCookie("access_token")
+    setAuth(setCookie)
+    if (auth !== null) {
+      console.log(auth);
+    } else if (auth === null) {
+      alert("You're logged out")
+      //dispatch(() => dispatch(displayInfo({})))
+
+      dispatch(() => dispatch(displayInfo('')))
+      navigate('/');
+      //window.location.href = '/'
+    }
+  }, [info, auth]);
   const navigate = useNavigate()
   const dispatch = useDispatch()
   return (

@@ -61,7 +61,7 @@ export const styles = {
   },
   headingStyle: {
     textAlign: "center",
-    padding: `25px 0 25px 0`,
+    padding: `15px 0 25px 0`,
   }
 };
 
@@ -89,7 +89,6 @@ export const TextContentInBG = styled('div')(({ theme }) => ({
 }));
 
 export const CardLayouts = styled('div')(({ theme }) => ({
-  padding: theme.spacing(2),
   [theme.breakpoints.up('xs')]: {
     //backgroundColor: theme.palette.secondary.main,
     display: `grid`,
@@ -134,6 +133,6 @@ export const FAQLayout = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     maxHeight: `135vh`,
     margin: `0% 0 10% 0`,
-    gap: `10%`
+    gap: `10%`,
   },
 }));

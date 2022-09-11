@@ -55,7 +55,7 @@ export default function RegisterPage() {
             textAlign: 'center',
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography variant="h4">
             Register
           </Typography>
           <div style={{ color: "red", fontSize: "13px" }}>{error}</div>

@@ -9,8 +9,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 
 import headerConfig from '../adapters/headerConfig'
 import { useSelector, useDispatch } from 'react-redux'
@@ -19,9 +17,10 @@ import axios from 'axios';
 import PaginationUsage from '../components/PaginationUsage'
 import formatDate from '../utils/formatDate'
 
-import {
-  Layout,
-} from './PaymentHistoryPage.styles'
+import getCookie from '../utils/getCookie'
+import { displayInfo } from '../redux/userInfoSlice'
+import { useNavigate } from 'react-router-dom'
+
 
 function createData(
   PaymentID: string,
@@ -54,12 +53,16 @@ const styles = {
 
 export default function PaymentHistoryPage() {
   const userId = useSelector((state) => state.userInfoReducer.user._id)
-  //const [rows, setRows] = useState([]);
   const [page, setPage] = useState(1);
   const [paymentList, setPaymentList] = useState([]);
   const handleChangePagination = (event, value) => {
     setPage(PaginationUsage(paymentList, value, 1).page);
   };
+
+  const navigate = useNavigate()
+  const username = useSelector((state) => state.userInfoReducer.user.username)
+  const dispatch = useDispatch()
+  const [auth, setAuth] = useState('');
 
   const onClick = async (e, currentSelect) => {
     e.stopPropagation();
@@ -86,6 +89,19 @@ export default function PaymentHistoryPage() {
   };
 
   useEffect(() => {
+    let setCookie = getCookie("access_token")
+    setAuth(setCookie)
+    if (auth !== null) {
+      console.log(auth);
+      console.log("Username is ", username)
+    } else if (auth === null) {
+      alert("You're logged out")
+      //dispatch(() => dispatch(displayInfo({})))
+
+      dispatch(() => dispatch(displayInfo('')))
+      navigate('/');
+      //window.location.href = '/'
+    }
     (async () => {
       let paymentArr = []
       const res = await axios.get("http://localhost:8000/api/payments/history", {
@@ -109,7 +125,7 @@ export default function PaymentHistoryPage() {
       setPaymentList(paymentArr);
       //console.log(res.data)
     })();
-  }, [])
+  }, [auth])
   return (
     <>
       <div style={{ marginTop: '5%' }}>

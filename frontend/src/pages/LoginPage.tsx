@@ -71,7 +71,7 @@ export default function LoginPage() {
             textAlign: 'center',
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography variant="h4">
             Sign in
           </Typography>
           <div style={{ color: "red", fontSize: "13px" }}>{error}</div>
@@ -121,7 +121,7 @@ export default function LoginPage() {
                   navigate('/register');
                 }}
                 underline={'hover'}
-                //href=""
+              //href=""
               >
                 {"Don't have an account? Sign Up"}
               </Link>

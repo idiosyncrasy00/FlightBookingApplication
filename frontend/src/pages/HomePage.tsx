@@ -21,6 +21,9 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Box from '@mui/material/Box';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { displayInfo } from '../redux/userInfoSlice'
+
 import {
   Layout,
   PaperContainer,
@@ -31,59 +34,6 @@ import {
   FAQLayout,
   TextContentInBG
 } from './HomePage.styles'
-
-// const Layout = styled('div')(({ theme }) => ({
-//   display: `flex`,
-//   flexDirection: 'column',
-//   alignItems: `center`,
-//   justifyContent: `center`,
-//   // textAlign: 'center',
-//   gap: `25px`,
-// }))
-
-// const PaperContainer = styled(Box)(({ theme }) => ({
-//   backgroundImage: `url(${paperImg})`,
-//   backgroundRepeat: `no-repeat`,
-//   backgroundSize: `100% 100%`,
-//   width: `100vw`,
-//   minHeight: `100vh`,
-//   display: `flex`,
-//   alignItems: `center`
-// }))
-
-// const styles = {
-//   textContent: {
-//     color: `white`,
-//     display: `flex`,
-//     flexDirection: `column`,
-//     alignItems: `flex-start`,
-//     fontSize: `25px`,
-//     padding: `0 0 0 10px`
-//   },
-//   bodySection1: {
-//     display: `flex`,
-//     flexDirection: `row`,
-//     gap: `5% 5%`,
-//     justifyContent: `center`,
-//     alignItems: `center`,
-//   },
-//   bodySection2: {
-//     display: `grid`,
-//     flexDirection: `column`,
-//     gap: `10%`,
-//     justifyContent: `center`,
-//     alignItems: `center`,
-//   },
-//   perfectCentering: {
-//     display: `grid`,
-//     justifyContent: `center`,
-//     alignItems: `center`,
-//   },
-//   headingStyle: {
-//     textAlign: "center",
-//     padding: `0 0 25px 0`,
-//   }
-// };
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -131,59 +81,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-// const CardLayouts = styled('div')(({ theme }) => ({
-//   padding: theme.spacing(2),
-//   [theme.breakpoints.up('xs')]: {
-//     //backgroundColor: theme.palette.secondary.main,
-//     display: `grid`,
-//     gap: `5%`,
-//     justifyContent: `center`,
-//     alignItems: `center`,
-//   },
-//   [theme.breakpoints.between('sm', 'lg')]: {
-//     //backgroundColor: theme.palette.primary.main,
-//     display: `flex`,
-//     flexDirection: `row`,
-//     gap: `5% 5%`,
-//     justifyContent: `center`,
-//     alignItems: `center`,
-//   },
-//   [theme.breakpoints.up('lg')]: {
-//     //backgroundColor: 'green',
-//     display: `flex`,
-//     flexDirection: `row`,
-//     gap: `5% 5%`,
-//     justifyContent: `center`,
-//     alignItems: `center`,
-//   },
-//   //borderTop: '1px solid rgba(0, 0, 0, .125)',
-// }));
-
-// const FAQLayout = styled('div')(({ theme }) => ({
-//   display: `grid`,
-//   alignItems: `center`,
-//   justifyContent: `center`,
-//   textAlign: 'center',
-//   maxWidth: `100%`,
-//   [theme.breakpoints.up('xs')]: {
-//     // minHeight: `200vh`,
-//     maxHeight: `240vh`,
-//     margin: `10% 0 10% 0`,
-//   },
-//   [theme.breakpoints.between('sm', 'lg')]: {
-//     maxHeight: `135vh`,
-//     margin: `0% 0 10% 0`,
-//   },
-//   [theme.breakpoints.up('lg')]: {
-//     maxHeight: `135vh`,
-//     margin: `0% 0 10% 0`,
-//     gap: `10%`
-//   },
-// }));
-
 const HomePage = () => {
   const navigate = useNavigate()
   const [auth, setAuth] = useState(null);
+  //const username = useSelector((state) => state.userInfoReducer.user.username)
+  //const dispatch = useDispatch()
 
   useEffect(() => {
     console.log(getCookie("access_token"));
@@ -213,7 +115,7 @@ const HomePage = () => {
               <div>
                 <Typography variant="h3" style={styles.headingStyle}>Reviews from our users</Typography>
                 <CardLayouts>
-                  <Card sx={{ maxWidth: 320 }}>
+                  <Card sx={{ width: '25%' }}>
                     <CardMedia
                       component="img"
                       height="200"
@@ -230,7 +132,7 @@ const HomePage = () => {
                     </CardContent>
                   </Card>
 
-                  <Card sx={{ maxWidth: 320 }}>
+                  <Card sx={{ width: '25%' }}>
                     <CardMedia
                       component="img"
                       height="200"
@@ -242,11 +144,11 @@ const HomePage = () => {
                         Linh
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        This app is great! I can get a flight ticket without spending times going to the airport!
+                        This is a website where I can reserve a flight ticket for multiple people. Thanks VietnamBay!
                       </Typography>
                     </CardContent>
                   </Card>
-                  <Card sx={{ maxWidth: 320 }}>
+                  <Card sx={{ width: '25%' }}>
                     <CardMedia
                       component="img"
                       height="200"
@@ -258,7 +160,7 @@ const HomePage = () => {
                         Dang
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        This app is great! I can get a flight ticket without spending times going to the airport!
+                        Best website for flight reservation! Definitely will recommend this to my friends.
                       </Typography>
                     </CardContent>
                   </Card>
@@ -272,11 +174,11 @@ const HomePage = () => {
                   style={{ textAlign: `left` }}
                 >
                   <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                    <Typography style={{ fontSize: '30px' }}><span>+ </span>Question 1: What is VietnamBay?</Typography>
+                    <Typography variant="h4"><span>+ </span>Question 1: What is VietnamBay?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography style={{ paddingLeft: `25px` }}>
-                      Answer: VietnamBay is a website for people booking a domestic flight in Vietnam online.
+                    <Typography style={{ paddingLeft: `32px` }}>
+                      <b>Answer:</b> VietnamBay is a website for people booking a domestic flight in Vietnam online.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -286,11 +188,11 @@ const HomePage = () => {
                   style={{ textAlign: `left` }}
                 >
                   <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                    <Typography style={{ fontSize: '30px' }}><span>+ </span>Question 2: How can you book a flight here?</Typography>
+                    <Typography variant="h4"><span>+ </span>Question 2: How can you book a flight here?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography style={{ paddingLeft: `25px` }}>
-                      Answer: You need to get an account. If you have not had an account yet, go sign up here.
+                    <Typography style={{ paddingLeft: `32px` }}>
+                      <b>Answer:</b> You need to get an account. If you have not had an account yet, go sign up here.
                       Once get an account, you login to the page and choose a flight you wish.
                     </Typography>
                   </AccordionDetails>
@@ -301,11 +203,11 @@ const HomePage = () => {
                   style={{ textAlign: `left` }}
                 >
                   <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-                    <Typography style={{ fontSize: '30px' }}><span>+ </span> Question 3: What types of payment method is accepted?</Typography>
+                    <Typography variant="h4"><span>+ </span> Question 3: What types of payment method is accepted?</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography style={{ paddingLeft: `25px` }}>
-                      Answer: We currently accept credit cards distributed by Vietnamese Banks.
+                    <Typography style={{ paddingLeft: `32px` }}>
+                      <b>Answer:</b> We currently accept credit cards distributed by Vietnamese Banks.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>

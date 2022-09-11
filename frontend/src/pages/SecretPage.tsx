@@ -25,6 +25,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import { styled } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux'
+import getCookie from '../utils/getCookie'
+import { displayInfo } from '../redux/userInfoSlice'
 
 const theme = createTheme();
 
@@ -156,6 +158,26 @@ function SecretPage() {
   const [results, setResults] = useState([] as flightInterface)
   const [notifyResults, setNotifyResults] = useState('')
   const username = useSelector((state) => state.userInfoReducer.user.username)
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [auth, setAuth] = useState('');
+
+  useEffect(() => {
+    let setCookie = getCookie("access_token")
+    setAuth(setCookie)
+    if (auth !== null) {
+      console.log(auth);
+      console.log("Username is ", username)
+    } else if (auth === null) {
+      alert("You're logged out")
+      //dispatch(() => dispatch(displayInfo({})))
+
+      dispatch(() => dispatch(displayInfo('')))
+      //navigate('/');
+      window.location.href = '/'
+    }
+  }, []);
 
   const handleClick = async (e) => {
     e.preventDefault();

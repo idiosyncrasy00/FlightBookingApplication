@@ -7,6 +7,8 @@ import getCookie from '../utils/getCookie'
 import { displayInfo } from '../redux/userInfoSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
+import { LogoLayout } from '../components/Navbar.styles'
+
 //import FlightIcon from '@mui/icons-material/Flight';
 
 const Navbar = () => {
@@ -21,12 +23,9 @@ const Navbar = () => {
     if (auth !== null) {
       console.log(auth);
       console.log("Username is ", username)
-    } else if (auth === null) {
-      alert("You're logged out")
-      // dispatch(() => dispatch(removeUsername('')))
-      dispatch(() => dispatch(displayInfo({})))
-      navigate('/');
-      //window.location.href = '/'
+    } else {
+      dispatch(() => dispatch(displayInfo('')))
+      //navigate('/');
     }
   }, [auth]);
   return (
@@ -35,14 +34,16 @@ const Navbar = () => {
         {/* <IconButton onClick={() => { navigate("/") }}>
           <FlightIcon />
         </IconButton> */}
-        <Typography
+        <LogoLayout
           variant='h6'
           component='div'
           sx={{ flexGrow: 1 }}
-          onClick={() => { navigate("/") }}
+          onClick={() => { window.location.href = "/" }
+          }
         >
-          VietnamBay
-        </Typography>
+          <img src="../../public/logo.svg" width="60" height="43" style={{ boxSizing: 'border-box' }}></img>
+          <span>VietnamBay</span>
+        </LogoLayout>
         {username === undefined ? (
           <Stack direction="row" spacing={2}>
             <Button onClick={() => { navigate("/login") }} color="inherit">

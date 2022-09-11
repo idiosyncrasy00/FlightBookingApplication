@@ -76,7 +76,7 @@ const userLogin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         //httpOnly: true,
-        expires: new Date(Date.now() + 90000000),
+        expires: new Date(Date.now() + 90000),
       })
       .status(200)
       .json({ details: { ...otherDetails }, isAdmin });
