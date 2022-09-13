@@ -2,6 +2,7 @@
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import paperImg from '../assets/254367.webp'
+import Card from '@mui/material/Card';
 
 
 export const Layout = styled('div')(({ theme }) => ({
@@ -135,4 +136,18 @@ export const FAQLayout = styled('div')(({ theme }) => ({
     margin: `0% 0 10% 0`,
     gap: `10%`,
   },
+}));
+
+export const CardLayout = styled(Card)(({ theme }) => ({
+  [theme.breakpoints.up('xs')]: {
+    width: '90%',
+    padding: '5%',
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: '25%',
+    padding: 0,
+  },
+  // [theme.breakpoints.up('lg')]: {
+
+  // },
 }));

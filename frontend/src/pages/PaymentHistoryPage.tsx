@@ -84,6 +84,7 @@ export default function PaymentHistoryPage() {
       }, headerConfig);
       console.log(cancelBooking);
       alert("Cancel booking successfully!");
+      window.location.reload();
     }
     //return <Button onClick={onClick}>Cancel</Button>;
   };

@@ -32,6 +32,7 @@ import {
   //AccordionSummary,
   CardLayouts,
   FAQLayout,
+  CardLayout,
   TextContentInBG
 } from './HomePage.styles'
 
@@ -115,7 +116,7 @@ const HomePage = () => {
               <div>
                 <Typography variant="h3" style={styles.headingStyle}>Reviews from our users</Typography>
                 <CardLayouts>
-                  <Card sx={{ width: '25%' }}>
+                  <CardLayout>
                     <CardMedia
                       component="img"
                       height="200"
@@ -130,9 +131,9 @@ const HomePage = () => {
                         This app is great! I can get a flight ticket without spending times going to the airport!
                       </Typography>
                     </CardContent>
-                  </Card>
+                  </CardLayout>
 
-                  <Card sx={{ width: '25%' }}>
+                  <CardLayout>
                     <CardMedia
                       component="img"
                       height="200"
@@ -147,8 +148,8 @@ const HomePage = () => {
                         This is a website where I can reserve a flight ticket for multiple people. Thanks VietnamBay!
                       </Typography>
                     </CardContent>
-                  </Card>
-                  <Card sx={{ width: '25%' }}>
+                  </CardLayout>
+                  <CardLayout>
                     <CardMedia
                       component="img"
                       height="200"
@@ -163,7 +164,7 @@ const HomePage = () => {
                         Best website for flight reservation! Definitely will recommend this to my friends.
                       </Typography>
                     </CardContent>
-                  </Card>
+                  </CardLayout>
                 </CardLayouts>
               </div>
               <FAQLayout>

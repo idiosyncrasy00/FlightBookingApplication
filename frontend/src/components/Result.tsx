@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import headerConfig from '../adapters/headerConfig'
 import Divider from "@mui/material/Divider";
+import { useNavigate } from 'react-router-dom'
+
 
 //mui import
 //import Box from '@mui/material/Box';
@@ -22,6 +24,10 @@ import Draggable from 'react-draggable';
 //import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import ReactToPrint from 'react-to-print'
 import Typography from '@mui/material/Typography';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 import numberWithCommas from '../utils/setDotsInNumber'
 
@@ -71,8 +77,68 @@ const counterReducer = (state = 0, action: unknown) => {
   }
 }
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 150,
+    },
+  },
+};
+
 const Modal = (props, ref) => {
   const pdfRef = useRef(null);
+  const [bankName, setBankName] = useState({
+    name: ''
+  });
+  const navigate = useNavigate()
+
+  const submitFlightForm = async () => {
+    let formArr = [];
+    //insert payment api here
+    //let bankName = (document.getElementById(`bank-name`) as HTMLInputElement).value
+    let creditCardNumber = (document.getElementById(`credit-card`) as HTMLInputElement).value
+    let paymentDetails = {
+      amount: props.price * (props.counter),
+      bankName: bankName.name,
+      creditCard_number: creditCardNumber,
+      flight_id: props.chosenFlightID,
+      user_id: props.userId
+    }
+
+    console.log(paymentDetails)
+
+    let paymentApi = await axios.post('http://localhost:8000/api/payments/insert', paymentDetails, headerConfig)
+    console.log(paymentApi)
+    //insert booking api here
+    for (let i = 0; i < props.counter; i++) {
+      let firstName = (document.getElementById(`first-name-${i}`) as HTMLInputElement).value
+      let lastName = (document.getElementById(`last-name-${i}`) as HTMLInputElement).value
+      let ssn = (document.getElementById(`ssn-${i}`) as HTMLInputElement).value
+      //console.log(firstName, lastName, ssn);
+      formArr.push({
+        first_name: firstName,
+        last_name: lastName,
+        social_security_id: ssn,
+        payment_id: paymentApi.data._id,
+      })
+    }
+    alert("Successfully booked a flight with id ", paymentDetails.chosenFlightID)
+    console.log(formArr)
+
+    let bookingParam = {
+      _id: props.chosenFlightID,
+      list_of_passengers: formArr
+    }
+
+    let bookingFlightApi = await axios.put('http://localhost:8000/api/utils/booked', bookingParam, headerConfig);
+
+    console.log(bookingFlightApi)
+    //setOpen(false);
+    navigate('/paymentHistory');
+  }
   return (
     <Dialog
       open={props.open}
@@ -180,7 +246,32 @@ const Modal = (props, ref) => {
                 <TextField id="email" fullWidth label="Email" variant="outlined" size="small" />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <TextField id="bank-name" fullWidth label="Bank Name" variant="outlined" size="small" />
+                {/* <TextField id="bank-name" fullWidth label="Bank Name" variant="outlined" size="small" /> */}
+                <FormControl sx={{ minWidth: 170 }}>
+                  <InputLabel id="bankname"><span style={{ padding: "0" }}>Bank Name</span></InputLabel>
+                  <Select
+                    labelId="bankname"
+                    //label="bankname"
+                    onChange={
+                      e => {
+                        setBankName({ ...bankName, name: e.target.value });
+                      }
+                    }
+                    // onClick={e => {
+                    //   let res = document.querySelectorAll('[role="option"]')
+                    //   console.log(res);
+                    // }}
+                    id="bank-name"
+                    fullWidth
+                    size="small"
+                    MenuProps={MenuProps}
+                  >
+                    <MenuItem value={"BIDV"}>BIDV</MenuItem>
+                    <MenuItem value={"Vietcombank"}>Vietcombank</MenuItem>
+                    <MenuItem value={"Techcombank"}>Techcombank</MenuItem>
+                    <MenuItem value={"Agribank"}>Agribank</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField id="credit-card" fullWidth label="Credit Card Number" variant="outlined" size="small" />
@@ -198,7 +289,7 @@ const Modal = (props, ref) => {
           Cancel
         </Button>
         <Button
-          onClick={props.submitFlightForm}
+          onClick={submitFlightForm}
           variant="contained"
           size="small"
         >Confirm your order</Button>
@@ -232,49 +323,6 @@ const Result: React.FC<Props> = ({ item }) => {
 
   const userId = useSelector((state) => state.userInfoReducer.user._id)
   // id: string
-  const submitFlightForm = async () => {
-    let formArr = [];
-    //insert payment api here
-    let bankName = (document.getElementById(`bank-name`) as HTMLInputElement).value
-    let creditCardNumber = (document.getElementById(`credit-card`) as HTMLInputElement).value
-    let paymentDetails = {
-      amount: item.price * (counter),
-      bankName: bankName,
-      creditCard_number: creditCardNumber,
-      flight_id: chosenFlightID,
-      user_id: userId
-    }
-
-    console.log(paymentDetails)
-
-    let paymentApi = await axios.post('http://localhost:8000/api/payments/insert', paymentDetails, headerConfig)
-    console.log(paymentApi)
-    //insert booking api here
-    for (let i = 0; i < counter; i++) {
-      let firstName = (document.getElementById(`first-name-${i}`) as HTMLInputElement).value
-      let lastName = (document.getElementById(`last-name-${i}`) as HTMLInputElement).value
-      let ssn = (document.getElementById(`ssn-${i}`) as HTMLInputElement).value
-      //console.log(firstName, lastName, ssn);
-      formArr.push({
-        first_name: firstName,
-        last_name: lastName,
-        social_security_id: ssn,
-        payment_id: paymentApi.data._id,
-      })
-    }
-    console.log("Successfully booked a flight with id ", chosenFlightID)
-    console.log(formArr)
-
-    let bookingParam = {
-      _id: chosenFlightID,
-      list_of_passengers: formArr
-    }
-
-    let bookingFlightApi = await axios.put('http://localhost:8000/api/utils/booked', bookingParam, headerConfig);
-
-    console.log(bookingFlightApi)
-    setOpen(false);
-  }
 
   // const pdfRef = useRef();
 
@@ -294,7 +342,7 @@ const Result: React.FC<Props> = ({ item }) => {
         </BoxChild2>
         <BoxChild4>
           <BoxChild3>
-            <span style={{ "font-weight": "bold" }}>{item.arrivalTime}</span>
+            <span style={{ "font-weight": "bold" }}>{item.departureTime}</span>
             <br />
             <span>
               {item.from}
@@ -304,7 +352,7 @@ const Result: React.FC<Props> = ({ item }) => {
           <BoxChild3>
             <div>
               <span style={{ "font-weight": "bold" }}>
-                {item.departureTime}
+                {item.arrivalTime}
               </span>
               <br />
               <span>
@@ -333,12 +381,14 @@ const Result: React.FC<Props> = ({ item }) => {
         image={item.image}
         price={item.price}
         arrivalTime={item.arrivalTime}
+        chosenFlightID={chosenFlightID}
+        userId={userId}
         // arrivalDate={item.arrivalDate}
         departureTime={item.departureTime}
         departureDate={item.departureDate}
         from={item.from}
         to={item.to}
-        submitFlightForm={submitFlightForm}
+      //submitFlightForm={submitFlightForm}
       // printToPDF={printToPDF}
       />
     </>
