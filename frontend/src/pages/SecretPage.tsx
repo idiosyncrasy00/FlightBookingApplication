@@ -154,6 +154,7 @@ function SecretPage() {
     from: '' as string,
     to: '' as string,
   })
+  const [searhError, setSearhError] = useState('')
 
   const [results, setResults] = useState([] as flightInterface)
   const [notifyResults, setNotifyResults] = useState('')
@@ -181,6 +182,10 @@ function SecretPage() {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    if (searchForm.from === '' && searchForm.to === '') {
+      setSearhError("Please do not leave the field 'From' and field 'To' be blank.");
+      return;
+    }
     let getDate = document.getElementById('departureDate')?.value || null;
     console.log(getDate);
     let formatDate = null;
@@ -296,6 +301,7 @@ function SecretPage() {
             >
               Search
             </Button>
+            <div style={{ color: 'red' }}>{searhError}</div>
           </CardForm>
           <BoxLayout>
             {

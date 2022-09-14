@@ -96,6 +96,10 @@ const Modal = (props, ref) => {
   const navigate = useNavigate()
 
   const submitFlightForm = async () => {
+    let isExecuted = confirm("Do you want to book the flight?");
+    if (!isExecuted) { 
+      return;
+    }
     let formArr = [];
     //insert payment api here
     //let bankName = (document.getElementById(`bank-name`) as HTMLInputElement).value
