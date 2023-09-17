@@ -27,6 +27,8 @@ import { styled } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux'
 import getCookie from '../utils/getCookie'
 import { displayInfo } from '../redux/userInfoSlice'
+import headerConfig from '../adapters/headerConfig'
+
 
 const theme = createTheme();
 
@@ -198,12 +200,7 @@ function SecretPage() {
       departureDate: formatDate,
     }
     console.log(submittedForm)
-    const res = await axios.post("http://localhost:8000/api/flights/query", submittedForm, {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    const res = await axios.post("http://localhost:8000/api/flights/query", submittedForm, headerConfig(getCookie("access_token")));
     if (typeof res.data !== 'Object') {
       setNotifyResults("Sorry, there are not available flights you're looking for!")
     }

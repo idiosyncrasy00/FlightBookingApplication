@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { displayInfo } from '../redux/userInfoSlice'
 
+
 const theme = createTheme();
 
 export default function LoginPage() {

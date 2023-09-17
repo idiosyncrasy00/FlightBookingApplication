@@ -2,6 +2,8 @@
 
 const { userRegistration, getUser, userLogin, postUserPayments, userUpdate } = require('../controllers/user.controller')
 const express = require('express');
+const auth = require("../middlewares/auth");
+
 
 
 const router = express.Router();
@@ -10,7 +12,7 @@ const router = express.Router();
 
 router.post('/register', userRegistration)
 router.post('/login', userLogin)
-router.put('/update', userUpdate)
+router.put('/update', auth, userUpdate)
 /**
  * body
  * {

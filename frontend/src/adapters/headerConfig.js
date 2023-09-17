@@ -1,7 +1,11 @@
-let headerConfig = {
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json'
+function headerConfig(tokenValue) {
+  console.log("tokenValue: ", tokenValue);
+  return {
+    withCredentials: true,
+    headers: {
+      "Authorization": "Bearer " + tokenValue,
+      'Content-Type': 'application/json'
+    }
   }
 }
 

@@ -18,7 +18,8 @@ const addPayment = async (req, res, next) => {
 }
 
 const getPaymentsByUserId = async (req, res, next) => {
-  let param = req.query.user_id
+  // let param = req.query.user_id
+  let param = req.params.userId
   //console.log(req.body.user_id)
   console.log(param)
   try {
@@ -31,8 +32,9 @@ const getPaymentsByUserId = async (req, res, next) => {
 }
 
 const cancelPayment = async (req, res, next) => {
-  let param = req.query.payment_id
+  // let param = req.query.payment_id
   //console.log(req.body.user_id)
+  let param = req.params.paymentId
   console.log(param)
   try {
     const result = await paymentModel.deleteOne({ payment_id: param })

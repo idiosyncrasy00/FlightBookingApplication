@@ -71,17 +71,13 @@ export default function PaymentHistoryPage() {
     let isExecuted = confirm("Are you sure to cancel the booking?");
 
     if (isExecuted) {
-      let cancelPayment = await axios.delete("http://localhost:8000/api/payments/cancel", {
-        params: {
-          payment_id: currentSelect.PaymentID
-        }
-      }, headerConfig);
+      let cancelPayment = await axios.delete("http://localhost:8000/api/payments/cancel/" + currentSelect.PaymentID, headerConfig(getCookie("access_token")));
       console.log(cancelPayment);
 
       let cancelBooking = await axios.put("http://localhost:8000/api/utils/cancel", {
         flight_id: currentSelect.FlightID,
         payment_id: currentSelect.PaymentID
-      }, headerConfig);
+      }, headerConfig(getCookie("access_token")));
       console.log(cancelBooking);
       alert("Cancel booking successfully!");
       window.location.reload();
@@ -105,11 +101,7 @@ export default function PaymentHistoryPage() {
     }
     (async () => {
       let paymentArr = []
-      const res = await axios.get("http://localhost:8000/api/payments/history", {
-        params: {
-          user_id: userId
-        }
-      });
+      const res = await axios.get("http://localhost:8000/api/payments/history/" + userId, headerConfig(getCookie("access_token")));
       for (let i = 0; i < res.data.length; i++) {
         paymentArr.push(
           createData(

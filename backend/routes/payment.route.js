@@ -2,13 +2,15 @@
 
 const { addPayment, getPaymentsByUserId, cancelPayment } = require('../controllers/payment.controller')
 const express = require('express');
+const auth = require("../middlewares/auth");
+
 
 
 const router = express.Router();
 
-router.post('/insert', addPayment)
-router.get('/history', getPaymentsByUserId)
-router.delete('/cancel', cancelPayment)
+router.post('/insert', auth, addPayment)
+router.get('/history/:userId', auth, getPaymentsByUserId)
+router.delete('/cancel/:paymentId', auth, cancelPayment)
 
 /**
  * body

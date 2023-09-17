@@ -93,6 +93,7 @@ export default function Profile(props) {
           deleteAllCookies()
           dispatch(() => dispatch(displayInfo({})))
           navigate('/');
+          window.location.href = "/"
         }}>
           {/* <Avatar /> My account */}
           Logout

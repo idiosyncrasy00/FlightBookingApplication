@@ -30,6 +30,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
 import numberWithCommas from '../utils/setDotsInNumber'
+import getCookie from '../utils/getCookie'
 
 import {
   BoxLayout,
@@ -114,7 +115,7 @@ const Modal = (props, ref) => {
 
     console.log(paymentDetails)
 
-    let paymentApi = await axios.post('http://localhost:8000/api/payments/insert', paymentDetails, headerConfig)
+    let paymentApi = await axios.post('http://localhost:8000/api/payments/insert', paymentDetails, headerConfig(getCookie("access_token")))
     console.log(paymentApi)
     //insert booking api here
     for (let i = 0; i < props.counter; i++) {
@@ -137,7 +138,7 @@ const Modal = (props, ref) => {
       list_of_passengers: formArr
     }
 
-    let bookingFlightApi = await axios.put('http://localhost:8000/api/utils/booked', bookingParam, headerConfig);
+    let bookingFlightApi = await axios.put('http://localhost:8000/api/utils/booked', bookingParam, headerConfig(getCookie("access_token")));
 
     console.log(bookingFlightApi)
     //setOpen(false);

@@ -1,0 +1,9 @@
+FROM node
+WORKDIR /frontend
+COPY package.json .
+RUN npm i -g vite
+RUN npm install 
+
+COPY . .
+
+CMD ["npm", "start"]

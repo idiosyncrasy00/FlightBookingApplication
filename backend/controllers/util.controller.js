@@ -66,19 +66,17 @@ const flightBooking = async (req, res, next) => {
 const cancelBooking = async (req, res, next) => {
   let list_of_passengers_arr = [];
   try {
-    const res = await flightModel.findById({ _id: req.body.flight_id })
-    console.log(res)
-    if (!res) {
-      res.status(404).send("Flight ID not found!");
+    try {
+      const res = await flightModel.findById({ _id: req.body.flight_id })
+      console.log(res)
+      if (!res) {
+        res.status(404).send("Flight ID not found!");
+      }
+      console.log(res.list_of_passengers)
+      list_of_passengers_arr = res.list_of_passengers;
+    } catch (err) {
+      console.log(err.message)
     }
-    console.log(res.list_of_passengers)
-    list_of_passengers_arr = res.list_of_passengers;
-
-    // for (let i = 0; i < list_of_passengers.length; i++) {
-    //   if (list_of_passengers[i].payment_id === req.body.payment_id) {
-
-    //   }
-    // }
     let list_of_passengers_updated = list_of_passengers_arr.reduce((updatedArr, passenger) => {
       if (passenger.payment_id !== req.body.payment_id) {
         updatedArr.push(passenger)
@@ -95,7 +93,7 @@ const cancelBooking = async (req, res, next) => {
         }
       }
     ).exec()
-    res.send("cancel booking successfully");
+    res.status(200).send("cancel booking successfully");
   } catch (error) {
     console.log(error.message);
   }

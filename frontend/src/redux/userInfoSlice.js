@@ -12,9 +12,6 @@ export const userInfoSlice = createSlice({
     displayInfo: (state, action) => {
       state.user = action.payload;
     },
-    // removeUsername: (state, action) => {
-    //   state.user = '';
-    // },
   },
 })
 

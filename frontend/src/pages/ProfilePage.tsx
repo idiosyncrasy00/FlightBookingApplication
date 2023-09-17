@@ -13,6 +13,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { displayInfo } from '../redux/userInfoSlice'
 import getCookie from '../utils/getCookie'
+import headerConfig from '../adapters/headerConfig'
+
 
 const theme = createTheme();
 
@@ -107,7 +109,7 @@ const ProfilePage = () => {
                     headers: {
                       'Content-Type': 'application/json'
                     }
-                  });
+                  }, headerConfig(getCookie("access_token")));
                   console.log(res.data)
                   dispatch(() => dispatch(displayInfo(info)))
                   navigate("/me")
